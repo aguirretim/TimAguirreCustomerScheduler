@@ -19,8 +19,8 @@ public class TimAguirreCustomerSchedulerApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-        
+        Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/Login.fxml"));
+        stage.setTitle("Welcome Consultant Specialist");
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
