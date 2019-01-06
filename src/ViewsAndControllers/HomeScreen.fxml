@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="ViewsAndControllers.HomeScreenController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewsAndControllers.HomeScreenController">
    <children>
       <TableView layoutX="170.0" layoutY="100.0" prefHeight="244.0" prefWidth="382.0">
         <columns>
@@ -20,7 +19,7 @@
       </TableView>
       <Label layoutX="170.0" layoutY="27.0" text="Welcome Consultant" />
       <Label layoutX="170.0" layoutY="63.0" text="Here are your scheduled appointments" />
-      <Label focusTraversable="false" layoutX="37.0" layoutY="15.0" prefHeight="58.0" prefWidth="110.0" text="Tim Aguirre Customer Scheduler App" textFill="#2d47da" wrapText="true">
+      <Label focusTraversable="false" layoutX="37.0" layoutY="15.0" prefHeight="58.0" prefWidth="110.0" text="Tim Aguirre Customer Scheduler" textFill="#2d47da" wrapText="true">
          <effect>
             <Blend />
          </effect>
@@ -31,7 +30,7 @@
             <Font size="11.0" />
          </font>
       </Button>
-      <Button layoutX="34.0" layoutY="258.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="89.0" text="Edit Appointment" wrapText="true">
+      <Button layoutX="34.0" layoutY="258.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="89.0" text="Edit Appointment" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="11.0" />
          </font>
