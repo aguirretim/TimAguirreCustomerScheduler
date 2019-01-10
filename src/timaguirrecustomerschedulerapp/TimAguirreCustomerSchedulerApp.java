@@ -10,7 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import Model.DBConnect;
 /**
  *
  * @author Tim
@@ -25,6 +25,9 @@ public class TimAguirreCustomerSchedulerApp extends Application {
         
         stage.setScene(scene);
         stage.show();
+        
+        DBConnect connect = new DBConnect();
+        connect.getData();
     }
 
     /**
@@ -32,6 +35,7 @@ public class TimAguirreCustomerSchedulerApp extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+        
     }
     
 }
