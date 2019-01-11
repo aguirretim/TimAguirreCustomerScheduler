@@ -6,15 +6,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="349.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewsAndControllers.Login">
+<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="349.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewsAndControllers.Login">
     <children>
         <Button fx:id="button" layoutX="40.0" layoutY="161.0" onAction="#handleButtonAction" text="Click Me!" />
         <Label fx:id="label" layoutX="119.0" layoutY="165.0" minHeight="16" minWidth="69" />
       <PasswordField layoutX="119.0" layoutY="84.0" />
       <TextField layoutX="119.0" layoutY="45.0" />
-      <Label fx:id="label1" layoutX="59.0" layoutY="49.0" minHeight="16" minWidth="69" text="Username:" />
+      <Label fx:id="label1" layoutX="47.0" layoutY="50.0" minHeight="16" minWidth="69" text="Username:" />
       <Button fx:id="login" layoutX="163.0" layoutY="123.0" mnemonicParsing="false" onAction="#loginButtonAction" text="Login" />
-      <Label fx:id="label11" layoutX="59.0" layoutY="88.0" minHeight="16" minWidth="69" text="Password:" />
+      <Label fx:id="label11" layoutX="49.0" layoutY="88.0" minHeight="16" minWidth="69" text="Password:" />
       <Label layoutX="143.0" layoutY="14.0" text="Hello,  Please Login" />
     </children>
 </AnchorPane>

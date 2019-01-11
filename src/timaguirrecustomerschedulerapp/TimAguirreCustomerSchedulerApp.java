@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package timaguirrecustomerschedulerapp;
 
 import javafx.application.Application;
@@ -11,31 +6,31 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import Model.DBConnect;
-/**
- *
- * @author Tim
- */
-public class TimAguirreCustomerSchedulerApp extends Application {
-    
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/Login.fxml"));
-        stage.setTitle("Welcome Consultant Specialist");
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.show();
-        
-        DBConnect connect = new DBConnect();
-        connect.getData();
-    }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
-        
-    }
-    
+
+
+
+public class TimAguirreCustomerSchedulerApp extends Application {
+
+ @Override
+ public void start(Stage stage) throws Exception {
+  Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/Login.fxml"));
+  stage.setTitle("Welcome Consultant Specialist");
+  Scene scene = new Scene(root);
+
+  stage.setScene(scene);
+  stage.show();
+
+//Connecting to the MySql Database and performing a query
+  DBConnect connect = new DBConnect();
+  connect.getData();
+ }
+
+ 
+ 
+ public static void main(String[] args) {
+  launch(args);
+
+ }
+
 }

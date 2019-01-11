@@ -23,35 +23,52 @@ import javafx.stage.Stage;
  * @author Tim
  */
 public class Login implements Initializable {
-    
-    @FXML
-    private Label label;
-    
-    @FXML
-    private Button login;
-    
-    Stage stage = new Stage();
-    
-    @FXML
-    private void loginButtonAction(ActionEvent event) throws IOException {
-        login.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));
-        Scene scene = new Scene(root);
-        stage.setTitle("Tim Aguirre Customer Scheduler App");
-        stage.setScene(scene);
-        stage.showAndWait();
-        
-    }
-    
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+
+
+
+ /************************************
+  * Variables for Buttons and Field.
+  ************************************/
+
+
+
+ @FXML
+ private Label label;
+
+ @FXML
+ private Button login;
+
+ //Stage setting variable for Button actions to select new stages to display
+ Stage stage = new Stage();
+
+
+
+ /************************************
+  * Changing screens and scenes with buttons.
+  ************************************/
+
+
+
+ @FXML
+ private void loginButtonAction(ActionEvent event) throws IOException {
+  login.getScene().getWindow().hide();
+  Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));
+  Scene scene = new Scene(root);
+  stage.setTitle("Tim Aguirre Customer Scheduler App");
+  stage.setScene(scene);
+  stage.showAndWait();
+
+ }
+
+ @FXML
+ private void handleButtonAction(ActionEvent event) {
+  System.out.println("You clicked me!");
+  label.setText("Hello World!");
+ }
+
+ @Override
+ public void initialize(URL url, ResourceBundle rb) {
+  // TODO
+ }
+
 }

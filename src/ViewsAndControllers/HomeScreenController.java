@@ -23,32 +23,43 @@ import javafx.stage.Stage;
  * @author Tim
  */
 public class HomeScreenController implements Initializable {
-    @FXML
-    private Button customerButton;
 
-   
-    
-    Stage stage = new Stage();
-    
-    /**
-     * Initializes the controller class.
-     */
-   
-        // TODO
-        @FXML
-        private void customerButtonAction(ActionEvent event) throws IOException {
-        customerButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/CustomerSceen.fxml"));
-        Scene scene = new Scene(root);
-        stage.setTitle("Tim Aguirre Customer Scheduler App");
-        stage.setScene(scene);
-        stage.showAndWait();
-        }  
-        
-        
-        @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+
+
+ /************************************
+  * Variables for Buttons and Field.
+  ************************************/
+
+
+
+ @FXML
+ private Button customerButton;
+
+ //Stage setting variable for Button actions to select new stages to display
+ Stage stage = new Stage();
+
+
+
+ /************************************
+  * Changing screens and scenes with buttons.
+  ************************************/
+
+ 
+ 
+ @FXML
+ private void customerButtonAction(ActionEvent event) throws IOException {
+  customerButton.getScene().getWindow().hide();
+  Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/CustomerSceen.fxml"));
+  Scene scene = new Scene(root);
+  stage.setTitle("Tim Aguirre Customer Scheduler App");
+  stage.setScene(scene);
+  stage.showAndWait();
+ }
+
+
+ @Override
+ public void initialize(URL url, ResourceBundle rb) {
+  // TODO
+ }
+
 }
