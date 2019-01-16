@@ -16,8 +16,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
+import Model.DBConnect;
 /**
  *
  * @author Tim
@@ -29,7 +30,11 @@ public class Login implements Initializable {
  /************************************
   * Variables for Buttons and Field.
   ************************************/
-
+@FXML
+ private TextField usernameText;
+    
+ @FXML
+ private TextField passwordText;
 
 
  @FXML
@@ -51,13 +56,27 @@ public class Login implements Initializable {
 
  @FXML
  private void loginButtonAction(ActionEvent event) throws IOException {
-  login.getScene().getWindow().hide();
-  Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));
+    try
+    {   
+    String userT = usernameText.getText().trim();
+    String passT=  passwordText.getText().trim();
+    
+    //String sql = "select userName,password from user where user = '" + userT+"'password = '"+passT+"'" ;
+    DBConnect connect = new DBConnect();
+   
+    connect.getLoginData(userT,passT);
+    
+    }
+    catch (Exception ex)
+    {}
+    
+    
+    
+  /*Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));
   Scene scene = new Scene(root);
   stage.setTitle("Tim Aguirre Customer Scheduler App");
   stage.setScene(scene);
-  stage.showAndWait();
-
+  stage.showAndWait();*/
  }
 
  @FXML
