@@ -25,7 +25,7 @@ public class TimAguirreCustomerSchedulerApp extends Application {
   DBConnect connect = new DBConnect();
   connect.getData();
   
-  locale.
+
  }
 
  
