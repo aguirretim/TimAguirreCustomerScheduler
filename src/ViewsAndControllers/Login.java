@@ -61,16 +61,21 @@ public class Login implements Initializable {
             DBConnect connect = new DBConnect();
 
             if (connect.getLoginData(userT, passT)== true){
+            login.getScene().getWindow().hide();
             Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));
             Scene scene = new Scene(root);
             stage.setTitle("Tim Aguirre Customer Scheduler App");
             stage.setScene(scene);
-            stage.showAndWait();
+            stage.showAndWait();            
             }
+           
+            
             else
+                
             {
             System.out.println("user is wrong");
             }
+            
         } catch (Exception ex) {
         }
 
