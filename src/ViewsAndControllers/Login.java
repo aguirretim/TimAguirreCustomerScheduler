@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import Model.DBConnect;
+import java.sql.Timestamp;
 
 /**
  *
@@ -26,11 +27,14 @@ import Model.DBConnect;
  */
 public class Login implements Initializable {
 
-    /**
-     * **********************************
+    
+    
+    /*************************************
      * Variables for Buttons and Field.
-  ***********************************
-     */
+     *************************************/
+    
+    
+    
     @FXML
     private TextField usernameText;
 
@@ -46,11 +50,14 @@ public class Login implements Initializable {
     //Stage setting variable for Button actions to select new stages to display
     Stage stage = new Stage();
 
-    /**
-     * **********************************
+    
+    
+     /*************************************
      * Changing screens and scenes with buttons.
-  ***********************************
-     */
+     ************************************/
+    
+    
+    
     @FXML
     private void loginButtonAction(ActionEvent event) throws IOException {
         try {
@@ -67,19 +74,16 @@ public class Login implements Initializable {
             stage.setTitle("Tim Aguirre Customer Scheduler App");
             stage.setScene(scene);
             stage.showAndWait();            
-            }
-           
+            }                       
             
-            else
-                
-            {
+            else                
+            
+            {                                               
             System.out.println("user is wrong");
             }
             
-        } catch (Exception ex) {
+        } catch (Exception ex) {            
         }
-
-        
     }
 
     @FXML
@@ -91,6 +95,8 @@ public class Login implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        System.out.println("Current time using current time: "+timestamp);       
     }
 
 }
