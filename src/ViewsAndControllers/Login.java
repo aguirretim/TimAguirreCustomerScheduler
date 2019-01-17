@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import Model.DBConnect;
 import java.sql.Timestamp;
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -78,11 +79,18 @@ public class Login implements Initializable {
             
             else                
             
-            {                                               
-            System.out.println("user is wrong");
+              
+            { 
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Login");
+            alert.setHeaderText("Sorry");
+            alert.setContentText("The username or password you entered is incorrect");
+            System.out.println("The username or password you entered is incorrect");
+            alert.showAndWait();                                  
             }
             
         } catch (Exception ex) {            
+            
         }
     }
 
