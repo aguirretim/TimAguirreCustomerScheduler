@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import Model.DBConnect;
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -26,11 +27,14 @@ import Model.DBConnect;
  */
 public class Login implements Initializable {
 
-    /**
-     * **********************************
-     * Variables for Buttons and Field.
-  ***********************************
-     */
+    
+    
+ /************************************
+  * Variables for Buttons and Field.
+  ************************************/ 
+    
+    
+    
     @FXML
     private TextField usernameText;
 
@@ -46,11 +50,14 @@ public class Login implements Initializable {
     //Stage setting variable for Button actions to select new stages to display
     Stage stage = new Stage();
 
-    /**
-     * **********************************
-     * Changing screens and scenes with buttons.
-  ***********************************
-     */
+
+    
+ /************************************
+  * Changing screens and scenes with buttons.
+  ************************************/
+    
+    
+    
     @FXML
     private void loginButtonAction(ActionEvent event) throws IOException {
         try {
@@ -73,7 +80,13 @@ public class Login implements Initializable {
             else
                 
             {
-            System.out.println("user is wrong");
+                
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                //alert.setTitle("Information Dialog");
+                alert.setHeaderText("Sorry");
+                alert.setContentText("The username or password you enetered is incorrect");
+                alert.showAndWait();
+                System.out.println("user is wrong");
             }
             
         } catch (Exception ex) {
