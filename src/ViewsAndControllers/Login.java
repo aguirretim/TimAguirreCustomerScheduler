@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import Model.DBConnect;
 import javafx.scene.control.Alert;
+import java.sql.Timestamp;
 
 /**
  *
@@ -29,12 +30,11 @@ public class Login implements Initializable {
 
     
     
+
  /************************************
   * Variables for Buttons and Field.
   ************************************/ 
-    
-    
-    
+  
     @FXML
     private TextField usernameText;
 
@@ -55,9 +55,7 @@ public class Login implements Initializable {
  /************************************
   * Changing screens and scenes with buttons.
   ************************************/
-    
-    
-    
+
     @FXML
     private void loginButtonAction(ActionEvent event) throws IOException {
         try {
@@ -74,10 +72,10 @@ public class Login implements Initializable {
             stage.setTitle("Tim Aguirre Customer Scheduler App");
             stage.setScene(scene);
             stage.showAndWait();            
-            }
-           
+            }                       
             
-            else
+            else                
+            
                 
             {
                 
@@ -87,12 +85,14 @@ public class Login implements Initializable {
                 alert.setContentText("The username or password you enetered is incorrect");
                 alert.showAndWait();
                 System.out.println("user is wrong");
+
+            {                                               
+            System.out.println("user is wrong");
+
             }
             
-        } catch (Exception ex) {
+        }} catch (Exception ex) {            
         }
-
-        
     }
 
     @FXML
@@ -104,6 +104,8 @@ public class Login implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        System.out.println("Current time using current time: "+timestamp);       
     }
 
 }

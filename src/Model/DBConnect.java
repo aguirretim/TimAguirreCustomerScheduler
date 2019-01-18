@@ -16,12 +16,15 @@ public class DBConnect {
 
     public DBConnect() {
 
-        /**
-         * **********************************
+        
+        
+        /*************************************
          * Connects to MySql Database.
-           ***********************************
-         */
-        try {
+         ************************************/
+        
+        
+        
+        try {                        
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77", "U04k77", "53688267207");
             st = con.createStatement();
@@ -79,4 +82,7 @@ public class DBConnect {
     return result;
     }
 
+    
+    
+    
 }

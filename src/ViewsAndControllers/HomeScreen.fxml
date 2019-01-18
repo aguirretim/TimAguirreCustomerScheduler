@@ -10,11 +10,11 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewsAndControllers.HomeScreenController">
    <children>
-      <TableView layoutX="170.0" layoutY="100.0" prefHeight="244.0" prefWidth="382.0">
+      <TableView fx:id="apptTable" layoutX="170.0" layoutY="100.0" prefHeight="244.0" prefWidth="382.0">
         <columns>
-            <TableColumn prefWidth="131.0" text="Appointment" />
-          <TableColumn prefWidth="126.0" text="Customer" />
-          <TableColumn minWidth="0.0" prefWidth="124.0" text="Address" />
+            <TableColumn fx:id="apptCol" prefWidth="131.0" text="Appointment" />
+          <TableColumn fx:id="customerCol" prefWidth="126.0" text="Customer" />
+          <TableColumn fx:id="addressCol" minWidth="0.0" prefWidth="124.0" text="Address" />
         </columns>
       </TableView>
       <Label layoutX="170.0" layoutY="27.0" text="Welcome Consultant" />
