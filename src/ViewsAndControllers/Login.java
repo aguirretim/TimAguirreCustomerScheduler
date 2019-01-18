@@ -67,6 +67,7 @@ public class Login implements Initializable {
 
             if (connect.getLoginData(userT, passT)== true){
             login.getScene().getWindow().hide();
+            System.out.println("(Succesful login) Welcome Consultant");
             Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));
             Scene scene = new Scene(root);
             stage.setTitle("Tim Aguirre Customer Scheduler App");
@@ -78,20 +79,17 @@ public class Login implements Initializable {
             
                 
             {
-                
+                System.out.println("(Invalid login attempted) Sorry, The username or password you entered is incorrect.");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                //alert.setTitle("Information Dialog");
+                alert.setTitle("Invalid login attempted");
                 alert.setHeaderText("Sorry");
-                alert.setContentText("The username or password you enetered is incorrect");
+                alert.setContentText("The username or password you entered is incorrect.");
                 alert.showAndWait();
-                System.out.println("user is wrong");
-
-            {                                               
-            System.out.println("user is wrong");
-
-            }
+                
             
-        }} catch (Exception ex) {            
+        }
+        
+        } catch (Exception ex) {            
         }
     }
 
