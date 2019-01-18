@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
@@ -29,6 +30,8 @@ import javafx.stage.Stage;
  *
  * @author Tim
  */
+
+
 public class HomeScreenController implements Initializable {
     
     
@@ -85,7 +88,15 @@ Timestamp T = java.sql.Timestamp.valueOf("2019-01-16 23:11:48.914");
  @Override
  public void initialize(URL url, ResourceBundle rb) {
   // TODO
- customerData.addCustomer(new Customer(1, "Will Smith", 2, 2, "Bruce Lee", T, "Jet li"));
+ 
+  customerData.addCustomer(new Customer(1, "Will Smith", 2, 2, "Bruce Lee", T, "Jet li"));
+   apptTable.setItems(customerData.getCustomer());
+   
+  customerCol.setCellValueFactory(new PropertyValueFactory<>("customerName")); 
+ 
+ 
+ 
  }
+ 
  
 }

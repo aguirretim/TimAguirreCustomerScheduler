@@ -18,4 +18,13 @@ public class CustomerList {
       public void addCustomer(Customer CustomerData) {
         allCustomers.add(CustomerData);
     }
+      
+     public void getCustomer(Customer CustomerData) {
+        allCustomers.add(CustomerData);
+    } 
+     
+     public ObservableList<Customer> getCustomer() {
+        return allCustomers;
+    }
+     
 }
