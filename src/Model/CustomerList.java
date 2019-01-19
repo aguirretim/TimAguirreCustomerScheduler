@@ -14,7 +14,10 @@ import javafx.collections.ObservableList;
  */
 public class CustomerList {
   private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
-    
+  private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();  
+
+  
+  
       public void addCustomer(Customer CustomerData) {
         allCustomers.add(CustomerData);
     }
@@ -26,5 +29,15 @@ public class CustomerList {
      public ObservableList<Customer> getCustomer() {
         return allCustomers;
     }
+     public void addAppointment(Appointment AppointmentData) {
+        allAppointments.add(AppointmentData);
+    }
+      
+     public void getAppointment(Appointment AppointmentData) {
+        allAppointments.add(AppointmentData);
+    } 
      
+     public ObservableList<Appointment> getAppointment() {
+        return allAppointments;
+    }
 }

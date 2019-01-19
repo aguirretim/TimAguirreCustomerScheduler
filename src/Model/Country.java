@@ -14,9 +14,9 @@ import java.util.Date;
  */
 public class Country {
     int countryId;
-    //varchar country;
+    private String country;
     Date createdDate = new Date();
-    //varchar createdBy;
+    private String createdBy;
     Timestamp lastUpdate;
-    //varchar lastUpdateBY;
+    private String lastUpdateBY;
 }

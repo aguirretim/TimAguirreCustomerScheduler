@@ -15,19 +15,160 @@ import javafx.scene.text.Text;
  * @author Tim
  */
 public class Appointment {
-    int appointmentId;
-    int customerId;
-    int userId;
-    //varchar title;
-    Text description;
-    Text location;
-    Text contact;
-    Text type;
-    //varchar url;
-    //datetime start;
-    //datetime end;
-    Date createdDate = new Date();
-    //varchar createdBy;
-    Timestamp lastUpdate;
-    //varchar lastUpdateBY;
+
+   private int appointmentId;
+   private int customerId;
+   private int userId;
+   private String title;
+   private String description;
+   private String location;
+   private String contact;
+   private String type;
+   private String url;
+    //Start time suppose to be datetime in SQL
+   private Timestamp start;
+   //End time suppose to be datetime in SQL
+   private Timestamp end;
+   Date createdDate = new Date();
+   private String createdBy;
+   private Timestamp lastUpdate;
+   private String lastUpdateBY;
+   
+   public Appointment(int appointmentId, int customerId, int userId, String title, String description, String location, String contact, String type, String url, Timestamp start, Timestamp end, String createdBy, Timestamp lastUpdate, String lastUpdateBY) {
+        this.appointmentId = appointmentId;
+        this.customerId = customerId;
+        this.userId = userId;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.contact = contact;
+        this.type = type;
+        this.url = url;
+        this.start = start;
+        this.end = end;
+        this.createdBy = createdBy;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdateBY = lastUpdateBY;
+    }
+   
+       public int getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(int appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Timestamp getStart() {
+        return start;
+    }
+
+    public void setStart(Timestamp start) {
+        this.start = start;
+    }
+
+    public Timestamp getEnd() {
+        return end;
+    }
+
+    public void setEnd(Timestamp end) {
+        this.end = end;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Timestamp getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public String getLastUpdateBY() {
+        return lastUpdateBY;
+    }
+
+    public void setLastUpdateBY(String lastUpdateBY) {
+        this.lastUpdateBY = lastUpdateBY;
+    }
+   
 }

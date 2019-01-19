@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="ViewsAndControllers.CustomerSceenController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewsAndControllers.CustomerSceenController">
     <children>
       <TableView layoutX="170.0" layoutY="100.0" prefHeight="244.0" prefWidth="382.0">
         <columns>
@@ -24,7 +24,7 @@
             <Blend />
          </effect>
       </Label>
-      <Button layoutX="34.0" layoutY="88.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="89.0" text="Appointments">
+      <Button fx:id="apptButton" layoutX="34.0" layoutY="88.0" mnemonicParsing="false" onAction="#apptButtonAction" prefHeight="58.0" prefWidth="89.0" text="Appointments">
          <font>
             <Font size="11.0" />
          </font></Button>

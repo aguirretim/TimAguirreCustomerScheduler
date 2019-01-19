@@ -13,14 +13,14 @@ import java.util.Date;
  * @author Tim
  */
 public class Address {
-    int addressId;
-    //varchar address;
-    //varchar address2;
+    private int addressId;
+    private String address;
+    private String address2;
     int cityId;
-    //varchar postalCode;
-    //varchar phone;
+    private String postalCode;
+    private String phone;
     Date createdDate = new Date();
-    //varchar createdBy;
-    Timestamp lastUpdate;
-    //varchar lastUpdateBY;
+    private String createdBy;
+    private Timestamp lastUpdate;
+    private String lastUpdateBY;
 }

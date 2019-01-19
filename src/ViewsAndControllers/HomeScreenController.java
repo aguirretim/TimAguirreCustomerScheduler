@@ -5,6 +5,7 @@
  */
 package ViewsAndControllers;
 
+import Model.Appointment;
 import Model.CustomerList;
 import Model.Customer;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,16 +75,15 @@ public class HomeScreenController implements Initializable {
  
  @FXML
  private void customerButtonAction(ActionEvent event) throws IOException {
-  customerButton.getScene().getWindow().hide();
+  stage=(Stage)customerButton.getScene().getWindow();
   Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/CustomerSceen.fxml"));
   Scene scene = new Scene(root);
   stage.setTitle("Tim Aguirre Customer Scheduler App");
   stage.setScene(scene);
-  stage.showAndWait();
+//  stage.showAndWait();
  }
 
 Timestamp T = java.sql.Timestamp.valueOf("2019-01-16 23:11:48.914");
-        
         
 
  @Override
@@ -90,12 +91,15 @@ Timestamp T = java.sql.Timestamp.valueOf("2019-01-16 23:11:48.914");
   // TODO
  
   customerData.addCustomer(new Customer(1, "Will Smith", 2, 2, "Bruce Lee", T, "Jet li"));
-   apptTable.setItems(customerData.getCustomer());
-   
-  customerCol.setCellValueFactory(new PropertyValueFactory<>("customerName")); 
- 
- 
- 
+  customerData.addAppointment(new Appointment(0, 0, 0, "Meeting about new movie", "Discuss about script for new movie", "Seattle", "Agent J", "Meeting", "willsmith.com", T, T, "Sony Pictures", T, "Tim Aguirre"));
+  
+  
+  apptTable.setItems(customerData.getAppointment()); 
+
+customerCol.setCellValueFactory(new PropertyValueFactory<>("customerId")); 
+apptCol.setCellValueFactory(new PropertyValueFactory<>("title")); 
+addressCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+
  }
  
  

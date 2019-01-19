@@ -14,12 +14,12 @@ import java.util.Date;
  */
 public class User {
     int userId;
-    //varchar userName;
-    //varchar password;
+    private String userName;
+    private String password;
     //tinyint active;
     int countryId;
     Date createdDate = new Date();
-    //varchar createdBy;
+    private String createdBy;
     Timestamp lastUpdate;
-    //varchar lastUpdateBY;
+    private String lastUpdateBY;
 }

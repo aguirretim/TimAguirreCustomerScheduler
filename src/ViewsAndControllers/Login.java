@@ -19,8 +19,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import Model.DBConnect;
+import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
 import javafx.scene.control.Alert;
 import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Locale;
+import javafx.stage.Window;
 
 /**
  *
@@ -50,8 +54,8 @@ public class Login implements Initializable {
     //Stage setting variable for Button actions to select new stages to display
     Stage stage = new Stage();
 
-
-    
+    Locale currentLocale;
+    Locale mexicoLocale;
  /************************************
   * Changing screens and scenes with buttons.
   ************************************/
@@ -66,25 +70,35 @@ public class Login implements Initializable {
             DBConnect connect = new DBConnect();
 
             if (connect.getLoginData(userT, passT)== true){
-            login.getScene().getWindow().hide();
+            stage=(Stage)login.getScene().getWindow();          
             System.out.println("(Succesful login) Welcome Consultant");
             Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));
             Scene scene = new Scene(root);
             stage.setTitle("Tim Aguirre Customer Scheduler App");
+           
             stage.setScene(scene);
-            stage.showAndWait();            
+            stage.showAndWait();
+            
             }                       
             
             else                
             
                 
-            {
+            {                         if (currentLocale == mexicoLocale){
+                        
+                System.out.println("(Invalid login attempted) Sorry, The username or password you entered is incorrect.");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Intento de inicio de sesión no válido");
+                alert.setHeaderText("Lo siento");
+                alert.setContentText("El nombre de usuario o la contraseña son incorrectos.");
+                alert.showAndWait();
+                        } else{
                 System.out.println("(Invalid login attempted) Sorry, The username or password you entered is incorrect.");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Invalid login attempted");
                 alert.setHeaderText("Sorry");
                 alert.setContentText("The username or password you entered is incorrect.");
-                alert.showAndWait();
+                alert.showAndWait();}
                 
             
         }
@@ -99,11 +113,34 @@ public class Login implements Initializable {
         label.setText("Hello World!");
     }
 
-    @Override
+    // Code of Object.toString()
+    public String toString() {
+    return getClass().getName() + "@" + Integer.toHexString(hashCode());
+}
+
+
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
          Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        System.out.println("Current time using current time: "+timestamp);       
+        System.out.println("Current time using current time: "+timestamp); 
+        
+        Locale mexicoLocale = new Locale("es","MX");
+        
+        Locale.setDefault(mexicoLocale);
+        Locale currentLocale = Locale.getDefault();
+        /*
+        System.out.println(currentLocale.getDisplayLanguage());
+        System.out.println(currentLocale.getDisplayCountry());
+        System.out.println(currentLocale.getLanguage());
+        System.out.println(currentLocale.getCountry());
+        System.out.println(currentLocale);        
+        System.out.println(System.getProperty("user.country"));
+        System.out.println(System.getProperty("user.language"));
+        */
+           if (currentLocale == mexicoLocale)
+        {
+        System.out.println("Changing to localized language.........hola como estas");
+        }
     }
 
 }

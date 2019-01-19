@@ -14,10 +14,10 @@ import java.util.Date;
  */
 public class City {
     int cityId;
-    //varchar city;
+    private String city;
     int countryId;
     Date createdDate = new Date();
-    //varchar createdBy;
-    Timestamp lastUpdate;
-    //varchar lastUpdateBY;
+    private String createdBy;
+    private Timestamp lastUpdate;
+    private String lastUpdateBY;
 }
