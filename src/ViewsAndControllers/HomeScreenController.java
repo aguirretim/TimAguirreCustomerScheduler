@@ -59,7 +59,9 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     private Button customerButton;
-
+        
+    @FXML
+    private Button addApptButton;
     
     
  //Stage setting variable for Button actions to select new stages to display
@@ -83,6 +85,17 @@ public class HomeScreenController implements Initializable {
 //  stage.showAndWait();
  }
 
+  @FXML
+ private void addApptButtonAction(ActionEvent event) throws IOException {
+  stage=(Stage)addApptButton.getScene().getWindow();
+  Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/AddAppointment.fxml"));
+  Scene scene = new Scene(root);
+  stage.setTitle("Tim Aguirre Customer Scheduler App");
+  stage.setScene(scene);
+//  stage.showAndWait();
+ }
+ 
+ 
 Timestamp T = java.sql.Timestamp.valueOf("2019-01-16 23:11:48.914");
         
 
