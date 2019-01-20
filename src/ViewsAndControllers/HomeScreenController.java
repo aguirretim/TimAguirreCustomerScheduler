@@ -52,6 +52,12 @@ public class HomeScreenController implements Initializable {
     private TableColumn apptCol;
 
     @FXML
+    private TableColumn startCol;
+    
+    @FXML
+    private TableColumn endCol;
+
+    @FXML
     private TableColumn customerCol;
     
     @FXML
@@ -63,6 +69,8 @@ public class HomeScreenController implements Initializable {
     @FXML
     private Button addApptButton;
     
+    @FXML
+    private Button editApptButton;
     
  //Stage setting variable for Button actions to select new stages to display
  Stage stage = new Stage();
@@ -94,17 +102,26 @@ public class HomeScreenController implements Initializable {
   stage.setScene(scene);
 //  stage.showAndWait();
  }
+  
+  @FXML
+  private void editApptButtonAction(ActionEvent event) throws IOException {
+  stage=(Stage)editApptButton.getScene().getWindow();
+  Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/EditAppointment.fxml"));
+  Scene scene = new Scene(root);
+  stage.setTitle("Tim Aguirre Customer Scheduler App");
+  stage.setScene(scene);
+//  stage.showAndWait();
+ }
  
- 
-Timestamp T = java.sql.Timestamp.valueOf("2019-01-16 23:11:48.914");
-        
+Timestamp T = java.sql.Timestamp.valueOf("2019-01-23 12:00:00");
+Timestamp EN = java.sql.Timestamp.valueOf("2019-01-23 14:00:00");        
 
  @Override
  public void initialize(URL url, ResourceBundle rb) {
   // TODO
  
   customerData.addCustomer(new Customer(1, "Will Smith", 2, 2, "Bruce Lee", T, "Jet li"));
-  customerData.addAppointment(new Appointment(0, 0, 0, "Meeting about new movie", "Discuss about script for new movie", "Seattle", "Agent J", "Meeting", "willsmith.com", T, T, "Sony Pictures", T, "Tim Aguirre"));
+  customerData.addAppointment(new Appointment(0, 0, 0, "Meeting about new movie", "Discuss about script for new movie", "Seattle", "Agent J", "Meeting", "willsmith.com", T, EN, "Sony Pictures", T, "Tim Aguirre"));
   
   
   apptTable.setItems(customerData.getAppointment()); 
@@ -112,7 +129,8 @@ Timestamp T = java.sql.Timestamp.valueOf("2019-01-16 23:11:48.914");
 customerCol.setCellValueFactory(new PropertyValueFactory<>("customerId")); 
 apptCol.setCellValueFactory(new PropertyValueFactory<>("title")); 
 addressCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-
+startCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
  }
  
  

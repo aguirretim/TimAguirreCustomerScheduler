@@ -8,14 +8,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewsAndControllers.HomeScreenController">
+<AnchorPane id="AnchorPane" prefHeight="487.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewsAndControllers.HomeScreenController">
    <children>
-      <TableView fx:id="apptTable" layoutX="170.0" layoutY="100.0" prefHeight="244.0" prefWidth="382.0">
+      <TableView fx:id="apptTable" layoutX="145.0" layoutY="100.0" prefHeight="290.0" prefWidth="618.0">
         <columns>
-            <TableColumn fx:id="apptCol" prefWidth="131.0" text="Appointment" />
-          <TableColumn fx:id="customerCol" prefWidth="126.0" text="Customer" />
-          <TableColumn fx:id="addressCol" minWidth="0.0" prefWidth="124.0" text="Address" />
+            <TableColumn fx:id="apptCol" prefWidth="107.0" text="Appointment" />
+            <TableColumn fx:id="startCol" minWidth="0.0" prefWidth="104.0" text="Start Date" />
+            <TableColumn fx:id="endCol" minWidth="0.0" prefWidth="104.0" text="End Date" />
+          <TableColumn fx:id="customerCol" prefWidth="69.0" text="Customer" />
+          <TableColumn fx:id="addressCol" minWidth="0.0" prefWidth="101.0" text="Address" />
         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
       <Label layoutX="170.0" layoutY="27.0" text="Welcome Consultant" />
       <Label layoutX="170.0" layoutY="63.0" text="Here are your scheduled appointments" />
@@ -24,13 +29,33 @@
             <Blend />
          </effect>
       </Label>
-      <Button fx:id="customerButton" layoutX="34.0" layoutY="88.0" mnemonicParsing="false" onAction="#customerButtonAction" prefHeight="58.0" prefWidth="89.0" text="Customers" />
-      <Button fx:id="addApptButton" layoutX="34.0" layoutY="171.0" mnemonicParsing="false" onAction="#addApptButtonAction" prefHeight="58.0" prefWidth="89.0" text="Create New Appointments" wrapText="true">
+      <Button fx:id="customerButton" layoutX="29.0" layoutY="86.0" mnemonicParsing="false" onAction="#customerButtonAction" prefHeight="58.0" prefWidth="89.0" text="Customers" />
+      <Button fx:id="addApptButton" layoutX="29.0" layoutY="169.0" mnemonicParsing="false" onAction="#addApptButtonAction" prefHeight="58.0" prefWidth="89.0" text="Create New Appointments" wrapText="true">
          <font>
             <Font size="11.0" />
          </font>
       </Button>
-      <Button layoutX="34.0" layoutY="258.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="89.0" text="Edit Appointment" textAlignment="CENTER" wrapText="true">
+      <Button fx:id="editApptButton" layoutX="29.0" layoutY="256.0" mnemonicParsing="false" onAction="#editApptButtonAction" prefHeight="58.0" prefWidth="89.0" text="Edit Appointment" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Button>
+      <Button fx:id="editApptButton1" layoutX="29.0" layoutY="346.0" mnemonicParsing="false" onAction="#editApptButtonAction" prefHeight="58.0" prefWidth="89.0" text="Delete Selected Appointmernt" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Button>
+      <Button fx:id="editApptButton11" layoutX="309.0" layoutY="400.0" mnemonicParsing="false" onAction="#editApptButtonAction" prefHeight="58.0" prefWidth="89.0" text="Appointment Monthly Report" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Button>
+      <Button fx:id="editApptButton111" layoutX="411.0" layoutY="400.0" mnemonicParsing="false" onAction="#editApptButtonAction" prefHeight="58.0" prefWidth="89.0" text="All Consultants Appoinments Report" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Button>
+      <Button fx:id="editApptButton112" layoutX="511.0" layoutY="400.0" mnemonicParsing="false" onAction="#editApptButtonAction" prefHeight="58.0" prefWidth="89.0" text="Past 30 Day Appointment Report" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="11.0" />
          </font>
