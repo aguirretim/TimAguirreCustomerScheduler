@@ -19,7 +19,8 @@ public class TimAguirreCustomerSchedulerApp extends Application {
 
   stage.setScene(scene);
   stage.show();
-
+  stage.setResizable(false);
+  
 //Connecting to the MySql Database and performing a query
   DBConnect connect = new DBConnect();
   connect.getData();

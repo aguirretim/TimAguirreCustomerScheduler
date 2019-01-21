@@ -33,7 +33,12 @@ public class CustomerSceenController implements Initializable {
  @FXML
  private Button apptButton;
    
-        
+ @FXML
+ private Button addCustomerButton;
+ 
+  @FXML
+ private Button editCustomerButton;
+ 
 //Stage setting variable for Button actions to select new stages to display
  Stage stage = new Stage();
   
@@ -45,6 +50,26 @@ public class CustomerSceenController implements Initializable {
   Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));
   Scene scene = new Scene(root);
   stage.setTitle("Tim Aguirre Customer Scheduler App");
+  stage.setScene(scene);
+  stage.showAndWait();
+ }
+ 
+      @FXML
+ private void addCustomerButtonAction(ActionEvent event) throws IOException {
+  stage=(Stage)addCustomerButton.getScene().getWindow();
+  Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/AddCustomer.fxml"));
+  Scene scene = new Scene(root);
+  stage.setTitle("Create A New Customer");
+  stage.setScene(scene);
+  stage.showAndWait();
+ }
+ 
+       @FXML
+ private void editCustomerButtonAction(ActionEvent event) throws IOException {
+  stage=(Stage)editCustomerButton.getScene().getWindow();
+  Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/EditCustomer.fxml"));
+  Scene scene = new Scene(root);
+  stage.setTitle("Edit and Modify Customer");
   stage.setScene(scene);
   stage.showAndWait();
  }

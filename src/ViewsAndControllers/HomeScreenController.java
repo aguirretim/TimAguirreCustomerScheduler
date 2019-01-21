@@ -98,7 +98,7 @@ public class HomeScreenController implements Initializable {
   stage=(Stage)addApptButton.getScene().getWindow();
   Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/AddAppointment.fxml"));
   Scene scene = new Scene(root);
-  stage.setTitle("Tim Aguirre Customer Scheduler App");
+  stage.setTitle("Create New Appointment");
   stage.setScene(scene);
 //  stage.showAndWait();
  }
@@ -108,7 +108,7 @@ public class HomeScreenController implements Initializable {
   stage=(Stage)editApptButton.getScene().getWindow();
   Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/EditAppointment.fxml"));
   Scene scene = new Scene(root);
-  stage.setTitle("Tim Aguirre Customer Scheduler App");
+  stage.setTitle("Edit and Modify Appointment");
   stage.setScene(scene);
 //  stage.showAndWait();
  }
