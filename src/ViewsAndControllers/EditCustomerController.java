@@ -15,6 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -23,12 +25,50 @@ import javafx.stage.Stage;
  * @author Tim
  */
 public class EditCustomerController implements Initializable {
-
-       @FXML
+  
+    
+    
+  /************************************
+  * Variables for Buttons and Field.
+  ************************************/
+    
+    
+    
+    @FXML
+    private TextField customerNameText;
+    
+    @FXML
+    private TextField addressText;
+    
+    @FXML
+    private TextField address2Text;
+    
+    @FXML
+    private ChoiceBox citySelection;
+    
+    @FXML
+    private TextField zipCodeText;
+    
+    @FXML
+    private TextField phoneText;
+    
+    @FXML
+    private Button saveButton;
+    
+    @FXML
     private Button cancelButton;
          
+    
     //Stage setting variable for Button actions to select new stages to display
     Stage stage = new Stage();
+    
+    
+    
+  /************************************
+  * Changing screens and scenes with buttons.
+  ************************************/
+    
+    
     
     @FXML
     private void cancelButtonAction(ActionEvent event) throws IOException {

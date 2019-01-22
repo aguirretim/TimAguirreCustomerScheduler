@@ -51,7 +51,7 @@ public class CustomerSceenController implements Initializable {
   Scene scene = new Scene(root);
   stage.setTitle("Tim Aguirre Customer Scheduler App");
   stage.setScene(scene);
-  stage.showAndWait();
+  
  }
  
       @FXML
@@ -61,7 +61,7 @@ public class CustomerSceenController implements Initializable {
   Scene scene = new Scene(root);
   stage.setTitle("Create A New Customer");
   stage.setScene(scene);
-  stage.showAndWait();
+
  }
  
        @FXML
@@ -71,7 +71,7 @@ public class CustomerSceenController implements Initializable {
   Scene scene = new Scene(root);
   stage.setTitle("Edit and Modify Customer");
   stage.setScene(scene);
-  stage.showAndWait();
+ 
  }
     @Override
     public void initialize(URL url, ResourceBundle rb) {

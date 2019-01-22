@@ -42,6 +42,8 @@ public class HomeScreenController implements Initializable {
   * Variables for Buttons and Field.
   ************************************/
  
+    
+    
    //The inventory object that contains all of the parts and product listed inside
     CustomerList customerData = new CustomerList();
     
@@ -72,6 +74,18 @@ public class HomeScreenController implements Initializable {
     @FXML
     private Button editApptButton;
     
+    @FXML
+    private Button delButton;
+    
+    @FXML
+    private Button apptMonthReportButton;
+    
+    @FXML
+    private Button allConsultanReportButton;
+    
+    @FXML
+    private Button past30DayButton;
+    
  //Stage setting variable for Button actions to select new stages to display
  Stage stage = new Stage();
 
@@ -90,7 +104,6 @@ public class HomeScreenController implements Initializable {
   Scene scene = new Scene(root);
   stage.setTitle("Tim Aguirre Customer Scheduler App");
   stage.setScene(scene);
-//  stage.showAndWait();
  }
 
   @FXML
@@ -100,7 +113,6 @@ public class HomeScreenController implements Initializable {
   Scene scene = new Scene(root);
   stage.setTitle("Create New Appointment");
   stage.setScene(scene);
-//  stage.showAndWait();
  }
   
   @FXML
@@ -110,7 +122,6 @@ public class HomeScreenController implements Initializable {
   Scene scene = new Scene(root);
   stage.setTitle("Edit and Modify Appointment");
   stage.setScene(scene);
-//  stage.showAndWait();
  }
  
 Timestamp T = java.sql.Timestamp.valueOf("2019-01-23 12:00:00");

@@ -56,10 +56,16 @@ public class Login implements Initializable {
 
     Locale currentLocale;
     Locale mexicoLocale;
- /************************************
+ 
+    
+    
+  /************************************
   * Changing screens and scenes with buttons.
   ************************************/
 
+    
+    
+    
     @FXML
     private void loginButtonAction(ActionEvent event) throws IOException {
         try {
