@@ -30,49 +30,60 @@ public class CustomerSceenController implements Initializable {
   * Variables for Buttons and Field.
   ************************************/
 
+    
+    
  @FXML
  private Button apptButton;
    
  @FXML
  private Button addCustomerButton;
  
-  @FXML
+ @FXML
  private Button editCustomerButton;
  
+ @FXML
+ private Button delButton;
+  
 //Stage setting variable for Button actions to select new stages to display
  Stage stage = new Stage();
-  
  
  
-     @FXML
+ 
+  /************************************
+  * Changing screens and scenes with buttons.
+  ************************************/ 
+ 
+ 
+ 
+ @FXML
  private void apptButtonAction(ActionEvent event) throws IOException {
   stage=(Stage)apptButton.getScene().getWindow();
   Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));
   Scene scene = new Scene(root);
   stage.setTitle("Tim Aguirre Customer Scheduler App");
   stage.setScene(scene);
-  
- }
+  }
  
-      @FXML
+ @FXML
  private void addCustomerButtonAction(ActionEvent event) throws IOException {
   stage=(Stage)addCustomerButton.getScene().getWindow();
   Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/AddCustomer.fxml"));
   Scene scene = new Scene(root);
   stage.setTitle("Create A New Customer");
   stage.setScene(scene);
-
  }
  
-       @FXML
+ @FXML
  private void editCustomerButtonAction(ActionEvent event) throws IOException {
   stage=(Stage)editCustomerButton.getScene().getWindow();
   Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/EditCustomer.fxml"));
   Scene scene = new Scene(root);
   stage.setTitle("Edit and Modify Customer");
   stage.setScene(scene);
- 
  }
+ 
+ 
+ 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

@@ -15,6 +15,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -23,14 +28,65 @@ import javafx.stage.Stage;
  * @author Tim
  */
 public class EditAppointmentController implements Initializable {
+    
+        
+  
+    
+  /************************************
+  * Variables for Buttons and Field.
+  ************************************/
+    
+  
+    
+    @FXML
+    private TextField titleText;
+    
+    @FXML
+    private TextField descriptionText;
+    
+    @FXML
+    private ChoiceBox typeSelection;
+    
+    @FXML
+    private TextField urlText;
+    
+    @FXML
+    private DatePicker startDateSelection;
+    
+    @FXML
+    private DatePicker endDateSelection;
+    
+    @FXML
+    private TableView customerTable;
+    
+    @FXML
+    private TableColumn customerNameCol;
+
+    @FXML
+    private TableColumn addressCol;
+    
+    @FXML
+    private TableColumn phoneCol;
+    
+    @FXML
+    private Button saveButton;
+    
     @FXML
     private Button cancelButton;
     
      
     //Stage setting variable for Button actions to select new stages to display
-    Stage stage = new Stage();
+    Stage stage = new Stage();  
+        
+  
+  
+  /************************************
+  * Changing screens and scenes with buttons.
+  ************************************/
+    
+    
  
-     @FXML
+    @FXML
     private void cancelButtonAction(ActionEvent event) throws IOException {
     stage=(Stage)cancelButton.getScene().getWindow();
     Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));

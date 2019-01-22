@@ -38,6 +38,8 @@ public class Login implements Initializable {
  /************************************
   * Variables for Buttons and Field.
   ************************************/ 
+    
+    
   
     @FXML
     private TextField usernameText;
@@ -53,7 +55,8 @@ public class Login implements Initializable {
 
     //Stage setting variable for Button actions to select new stages to display
     Stage stage = new Stage();
-
+    
+    //Locale/language setting Varriable for setting language of app
     Locale currentLocale;
     Locale mexicoLocale;
  
@@ -86,29 +89,21 @@ public class Login implements Initializable {
             stage.showAndWait();
             
             }                       
-            
-            else                
-            
-                
-            {                         if (currentLocale == mexicoLocale){
-                        
+            else                 
+            {if (currentLocale == mexicoLocale){
                 System.out.println("(Invalid login attempted) Sorry, The username or password you entered is incorrect.");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Intento de inicio de sesión no válido");
                 alert.setHeaderText("Lo siento");
                 alert.setContentText("El nombre de usuario o la contraseña son incorrectos.");
-                alert.showAndWait();
-                        } else{
+                alert.showAndWait();} 
+            else{
                 System.out.println("(Invalid login attempted) Sorry, The username or password you entered is incorrect.");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Invalid login attempted");
                 alert.setHeaderText("Sorry");
                 alert.setContentText("The username or password you entered is incorrect.");
-                alert.showAndWait();}
-                
-            
-        }
-        
+                alert.showAndWait();}}   
         } catch (Exception ex) {            
         }
     }
@@ -119,19 +114,16 @@ public class Login implements Initializable {
         label.setText("Hello World!");
     }
 
-    // Code of Object.toString()
-    public String toString() {
-    return getClass().getName() + "@" + Integer.toHexString(hashCode());
-}
-
-
+    
+    
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        //Test print of current time for understanding how timestamps work
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         System.out.println("Current time using current time: "+timestamp); 
         
         Locale mexicoLocale = new Locale("es","MX");
         
+        //Changes default language english to testing language 
         Locale.setDefault(mexicoLocale);
         Locale currentLocale = Locale.getDefault();
         /*

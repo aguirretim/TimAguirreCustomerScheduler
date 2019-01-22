@@ -4,9 +4,9 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" prefHeight="447.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewsAndControllers.AddAppointmentController">
@@ -18,22 +18,22 @@
       </Label>
       <TextField fx:id="titleText" layoutX="118.0" layoutY="99.0" />
       <TextField fx:id="descriptionText" layoutX="118.0" layoutY="157.0" />
-      <TreeTableView fx:id="customerTable" layoutX="315.0" layoutY="71.0" prefHeight="197.0" prefWidth="320.0">
+      <TableView fx:id="customerTable" layoutX="309.0" layoutY="87.0" prefHeight="217.0" prefWidth="354.0">
         <columns>
-          <TreeTableColumn fx:id="customerNameCol" editable="false" prefWidth="121.0" text="Customer Name" />
-          <TreeTableColumn fx:id="addressCol" minWidth="0.0" prefWidth="112.0" text="Address" />
-            <TreeTableColumn fx:id="phoneCol" minWidth="4.0" prefWidth="86.0" text="Phone" />
+          <TableColumn fx:id="customerNameCol" prefWidth="75.0" text="Customer Name" />
+          <TableColumn fx:id="addressCol" prefWidth="75.0" text="Address" />
+            <TableColumn fx:id="phoneCol" prefWidth="75.0" text="Phone" />
         </columns>
          <columnResizePolicy>
-            
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
-      </TreeTableView>
+      </TableView>
       <ChoiceBox fx:id="typeSelection" layoutX="118.0" layoutY="208.0" prefHeight="27.0" prefWidth="167.0" />
       <TextField fx:id="urlText" layoutX="118.0" layoutY="256.0" />
       <DatePicker fx:id="startDateSelection" layoutX="106.0" layoutY="308.0" />
       <DatePicker fx:id="endDateSelection" layoutX="106.0" layoutY="365.0" />
-      <Button fx:id="cancelButton" layoutX="382.0" layoutY="365.0" mnemonicParsing="false" onAction="#cancelButtonAction" prefHeight="27.0" prefWidth="185.0" text="Cancel" />
-      <Button fx:id="saveButton" layoutX="382.0" layoutY="308.0" mnemonicParsing="false" text="Save and Add Appointment" />
+      <Button fx:id="cancelButton" layoutX="381.0" layoutY="374.0" mnemonicParsing="false" onAction="#cancelButtonAction" prefHeight="27.0" prefWidth="185.0" text="Cancel" />
+      <Button fx:id="saveButton" layoutX="381.0" layoutY="338.0" mnemonicParsing="false" text="Save and Add Appointment" />
       <Label layoutX="80.0" layoutY="103.0" text="Title:" />
       <Label layoutX="41.0" layoutY="161.0" text="Description:" />
       <Label layoutX="66.0" layoutY="212.0" text="Type:" />
