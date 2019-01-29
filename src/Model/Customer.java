@@ -5,7 +5,6 @@
  */
 package Model;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,7 +23,7 @@ public class Customer {
     private int active;
     private Date createdDate = new Date();
     private String createdBy;
-    private Timestamp lastUpdate;
+    private String lastUpdate;
     private String lastUpdateBY;
     
     
@@ -35,7 +34,7 @@ public class Customer {
     
     
     
-    public Customer(int customerId, String customerName, int addressId, int active, String createdBy, Timestamp lastUpdate, String lastUpdateBY) {
+    public Customer(int customerId, String customerName, int addressId, int active, String createdBy, String lastUpdate, String lastUpdateBY) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.addressId = addressId;
@@ -77,7 +76,7 @@ public class Customer {
         return createdBy;
     }
 
-    public Timestamp getLastUpdate() {
+    public String getLastUpdate() {
         return lastUpdate;
     }
 
@@ -117,7 +116,7 @@ public class Customer {
         this.createdBy = createdBy;
     }
 
-    public void setLastUpdate(Timestamp lastUpdate) {
+    public void setLastUpdate(String lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

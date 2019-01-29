@@ -125,8 +125,8 @@ public class HomeScreenController implements Initializable {
   stage.setScene(scene);
  }
  
-Timestamp T = java.sql.Timestamp.valueOf("2019-01-23 12:00:00");
-Timestamp EN = java.sql.Timestamp.valueOf("2019-01-23 14:00:00");        
+//Timestamp T = java.sql.Timestamp.valueOf("2019-01-23 12:00:00");
+//Timestamp EN = java.sql.Timestamp.valueOf("2019-01-23 14:00:00");        
 
  @Override
  public void initialize(URL url, ResourceBundle rb) {
@@ -135,7 +135,7 @@ Timestamp EN = java.sql.Timestamp.valueOf("2019-01-23 14:00:00");
   
   
   
-  customerData.addCustomer(new Customer(1, "Will Smith", 2, 2, "Bruce Lee", T, "Jet li"));
+//  customerData.addCustomer(new Customer(1, "Will Smith", 2, 2, "Bruce Lee", T, "Jet li"));
   
   //customerData.addAppointment(new Appointment(0, 0, 0, "Meeting about new movie", "Discuss about script for new movie", "Seattle", "Agent J", "Meeting", "willsmith.com", "oct 1", "Dec 2", "Sony Pictures", "Nov 8", "Tim Aguirre"));
   

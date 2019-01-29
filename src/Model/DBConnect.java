@@ -1,6 +1,7 @@
 package Model;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -28,7 +29,7 @@ public class DBConnect {
         
         try {                        
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77", "U04k77", "53688267207");
+con = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77?zeroDateTimeBehavior=convertToNull", "U04k77", "53688267207");
             st = con.createStatement();
         } catch (Exception ex) {
             System.out.println("erro: " + ex);
@@ -115,11 +116,19 @@ public class DBConnect {
                 String location = rs.getString("location");
                 String contact = rs.getString("contact");
                 String url = rs.getString("url");
-                String start = rs.getString("start");
+                String start = rs.getString("Start");
+                if (start==null)
+                {start="0000-00-00";}
                 String end = rs.getString("end");
+                 if (end==null)
+                {end="0000-00-00";}
                 String createDate = rs.getString("createDate");
+                 if (createDate==null)
+                {createDate="0000-00-00";}
                 String createdBy = rs.getString("createdBy");
                 String lastUpdate = rs.getString("lastUpdate");
+                 if (lastUpdate==null)
+                {lastUpdate="0000-00-00";}
                 String lastUpdateBy = rs.getString("lastUpdateBy");
                 String type = rs.getString("type");
                 
@@ -138,13 +147,13 @@ public class DBConnect {
                                 "lastUpdateBy: "+ lastUpdateBy+" "+
                                 "type: "+type);
              
-             customerData.addAppointment(new Appointment(appointmentId, 0, customerId,title, 
+            customerData.addAppointment(new Appointment(appointmentId, 0, customerId,title, 
                      description, location, contact, type, 
                      url, start, end, createdBy, lastUpdate, lastUpdateBy));
             
             }
         } catch (Exception ex) {
-            System.out.println("erro: " + ex);
+            System.out.println("error: " + ex);
         }
     }
 }
