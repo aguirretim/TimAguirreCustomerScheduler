@@ -5,6 +5,8 @@
  */
 package ViewsAndControllers;
 
+import Model.CustomerList;
+import Model.DBConnect;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,6 +17,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
@@ -29,8 +34,9 @@ public class CustomerSceenController implements Initializable {
   /************************************
   * Variables for Buttons and Field.
   ************************************/
-
     
+ //The inventory object that contains all of the parts and product listed inside
+ CustomerList customerData = new CustomerList();
     
  @FXML
  private Button apptButton;
@@ -43,11 +49,23 @@ public class CustomerSceenController implements Initializable {
  
  @FXML
  private Button delButton;
+ 
+ @FXML 
+ private TableView customerTable;
+ 
+ @FXML
+ private TableColumn customerCol;
+
+ @FXML
+ private TableColumn addressCol;
+
+ @FXML
+ private TableColumn phoneCol;
   
 //Stage setting variable for Button actions to select new stages to display
  Stage stage = new Stage();
  
- 
+ DBConnect DatabaseConnect = new DBConnect();
  
   /************************************
   * Changing screens and scenes with buttons.
@@ -87,6 +105,14 @@ public class CustomerSceenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        customerTable.setItems(customerData.getCustomer()); 
+
+customerCol.setCellValueFactory(new PropertyValueFactory<>("customerName")); 
+phoneCol.setCellValueFactory(new PropertyValueFactory<>("title")); 
+addressCol.setCellValueFactory(new PropertyValueFactory<>("addressId"));
+        
+        
     }    
     
 }
