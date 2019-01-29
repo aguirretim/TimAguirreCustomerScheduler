@@ -6,7 +6,7 @@
 package Model;
 
 
-import java.sql.Timestamp;
+
 import java.util.Date;
 import javafx.scene.text.Text;
 
@@ -26,15 +26,15 @@ public class Appointment {
    private String type;
    private String url;
     //Start time suppose to be datetime in SQL
-   private Timestamp start;
+   private String start;
    //End time suppose to be datetime in SQL
-   private Timestamp end;
+   private String end;
    Date createdDate = new Date();
    private String createdBy;
-   private Timestamp lastUpdate;
+   private String lastUpdate;
    private String lastUpdateBY;
    
-   public Appointment(int appointmentId, int customerId, int userId, String title, String description, String location, String contact, String type, String url, Timestamp start, Timestamp end, String createdBy, Timestamp lastUpdate, String lastUpdateBY) {
+   public Appointment(int appointmentId, int customerId, int userId, String title, String description, String location, String contact, String type, String url, String start, String end, String createdBy, String lastUpdate, String lastUpdateBY) {
         this.appointmentId = appointmentId;
         this.customerId = customerId;
         this.userId = userId;
@@ -123,19 +123,19 @@ public class Appointment {
         this.url = url;
     }
 
-    public Timestamp getStart() {
+    public String getStart() {
         return start;
     }
 
-    public void setStart(Timestamp start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-    public Timestamp getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setEnd(Timestamp end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 
@@ -155,11 +155,11 @@ public class Appointment {
         this.createdBy = createdBy;
     }
 
-    public Timestamp getLastUpdate() {
+    public String getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Timestamp lastUpdate) {
+    public void setLastUpdate(String lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

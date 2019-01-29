@@ -60,7 +60,8 @@ public class Login implements Initializable {
     Locale currentLocale;
     Locale mexicoLocale;
  
-    
+    //String sql = "select userName,password from user where user = '" + userT+"'password = '"+passT+"'" ;
+    DBConnect connect = new DBConnect();
     
   /************************************
   * Changing screens and scenes with buttons.
@@ -75,8 +76,7 @@ public class Login implements Initializable {
             String userT = usernameText.getText().trim();
             String passT = passwordText.getText().trim();
 
-            //String sql = "select userName,password from user where user = '" + userT+"'password = '"+passT+"'" ;
-            DBConnect connect = new DBConnect();
+      
 
             if (connect.getLoginData(userT, passT)== true){
             stage=(Stage)login.getScene().getWindow();          
@@ -108,10 +108,13 @@ public class Login implements Initializable {
         }
     }
 
+
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
         label.setText("Hello World!");
+        connect.getAppointmentInfo();
+        
     }
 
     

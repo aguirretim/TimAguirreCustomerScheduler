@@ -8,6 +8,7 @@ package ViewsAndControllers;
 import Model.Appointment;
 import Model.CustomerList;
 import Model.Customer;
+import Model.DBConnect;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
@@ -90,7 +91,7 @@ public class HomeScreenController implements Initializable {
  Stage stage = new Stage();
 
  
- 
+ DBConnect DatabaseConnect = new DBConnect();
  /************************************
   * Changing screens and scenes with buttons.
   ************************************/
@@ -130,17 +131,33 @@ Timestamp EN = java.sql.Timestamp.valueOf("2019-01-23 14:00:00");
  @Override
  public void initialize(URL url, ResourceBundle rb) {
   // TODO
- 
+  
+  
+  
+  
   customerData.addCustomer(new Customer(1, "Will Smith", 2, 2, "Bruce Lee", T, "Jet li"));
-  customerData.addAppointment(new Appointment(0, 0, 0, "Meeting about new movie", "Discuss about script for new movie", "Seattle", "Agent J", "Meeting", "willsmith.com", T, EN, "Sony Pictures", T, "Tim Aguirre"));
+  
+  //customerData.addAppointment(new Appointment(0, 0, 0, "Meeting about new movie", "Discuss about script for new movie", "Seattle", "Agent J", "Meeting", "willsmith.com", "oct 1", "Dec 2", "Sony Pictures", "Nov 8", "Tim Aguirre"));
   
   
+DatabaseConnect.getAppointmentInfo();
+  
+  
+  /*initInventory.addPart(new Inhouse(
+     Integer.parseInt(
+      machineidText.getText()),
+     partID,
+     nameText.getText(),
+     Double.parseDouble(pricecostText.getText()),
+     Integer.parseInt(invText.getText()),
+     Integer.parseInt(minText.getText()),
+     Integer.parseInt(maxText.getText())));*/
   apptTable.setItems(customerData.getAppointment()); 
 
 customerCol.setCellValueFactory(new PropertyValueFactory<>("customerId")); 
 apptCol.setCellValueFactory(new PropertyValueFactory<>("title")); 
 addressCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-startCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+startCol.setCellValueFactory(new PropertyValueFactory<>("start" ));
 endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
  }
  

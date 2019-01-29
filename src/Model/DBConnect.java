@@ -14,6 +14,8 @@ public class DBConnect {
     private String userName;
     private String password;
 
+    CustomerList customerData = new CustomerList();
+    
     public DBConnect() {
 
         
@@ -83,6 +85,66 @@ public class DBConnect {
     }
 
     
+        public void getCustomerId() {
+        try {
+            String query = "select customerId from customer";
+            rs = st.executeQuery(query);
+            System.out.println("Record from Database");
+            while (rs.next()) {
+                String customerId = rs.getString("customerId");
+                //String password = rs.getString("password");
+             System.out.println("Customer ID: " + customerId);
+            }
+        } catch (Exception ex) {
+            System.out.println("erro: " + ex);
+        }
+    }
     
-    
+        public void getAppointmentInfo() {
+        try {
+            
+            String query = "select * from appointment";
+            rs = st.executeQuery(query);
+            System.out.println("Record from Database");
+            while (rs.next()) {
+                
+                int appointmentId = rs.getInt("appointmentId");
+                int customerId = rs.getInt("customerId");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                String location = rs.getString("location");
+                String contact = rs.getString("contact");
+                String url = rs.getString("url");
+                String start = rs.getString("start");
+                String end = rs.getString("end");
+                String createDate = rs.getString("createDate");
+                String createdBy = rs.getString("createdBy");
+                String lastUpdate = rs.getString("lastUpdate");
+                String lastUpdateBy = rs.getString("lastUpdateBy");
+                String type = rs.getString("type");
+                
+             System.out.println("appointmentId: "+ appointmentId+" "+
+                                "Customer ID: " + customerId +" "+
+                                "title: "+ title+" "+
+                                "description: "+ description+" "+
+                                "location: "+ location+" "+
+                                "contact: " + contact+" "+
+                                "url: "+ url+" "+
+                                "start: "+ start+" "+
+                                "end: "+end+" "+
+                                "createDate: "+createDate+" "+
+                                "createdBy: "+createdBy+" "+
+                                "lastUpdate: "+lastUpdate+" "+
+                                "lastUpdateBy: "+ lastUpdateBy+" "+
+                                "type: "+type);
+             
+             customerData.addAppointment(new Appointment(appointmentId, 0, customerId,title, 
+                     description, location, contact, type, 
+                     url, start, end, createdBy, lastUpdate, lastUpdateBy));
+            
+            }
+        } catch (Exception ex) {
+            System.out.println("erro: " + ex);
+        }
+    }
 }
