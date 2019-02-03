@@ -34,7 +34,10 @@ public class Appointment {
    private String lastUpdate;
    private String lastUpdateBY;
    
-   public Appointment(int appointmentId, int customerId, int userId, String title, String description, String location, String contact, String type, String url, String start, String end, String createdBy, String lastUpdate, String lastUpdateBY) {
+   public Appointment(int appointmentId, int customerId, int userId, 
+           String title, String description, String location, String contact, 
+           String type, String url, String start, String end, String createdBy, 
+           String lastUpdate, String lastUpdateBY) {
         this.appointmentId = appointmentId;
         this.customerId = customerId;
         this.userId = userId;

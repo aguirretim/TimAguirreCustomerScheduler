@@ -15,6 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 /**
@@ -46,7 +48,17 @@ public class CustomerSceenController implements Initializable {
   
 //Stage setting variable for Button actions to select new stages to display
  Stage stage = new Stage();
- 
+ @FXML
+    private TableView customerTable;
+    
+    @FXML
+    private TableColumn nameCol;
+
+    @FXML
+    private TableColumn address;
+    
+    @FXML
+    private TableColumn phone;
  
  
   /************************************

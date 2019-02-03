@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import Model.DBConnect;
+import Model.User;
 import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
 import javafx.scene.control.Alert;
 import java.sql.Timestamp;
@@ -32,7 +33,7 @@ import javafx.stage.Window;
  */
 public class Login implements Initializable {
 
-    
+    private static User loggedInUser;
     
 
  /************************************
@@ -77,8 +78,15 @@ public class Login implements Initializable {
             String passT = passwordText.getText().trim();
 
       
-
-            if (connect.getLoginData(userT, passT)== true){
+            // test to see if the login credentials are correct
+            User user = null;
+            User userInData=connect.getUserByUsernamePassword(userT, passT);
+            if ((user = userInData)!= null){
+                System.out.println("log in completed");
+                // Login passed
+                Login.loggedInUser = user;
+                
+                // Create a login session, and set the user to that session
             stage=(Stage)login.getScene().getWindow();          
             System.out.println("(Succesful login) Welcome Consultant");
             Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));
@@ -113,7 +121,7 @@ public class Login implements Initializable {
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
         label.setText("Hello World!");
-        connect.getAppointmentInfo();
+        connect.getCustomerInfo();
         
     }
 
