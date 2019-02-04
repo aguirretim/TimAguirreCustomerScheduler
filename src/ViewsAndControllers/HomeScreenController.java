@@ -5,17 +5,11 @@
  */
 package ViewsAndControllers;
 
-import Model.Appointment;
 import Model.CustomerList;
-import Model.Customer;
 import Model.DBConnect;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.Locale;
 import java.util.ResourceBundle;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -37,8 +32,7 @@ public class HomeScreenController implements Initializable {
 
     /**
      * **********************************
-     * Variables for Buttons and Field.
-  ***********************************
+     * Variables for Buttons and Field. **********************************
      */
     //The inventory object that contains all of the parts and product listed inside
     CustomerList customerData = new CustomerList();
@@ -90,9 +84,8 @@ public class HomeScreenController implements Initializable {
     /**
      * **********************************
      * Changing screens and scenes with buttons.
-  ***********************************
+     * **********************************
      */
-
     @FXML
     private void customerButtonAction(ActionEvent event) throws IOException {
         stage = (Stage) customerButton.getScene().getWindow();
@@ -104,11 +97,15 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     private void addApptButtonAction(ActionEvent event) throws IOException {
-        stage = (Stage) addApptButton.getScene().getWindow();
+        // stage = (Stage) addApptButton.getScene().getWindow();
+        Stage modalStage = new Stage();
+        modalStage.initOwner(stage);
+        modalStage.initModality(Modality.APPLICATION_MODAL);
         Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/AddAppointment.fxml"));
         Scene scene = new Scene(root);
-        stage.setTitle("Create New Appointment");
-        stage.setScene(scene);
+        modalStage.setTitle("Create New Appointment");
+        modalStage.setScene(scene);
+        modalStage.showAndWait();
     }
 
     @FXML
@@ -124,37 +121,35 @@ public class HomeScreenController implements Initializable {
 //Timestamp EN = java.sql.Timestamp.valueOf("2019-01-23 14:00:00");        
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
 
-//  customerData.addCustomer(new Customer(1, "Will Smith", 2, 2, "Bruce Lee", T, "Jet li"));
-        //customerData.addAppointment(new Appointment(0, 0, 0, "Meeting about new movie", "Discuss about script for new movie", "Seattle", "Agent J", "Meeting", "willsmith.com", "oct 1", "Dec 2", "Sony Pictures", "Nov 8", "Tim Aguirre"));
-        // get the all appointment l;ist, and show it
-        /*initInventory.addPart(new Inhouse(
-     Integer.parseInt(
-      machineidText.getText()),
-     partID,
-     nameText.getText(),
-     Double.parseDouble(pricecostText.getText()),
-     Integer.parseInt(invText.getText()),
-     Integer.parseInt(minText.getText()),
-     Integer.parseInt(maxText.getText())));*/
-        
-        this.customerData.clearAppointments();
-        try {
-            this.customerData.addAppointments(
-                    DatabaseConnect.getAllAppointments()
+        if (Login.isLoggedIn()) {
+            this.customerData.clearAppointments();
+            try {
+                this.customerData.addAppointments(
+                        DatabaseConnect
+                                .getAllAppointmentsByUserId(
+                                        Login.getLoggedInUserId()
+                                )
+                );
+            } catch (Exception e) {
+                // print some msg or popup some error alert box
+                throw new UnsupportedOperationException(
+                        "Homescreen initialize - caught Exception", e
+                );
+            }
+
+            apptTable.setItems(customerData.getAppointment());
+            customerCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+            apptCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+            addressCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+            startCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+            endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        } else {
+            // prompt the user to log in
+            throw new UnsupportedOperationException(
+                    "Homescreen initialize - user not logged in - fixme force login"
             );
-        } catch (Exception e) {
-            // print some msg or popup some error alert box
         }
-        
-        apptTable.setItems(customerData.getAppointment());
-
-        customerCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        apptCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-        addressCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-        startCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-        endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
     }
 
 }

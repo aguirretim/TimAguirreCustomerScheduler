@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
  */
 public class Appointment {
 
-   private int appointmentId;
+   private Integer appointmentId;
    private int customerId;
    private int userId;
    private String title;
@@ -34,7 +34,7 @@ public class Appointment {
    private String lastUpdate;
    private String lastUpdateBY;
    
-   public Appointment(int appointmentId, int customerId, int userId, 
+   public Appointment(Integer appointmentId, int customerId, int userId, 
            String title, String description, String location, String contact, 
            String type, String url, String start, String end, String createdBy, 
            String lastUpdate, String lastUpdateBY) {
@@ -54,11 +54,11 @@ public class Appointment {
         this.lastUpdateBY = lastUpdateBY;
     }
    
-       public int getAppointmentId() {
+       public Integer getAppointmentId() {
         return appointmentId;
     }
 
-    public void setAppointmentId(int appointmentId) {
+    public void setAppointmentId(Integer appointmentId) {
         this.appointmentId = appointmentId;
     }
 
