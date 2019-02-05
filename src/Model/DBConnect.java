@@ -221,15 +221,18 @@ public class DBConnect {
         return results;
     }
 
-    public void getCustomerInfo() {
-        try {
+    
+    public List<Customer> getAllCustomers() throws SQLException {
 
-            String query = "select * from customer";
-            rs = st.executeQuery(query);
-            System.out.println("Record from Database");
-            while (rs.next()) {
+        // create a new Arraylist to return the results of the query
+        List<Customer> results = new ArrayList<>();
+         
+        String query = "SELECT * FROM U04k77.customer;";
+        rs = st.executeQuery(query);
+        System.out.println("Record from Database");
+        while (rs.next()) {
 
-                int customerId = rs.getInt("customerId");
+            int customerId = rs.getInt("customerId");
                 String customerName = rs.getString("customerName");
                 int addressId = rs.getInt("addressId");
                 int active = rs.getInt("active");
@@ -254,16 +257,15 @@ public class DBConnect {
                         + "lastUpdateBy: " + lastUpdateBy + " "
                 );
 
-//                customerData.addCustomer(new Customer(customerId, customerName, addressId, active,
-//                        createdBy, lastUpdate, lastUpdateBy));
-            }
-        } catch (Exception ex) {
-            System.out.println("error: " + ex);
-        }
-    }
+/*                    public Customer(int customerId, String customerName, int addressId, int active, String createdBy, String lastUpdate, String lastUpdateBY) {
+        */
     
-    /*public Appointment saveAppointment(int userId, Appointment newApptDetails){
-        Appointment temp = new Appointment(newApptDetails);
-        temp.setAppointmentId(null);
-    }*/
+    
+            results.add(new Customer(customerId, customerName,addressId, active,
+                     createdBy, lastUpdate, lastUpdateBy));
+        }
+
+        return results;
+    }
+
 }

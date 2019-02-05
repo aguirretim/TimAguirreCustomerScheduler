@@ -20,8 +20,8 @@ public class CustomerList {
 
   
   
-      public void addCustomer(Customer CustomerData) {
-        allCustomers.add(CustomerData);
+      public void addCustomers(List<Customer> customerList) {
+        allCustomers.addAll(customerList);
     }
       
      public void getCustomer(Customer CustomerData) {
@@ -32,9 +32,13 @@ public class CustomerList {
         return allCustomers;
     }
      
-     public void addAppointment(Appointment AppointmentData) {
-        allAppointments.add(AppointmentData);
+    public void clearCustomers() {
+        allCustomers.clear();
     }
+     
+   /*  public void addAppointment(Appointment AppointmentData) {
+        allAppointments.add(AppointmentData);
+    }*/
      
      public void addAppointments(List<Appointment> appointmentList) {
         allAppointments.addAll(appointmentList);
@@ -47,7 +51,7 @@ public class CustomerList {
      public ObservableList<Appointment> getAppointment() {
         return allAppointments;
     }
-
+     
     public void clearAppointments() {
         allAppointments.clear();
     }
