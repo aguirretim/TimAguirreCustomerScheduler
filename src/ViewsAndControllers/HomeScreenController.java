@@ -121,16 +121,15 @@ public class HomeScreenController implements Initializable {
 //Timestamp EN = java.sql.Timestamp.valueOf("2019-01-23 14:00:00");        
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
         if (Login.isLoggedIn()) {
+            //Clears the table to refresh it
             this.customerData.clearAppointments();
             try {
+                //Adds appointments to table list by User who is logged in ID
                 this.customerData.addAppointments(
-                        DatabaseConnect
-                                .getAllAppointmentsByUserId(
-                                        Login.getLoggedInUserId()
-                                )
-                );
+                        DatabaseConnect.getAllAppointmentsByUserId(Login.getLoggedInUserId()));
+               
             } catch (Exception e) {
                 // print some msg or popup some error alert box
                 throw new UnsupportedOperationException(
@@ -139,6 +138,7 @@ public class HomeScreenController implements Initializable {
             }
 
             apptTable.setItems(customerData.getAppointment());
+            
             customerCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
             apptCol.setCellValueFactory(new PropertyValueFactory<>("title"));
             addressCol.setCellValueFactory(new PropertyValueFactory<>("location"));

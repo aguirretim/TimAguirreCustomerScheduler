@@ -123,41 +123,49 @@ public class DBConnect {
         return null;
     }
 
-    // what does this do?
-    public void getCustomerId() {
+    // Returns Customer name By ID 
+    // So that you can change ID to a name for appointment (Work in progress)
+    public String getCustomerId(int customerId) {
         try {
-            String query = "select customerId from customer";
+            String query = "SELECT customerId,customerName FROM U04k77.customer "
+                    + "where customerId = "+ customerId;
+             
             rs = st.executeQuery(query);
             System.out.println("Record from Database");
             while (rs.next()) {
-                String customerId = rs.getString("customerId");
+                String customerName= rs.getString("customerName");
                 //String password = rs.getString("password");
-                System.out.println("Customer ID: " + customerId);
+                System.out.println("The Customer ID: " + customerId 
+                        +" Returns Customer Name "+customerName );
+                return customerName;
             }
         } catch (Exception ex) {
-            System.out.println("erro: " + ex);
+            System.out.println("erro: " + ex);   
         }
+        return "Error occured No Customer name found";
     }
-
+    
     // getting all the appoitments in the databse
     // public List<Appointment> getAllAppointments()
     // appontments = dbConn.getAllAppointments()
     // myObservableList.clear()
     // myObservableList.addAll(appointments)
     public List<Appointment> getAllAppointmentsByUserId(
-            int userId
-    ) throws SQLException {
+            
+    int LoggedInUserId) throws SQLException {
 
         // create a new Arraylist to return the results of the query
         List<Appointment> results = new ArrayList<>();
-
-        String query = "select * from appointment";
+         
+        String query = "SELECT * FROM U04k77.appointment where customerId = "
+                + LoggedInUserId;
         rs = st.executeQuery(query);
         System.out.println("Record from Database");
         while (rs.next()) {
 
             int appointmentId = rs.getInt("appointmentId");
             int customerId = rs.getInt("customerId");
+            int userId = rs.getInt("userId");
             String title = rs.getString("title");
             String description = rs.getString("description");
             String location = rs.getString("location");
@@ -204,7 +212,7 @@ public class DBConnect {
                     String type, String url, String start, String end, String createdBy, 
                     String lastUpdate, String lastUpdateBY)
              */
-            results.add(new Appointment(appointmentId, customerId, 0, title,
+            results.add(new Appointment(appointmentId, customerId,userId, title,
                     description, location, contact, type,
                     url, start, end, createdBy, lastUpdate, lastUpdateBy));
 

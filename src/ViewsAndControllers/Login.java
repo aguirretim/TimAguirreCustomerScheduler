@@ -35,11 +35,9 @@ public class Login implements Initializable {
 
     private static User loggedInUser;
 
-    /**
-     * **********************************
+    /*************************************
      * Variables for Buttons and Field.
-  ***********************************
-     */
+     ************************************/
     @FXML
     private TextField usernameText;
 
@@ -67,6 +65,7 @@ public class Login implements Initializable {
         return Login.loggedInUser != null;
     }
     
+    
     public static int getLoggedInUserId() {
         if(Login.isLoggedIn()) {
             return Login.loggedInUser.getUserId();
@@ -85,11 +84,9 @@ public class Login implements Initializable {
         }
     }
     
-    /**
-     * **********************************
+    /*************************************
      * Changing screens and scenes with buttons.
-     ***********************************
-     */
+     ************************************/
     @FXML
     private void loginButtonAction(ActionEvent event) throws IOException {
         try {
@@ -99,8 +96,10 @@ public class Login implements Initializable {
             // test to see if the login credentials are correct
             User user = null;
             User userInData = connect.getUserByUsernamePassword(userT, passT);
+            
             if ((user = userInData) != null) {
                 System.out.println("log in completed");
+                
                 // Login passed
                 Login.loggedInUser = user;
 
@@ -135,13 +134,6 @@ public class Login implements Initializable {
         }
     }
 
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-        connect.getCustomerInfo();
-
-    }
 
     public void initialize(URL url, ResourceBundle rb) {
         //Test print of current time for understanding how timestamps work
