@@ -267,5 +267,31 @@ public class DBConnect {
 
         return results;
     }
+    
+    public void createAppontment (int customerId, int userId, String title, 
+            String description, String location, String contact, String type,
+            String url, String start, String end, String lastUpdate, 
+            String createDate, String createdBy, String lastUpdateBy) throws SQLException {
+        
+   String query = "INSERT INTO `U04k77`.`appointment` (`customerId`, `userId`, `title`, `description`,"+ 
+             "`location`, `contact`, `type`, `url`, `start`, `end`, `lastUpdate`, "+
+             "`createDate`, `createdBy`, `lastUpdateBy`) "+
+            "VALUES ("+ customerId+","
+                      + userId+","
+                      + title+","
+                      + description+","
+                      + location+","
+                      + contact+","
+                      + type+","
+                      + url+","
+                      + start+","
+                      + end +","
+                      + lastUpdate+","
+                      + createDate+","
+                      + createdBy+","
+                      + lastUpdateBy+");";
+   rs = st.executeQuery(query);
+   System.out.println("Creating an appointment with" + query);
+    }
 
 }
