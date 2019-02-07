@@ -94,10 +94,15 @@ public class AddAppointmentController implements Initializable {
         stage.hide();
     }
    
+    
+
+
     @FXML
     private void saveButtonAction(ActionEvent event) throws IOException {
         
-        
+       
+                
+                
         System.out.println(customerTable.getSelectionModel().getSelectedItem().toString());
         if(Login.isLoggedIn()){
             // first try to validate the form
@@ -111,7 +116,8 @@ public class AddAppointmentController implements Initializable {
             
             
             try {
-                int customerId;
+                 Customer selCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+                int customerId= selCustomer.getCustomerId();
                 int userId = Login.getLoggedInUserId();
                 String title = titleText.getText();
                 String description = descriptionText.getText();
@@ -119,7 +125,12 @@ public class AddAppointmentController implements Initializable {
                 String url = urlText.getText();
                 String start = startDateSelection.getValue().toString();
                 String end = endDateSelection.getValue().toString();        
+                String lastUpdate = selCustomer.getLastUpdate();
+                String createdDate = selCustomer.getCreatedDate();
                 
+                        
+                        
+                        
                 //Customer selCustomer = customerTable.getSelectionModel().getSelectedItem().;
                 
                 
