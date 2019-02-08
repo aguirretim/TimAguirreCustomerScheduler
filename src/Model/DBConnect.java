@@ -154,44 +154,6 @@ con = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77?zeroD
             }
         } catch (Exception ex) {
             System.out.println("error: " + ex);
-        }     
+        }
     }
-        
-        public void getCustomerInfo() {
-        try {
-            
-            String query = "select * from customer";
-            rs = st.executeQuery(query);
-            System.out.println("Record from Database");
-            while (rs.next()) {
-                
-                
-                int customerId = rs.getInt("customerId");
-                String customerName = rs.getString("customerName");
-                int addressId = rs.getInt("addressId");
-                int active = rs.getInt("active");
-                String createdBy = rs.getString("createdBy");
-                String lastUpdate = rs.getString("lastUpdate");
-                String lastUpdateBY = rs.getString("lastUpdateBY");
-                
-                
-             System.out.println("Customer ID: : "+ customerId+" "+
-                                "customer Name: " + customerName +" "+
-                                "address Id: "+ addressId+" "+
-                                "active: "+ active+" "+
-                                "createdBy: "+ createdBy+" "+
-                                "lastUpdate: " + lastUpdate+" "+
-                                "lastUpdateBY: "+ lastUpdateBY+" "
-                                );
-             
-            customerData.addCustomer(new Customer(customerId, customerName, 
-                     addressId, active, createdBy, lastUpdate, 
-                     lastUpdateBY));
-            
-            }
-        } catch (Exception ex) {
-            System.out.println("error: " + ex);
-        } 
-}
-
 }
