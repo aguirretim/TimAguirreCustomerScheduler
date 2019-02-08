@@ -21,7 +21,7 @@ public class Customer {
     private String customerName;
     private int addressId;
     private int active;
-    private Date createdDate = new Date();
+    private String createdDate;
     private String createdBy;
     private String lastUpdate;
     private String lastUpdateBY;
@@ -34,6 +34,11 @@ public class Customer {
     
     
     
+    @Override
+    public String toString() {
+        return "Customer{" + "customerId=" + customerId + ", customerName=" + customerName + ", addressId=" + addressId + ", active=" + active + ", createdDate=" + createdDate + ", createdBy=" + createdBy + ", lastUpdate=" + lastUpdate + ", lastUpdateBY=" + lastUpdateBY + '}';
+    }
+
     public Customer(int customerId, String customerName, int addressId, int active, String createdBy, String lastUpdate, String lastUpdateBY) {
         this.customerId = customerId;
         this.customerName = customerName;
@@ -68,7 +73,7 @@ public class Customer {
         return active;
     }
 
-    public Date getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
@@ -108,7 +113,7 @@ public class Customer {
         this.active = active;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 

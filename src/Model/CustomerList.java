@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -13,13 +14,14 @@ import javafx.collections.ObservableList;
  * @author Tim
  */
 public class CustomerList {
+    // TODO do you really want to make these static??
   private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
   private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();  
 
   
   
-      public void addCustomer(Customer CustomerData) {
-        allCustomers.add(CustomerData);
+      public void addCustomers(List<Customer> customerList) {
+        allCustomers.addAll(customerList);
     }
       
      public void getCustomer(Customer CustomerData) {
@@ -29,8 +31,17 @@ public class CustomerList {
      public ObservableList<Customer> getCustomer() {
         return allCustomers;
     }
-     public void addAppointment(Appointment AppointmentData) {
+     
+    public void clearCustomers() {
+        allCustomers.clear();
+    }
+     
+   /*  public void addAppointment(Appointment AppointmentData) {
         allAppointments.add(AppointmentData);
+    }*/
+     
+     public void addAppointments(List<Appointment> appointmentList) {
+        allAppointments.addAll(appointmentList);
     }
       
      public void getAppointment(Appointment AppointmentData) {
@@ -39,5 +50,9 @@ public class CustomerList {
      
      public ObservableList<Appointment> getAppointment() {
         return allAppointments;
+    }
+     
+    public void clearAppointments() {
+        allAppointments.clear();
     }
 }
