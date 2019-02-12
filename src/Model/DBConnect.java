@@ -13,6 +13,7 @@ public class DBConnect {
     private Connection con;
     private Statement st;
     private ResultSet rs;
+    
 //    private String userName;
 //    private String password;
 //
@@ -257,7 +258,9 @@ public class DBConnect {
                         + "lastUpdateBy: " + lastUpdateBy + " "
                 );
 
-/*                    public Customer(int customerId, String customerName, int addressId, int active, String createdBy, String lastUpdate, String lastUpdateBY) {
+/*                    public Customer(int customerId, String customerName,
+                int addressId, int active, String createdBy, String lastUpdate,
+                String lastUpdateBY) {
         */
     
     
@@ -273,9 +276,10 @@ public class DBConnect {
             String url, String start, String end, String lastUpdate, 
             String createDate, String createdBy, String lastUpdateBy) throws SQLException {
         
-   String query = "INSERT INTO `U04k77`.`appointment` (`customerId`, `userId`, `title`, `description`,"+ 
-             "`location`, `contact`, `type`, `url`, `start`, `end`, `lastUpdate`, "+
-             "`createDate`, `createdBy`, `lastUpdateBy`) "+
+   String query = "INSERT INTO U04k77.appointment (customerId, userId,"
+           + " title, description,"+ 
+             "location, contact, type, url, start, end, lastUpdate, "+
+             "createDate, createdBy, lastUpdateBy) "+
             "VALUES ("+ customerId+","
                       + userId+","
                       + title+","
@@ -290,8 +294,13 @@ public class DBConnect {
                       + createDate+","
                       + createdBy+","
                       + lastUpdateBy+");";
-   rs = st.executeQuery(query);
    System.out.println("Creating an appointment with" + query);
+    int tableRowsAffected = st.executeUpdate(query);
+    
+    System.out.println(tableRowsAffected+" rows was added. "
+            + "Creating an appointment with" + query);
+        
+  
     }
 
 }

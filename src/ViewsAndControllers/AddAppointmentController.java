@@ -10,6 +10,8 @@ import Model.CustomerList;
 import Model.DBConnect;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -83,6 +85,8 @@ public class AddAppointmentController implements Initializable {
     
     DBConnect DatabaseConnect = new DBConnect();
     
+    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+    
     /**
      * **********************************
      * Changing screens and scenes with buttons.
@@ -103,8 +107,8 @@ public class AddAppointmentController implements Initializable {
        
                 
                 
-        System.out.println(customerTable.getSelectionModel().getSelectedItem().toString());
-        if(Login.isLoggedIn()){
+        System.out.println(timestamp.toString());
+        
             // first try to validate the form
             /*if(!validateForm()) {
                 // maybe popup a message with hint,
@@ -113,42 +117,41 @@ public class AddAppointmentController implements Initializable {
             }*/
             
             // Now that we have a valid form try to save
-            
-            
+            Customer selCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+           
             try {
-                 Customer selCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
-                int customerId= selCustomer.getCustomerId();
+                
+                int customerId=selCustomer.getCustomerId();
                 int userId = Login.getLoggedInUserId();
                 String title = titleText.getText();
                 String description = descriptionText.getText();
+                String location = "LocPHGetlocAddrID"+String.valueOf(selCustomer.getAddressId());
+                String contact ="ContactPHGetPhoneAddrID"+String.valueOf(selCustomer.getAddressId());
                 String type = typeSelection.getValue().toString();
                 String url = urlText.getText();
                 String start = startDateSelection.getValue().toString();
                 String end = endDateSelection.getValue().toString();        
                 String lastUpdate = selCustomer.getLastUpdate();
-                String createdDate = selCustomer.getCreatedDate();
-                
-                        
-                        
-                        
-                //Customer selCustomer = customerTable.getSelectionModel().getSelectedItem().;
-                
-                
-                System.out.println(typeSelection.getSelectionModel());
+                String createdDate = timestamp.toString();
+                String createdBy = Login.getLoggedInUser().getUserName();
+                String lastUpdateby =  Login.getLoggedInUser().getUserName();
+                  
+                DatabaseConnect.createAppontment(customerId, userId, title,
+                        description, location,contact, type, url, start, end,
+                        lastUpdate, createdDate, createdBy, lastUpdateby);
+
                 // Save the appointment 
                 
                 // Close the window 
             }
-            catch (Exception e){
+            catch (SQLException e){
                 // possibly show a popup with a try again or cancel option
+                
+            System.out.println("error: "+ e);
+
             }
-        }
-        else{
-            throw new UnsupportedOperationException(
-                        this.getClass().getName()
-                        + ".saveButtonAction(...) - caught Exception: not logged in"
-                );
-        }
+        
+      
     }
 
     @Override
