@@ -21,10 +21,9 @@ public class DBConnect {
 
     public DBConnect() {
 
-        /**
-         * ***********************************
-         * Connects to MySql Database. **********************************
-         */
+        /**************************************
+         * Connects to MySql Database. 
+         ***********************************/
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77?zeroDateTimeBehavior=convertToNull", "U04k77", "53688267207");
@@ -276,25 +275,25 @@ public class DBConnect {
             String url, String start, String end, String lastUpdate, 
             String createDate, String createdBy, String lastUpdateBy) throws SQLException {
         
-   String query = "INSERT INTO U04k77.appointment (customerId, userId,"
-           + " title, description,"+ 
-             "location, contact, type, url, start, end, lastUpdate, "+
-             "createDate, createdBy, lastUpdateBy) "+
-            "VALUES ("+ customerId+","
-                      + userId+","
-                      + title+","
-                      + description+","
-                      + location+","
-                      + contact+","
-                      + type+","
-                      + url+","
-                      + start+","
-                      + end +","
-                      + lastUpdate+","
-                      + createDate+","
-                      + createdBy+","
-                      + lastUpdateBy+");";
-   System.out.println("Creating an appointment with" + query);
+   String query = "INSERT INTO `U04k77`.`appointment` (`customerId`, `userId`,"
+           + " `title`, `description`,"+ 
+             "`location`, `contact`, `type`, `url`, `start`, `end`, `lastUpdate`, "+
+             "`createDate`, `createdBy`, `lastUpdateBy`) "+
+            "VALUES ("+"'"+ customerId+"',"
+                      +"'"+ userId+"',"
+                      +"'"+ title+"',"
+                      +"'"+ description+"',"
+                      +"'"+ location+"',"
+                      +"'"+ contact+"',"
+                      +"'"+ type+"',"
+                      +"'"+ url+"',"
+                      +"'"+ start+"',"
+                      +"'"+ end +"',"
+                      +"'"+ lastUpdate+"',"
+                      +"'"+ createDate+"',"
+                      +"'"+ createdBy+"',"
+                      +"'"+ lastUpdateBy+"');";
+   
     int tableRowsAffected = st.executeUpdate(query);
     
     System.out.println(tableRowsAffected+" rows was added. "

@@ -131,7 +131,7 @@ public class AddAppointmentController implements Initializable {
                 String url = urlText.getText();
                 String start = startDateSelection.getValue().toString();
                 String end = endDateSelection.getValue().toString();        
-                String lastUpdate = selCustomer.getLastUpdate();
+                String lastUpdate = timestamp.toString();
                 String createdDate = timestamp.toString();
                 String createdBy = Login.getLoggedInUser().getUserName();
                 String lastUpdateby =  Login.getLoggedInUser().getUserName();
