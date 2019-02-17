@@ -125,8 +125,8 @@ public class AddAppointmentController implements Initializable {
                 int userId = Login.getLoggedInUserId();
                 String title = titleText.getText();
                 String description = descriptionText.getText();
-                String location = "LocPHGetlocAddrID"+String.valueOf(selCustomer.getAddressId());
-                String contact ="ContactPHGetPhoneAddrID"+String.valueOf(selCustomer.getAddressId());
+                String location = String.valueOf(selCustomer.getAddressId());
+                String contact =String.valueOf(selCustomer.getAddressId());
                 String type = typeSelection.getValue().toString();
                 String url = urlText.getText();
                 String start = startDateSelection.getValue().toString();
@@ -139,10 +139,14 @@ public class AddAppointmentController implements Initializable {
                 DatabaseConnect.createAppontment(customerId, userId, title,
                         description, location,contact, type, url, start, end,
                         lastUpdate, createdDate, createdBy, lastUpdateby);
-
+                
                 // Save the appointment 
                 
                 // Close the window 
+                stage = (Stage) cancelButton.getScene().getWindow();
+                stage.hide();
+                HomeScreenController.getActiveHomeScreen().reinitialize();
+                        
             }
             catch (SQLException e){
                 // possibly show a popup with a try again or cancel option
@@ -150,8 +154,7 @@ public class AddAppointmentController implements Initializable {
             System.out.println("error: "+ e);
 
             }
-        
-      
+         
     }
 
     @Override

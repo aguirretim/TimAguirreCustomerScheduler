@@ -49,8 +49,7 @@ public class Customer {
         this.lastUpdateBY = lastUpdateBY;
     }
     
-    
-    
+
      /*************************************
      * Getters
      ************************************/

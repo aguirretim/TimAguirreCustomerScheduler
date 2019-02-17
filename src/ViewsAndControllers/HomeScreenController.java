@@ -32,8 +32,9 @@ public class HomeScreenController implements Initializable {
 
     /**
      * **********************************
-     * Variables for Buttons and Field. **********************************
-     */
+     * Variables for Buttons and Field. 
+     ***********************************/
+    
     //The inventory object that contains all of the parts and product listed inside
     CustomerList customerData = new CustomerList();
 
@@ -76,6 +77,17 @@ public class HomeScreenController implements Initializable {
     @FXML
     private Button past30DayButton;
 
+    private static HomeScreenController ActiveHomeScreen=null;
+
+    public static HomeScreenController getActiveHomeScreen() {
+        return ActiveHomeScreen;
+    }
+
+    public static void setActiveHomeScreen(HomeScreenController ActiveHomeScreen) {
+        HomeScreenController.ActiveHomeScreen = ActiveHomeScreen;
+    }
+            
+    
     //Stage setting variable for Button actions to select new stages to display
     Stage stage = new Stage();
 
@@ -86,6 +98,7 @@ public class HomeScreenController implements Initializable {
      * Changing screens and scenes with buttons.
      * **********************************
      */
+
     @FXML
     private void customerButtonAction(ActionEvent event) throws IOException {
         stage = (Stage) customerButton.getScene().getWindow();
@@ -122,6 +135,11 @@ public class HomeScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        setActiveHomeScreen(this);
+        reinitialize();
+    }
+
+    public void reinitialize() {
         if (Login.isLoggedIn()) {
             //Clears the table to refresh it
             this.customerData.clearAppointments();
@@ -129,7 +147,7 @@ public class HomeScreenController implements Initializable {
                 //Adds appointments to table list by User who is logged in ID
                 this.customerData.addAppointments(
                         DatabaseConnect.getAllAppointmentsByUserId(Login.getLoggedInUserId()));
-               
+
             } catch (Exception e) {
                 // print some msg or popup some error alert box
                 throw new UnsupportedOperationException(
@@ -138,6 +156,10 @@ public class HomeScreenController implements Initializable {
             }
 
             apptTable.setItems(customerData.getAppointment());
+            
+            int cusId;
+            
+           // customerData.getAppointment().forEach(appointment-> getCustomerName(appointment.getCustomerId()));
             
             customerCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
             apptCol.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -151,5 +173,4 @@ public class HomeScreenController implements Initializable {
             );
         }
     }
-
 }

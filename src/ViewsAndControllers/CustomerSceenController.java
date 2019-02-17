@@ -70,6 +70,19 @@ public class CustomerSceenController implements Initializable {
     private TableColumn phone;
 
     DBConnect DatabaseConnect = new DBConnect();
+    
+    private static CustomerSceenController ActiveCustomerScreen=null;
+
+    public static CustomerSceenController getActiveCustomerScreen() {
+        return ActiveCustomerScreen;
+    }
+    
+     public static void setActiveCustomerScreen(CustomerSceenController ActiveCustomerScreen) {
+        CustomerSceenController.ActiveCustomerScreen = ActiveCustomerScreen;
+    }
+    
+    
+    
     /*************************************
      * Changing screens and scenes with buttons.
      ************************************/
@@ -85,11 +98,11 @@ public class CustomerSceenController implements Initializable {
 
     @FXML
     private void addCustomerButtonAction(ActionEvent event) throws IOException {
-        stage = (Stage) addCustomerButton.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/AddCustomer.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Create A New Customer");
         stage.setScene(scene);
+        stage.showAndWait();
     }
 
     @FXML
@@ -103,7 +116,11 @@ public class CustomerSceenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.customerData.clearCustomers();
+        
+        reinitialize();
+    }
+     public void reinitialize() {
+     this.customerData.clearCustomers();
         try {
             // TODO
             this.customerData.addCustomers(DatabaseConnect.getAllCustomers());
@@ -117,7 +134,6 @@ public class CustomerSceenController implements Initializable {
             nameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
             address.setCellValueFactory(new PropertyValueFactory<>("addressId"));
             phone.setCellValueFactory(new PropertyValueFactory<>("active"));
-        
-    }
+     }
 
 }

@@ -24,9 +24,9 @@ public class TimAguirreCustomerSchedulerApp extends Application {
   
 //Connecting to the MySql Database and performing a query
   DBConnect connect = new DBConnect();
-  connect.getData();
-  
+ 
  connect.getCustomerId(0);
+ 
  }
 
  

@@ -19,7 +19,6 @@ public class CustomerList {
   private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();  
 
   
-  
       public void addCustomers(List<Customer> customerList) {
         allCustomers.addAll(customerList);
     }

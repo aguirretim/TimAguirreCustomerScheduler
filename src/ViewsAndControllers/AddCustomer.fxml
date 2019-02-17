@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="404.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewsAndControllers.AddCustomerController">
+<AnchorPane id="AnchorPane" prefHeight="404.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewsAndControllers.AddCustomerController">
    <children>
       <Label focusTraversable="false" layoutX="11.0" layoutY="9.0" prefHeight="32.0" prefWidth="181.0" text="Add Customer" textFill="#2d47da" wrapText="true">
          <effect>
@@ -18,7 +18,7 @@
       <ChoiceBox fx:id="citySelection" layoutX="120.0" layoutY="179.0" prefWidth="150.0" />
       <TextField fx:id="address2Text" layoutX="120.0" layoutY="138.0" />
       <Button fx:id="cancelButton" layoutX="57.0" layoutY="352.0" mnemonicParsing="false" onAction="#cancelButtonAction" prefHeight="27.0" prefWidth="196.0" text="Cancel" />
-      <Button fx:id="saveButton" layoutX="56.0" layoutY="313.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="196.0" text="Save and Add Customer" />
+      <Button fx:id="saveButton" layoutX="56.0" layoutY="313.0" mnemonicParsing="false" onAction="#saveButtonAction" prefHeight="27.0" prefWidth="196.0" text="Save and Add Customer" />
       <Label layoutX="6.0" layoutY="60.0" text="Customer Name:" />
       <Label layoutX="48.0" layoutY="99.0" text="Address:" />
       <Label layoutX="70.0" layoutY="183.0" text="City:" />
