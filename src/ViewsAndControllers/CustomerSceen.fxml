@@ -41,7 +41,7 @@
             <Font size="11.0" />
          </font>
       </Button>
-      <Button fx:id="delButton" layoutX="34.0" layoutY="353.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="89.0" text="Delete Selected Customer" textAlignment="CENTER" wrapText="true">
+      <Button fx:id="delButton" layoutX="34.0" layoutY="353.0" mnemonicParsing="false" onAction="#delButtonButtonAction" prefHeight="58.0" prefWidth="89.0" text="Delete Selected Customer" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="11.0" />
          </font>

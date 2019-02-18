@@ -355,4 +355,31 @@ public class DBConnect {
         }
         return null;
     }
+
+    public void delAppointment(int apptId) throws SQLException {
+        String query = "DELETE FROM `U04k77`.`appointment` "
+                + "WHERE (`appointmentId` = '" + apptId + "');";
+        try {
+            int tableRowsAffected = st.executeUpdate(query);
+
+            System.out.println(tableRowsAffected + " rows were deleted. "
+                    + "Deleting an appointment with" + query);
+        } catch (Exception ex) {
+            System.out.println("erro: " + ex);
+        }
+    }
+    
+    public void delCustomer(int customerId) throws SQLException {
+        String query = "DELETE FROM `U04k77`.`customer` "
+                + "WHERE (`customerId` = '" + customerId + "');";
+        try {
+            int tableRowsAffected = st.executeUpdate(query);
+            System.out.println(tableRowsAffected + " rows were deleted. "
+                    + "Deleting a Customer with" + query);
+            
+        } catch (Exception ex) {
+            System.out.println("erro: " + ex);
+        }
+    }
+
 }

@@ -5,6 +5,7 @@
  */
 package ViewsAndControllers;
 
+import Model.Customer;
 import Model.CustomerList;
 import Model.DBConnect;
 import java.io.IOException;
@@ -32,16 +33,14 @@ import javafx.stage.Stage;
  */
 public class CustomerSceenController implements Initializable {
 
-    
-    
-    /*************************************
+    /**
+     * ***********************************
      * Variables for Buttons and Field.
-     ************************************/
-    
-    
+     ***********************************
+     */
     //The inventory object that contains all of the parts and product listed inside
     CustomerList customerData = new CustomerList();
-    
+
     @FXML
     private Button apptButton;
 
@@ -70,23 +69,24 @@ public class CustomerSceenController implements Initializable {
     private TableColumn phone;
 
     DBConnect DatabaseConnect = new DBConnect();
-    
-    private static CustomerSceenController ActiveCustomerScreen=null;
+
+    Customer selCustomer;
+
+    private static CustomerSceenController ActiveCustomerScreen = null;
 
     public static CustomerSceenController getActiveCustomerScreen() {
         return ActiveCustomerScreen;
     }
-    
-     public static void setActiveCustomerScreen(CustomerSceenController ActiveCustomerScreen) {
+
+    public static void setActiveCustomerScreen(CustomerSceenController ActiveCustomerScreen) {
         CustomerSceenController.ActiveCustomerScreen = ActiveCustomerScreen;
     }
-    
-    
-    
-    /*************************************
+
+    /**
+     * ***********************************
      * Changing screens and scenes with buttons.
-     ************************************/
-    
+     ***********************************
+     */
     @FXML
     private void apptButtonAction(ActionEvent event) throws IOException {
         stage = (Stage) apptButton.getScene().getWindow();
@@ -114,26 +114,35 @@ public class CustomerSceenController implements Initializable {
         stage.setScene(scene);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
+    @FXML
+    private void delButtonButtonAction(ActionEvent event) throws IOException, SQLException {
+        selCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+        int custId = selCustomer.getCustomerId();
+        DatabaseConnect.delCustomer(custId);
         reinitialize();
     }
-     public void reinitialize() {
-     this.customerData.clearCustomers();
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+
+        reinitialize();
+    }
+
+    public void reinitialize() {
+        this.customerData.clearCustomers();
         try {
             // TODO
             this.customerData.addCustomers(DatabaseConnect.getAllCustomers());
         } catch (Exception e) {
-           // print some msg or popup some error alert box
-                throw new UnsupportedOperationException(
-                        "Homescreen initialize - caught Exception", e);
+            // print some msg or popup some error alert box
+            throw new UnsupportedOperationException(
+                    "Homescreen initialize - caught Exception", e);
         }
         customerTable.setItems(customerData.getCustomer());
-            
-            nameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-            address.setCellValueFactory(new PropertyValueFactory<>("addressId"));
-            phone.setCellValueFactory(new PropertyValueFactory<>("active"));
-     }
+
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        address.setCellValueFactory(new PropertyValueFactory<>("addressId"));
+        phone.setCellValueFactory(new PropertyValueFactory<>("active"));
+    }
 
 }

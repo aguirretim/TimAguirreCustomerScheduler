@@ -5,10 +5,12 @@
  */
 package ViewsAndControllers;
 
+import Model.Appointment;
 import Model.CustomerList;
 import Model.DBConnect;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -76,7 +78,9 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     private Button past30DayButton;
-
+    
+    Appointment selAppointment;
+   
     private static HomeScreenController ActiveHomeScreen=null;
 
     public static HomeScreenController getActiveHomeScreen() {
@@ -129,7 +133,16 @@ public class HomeScreenController implements Initializable {
         stage.setTitle("Edit and Modify Appointment");
         stage.setScene(scene);
     }
-
+    
+    @FXML
+    private void delButtonButtonAction(ActionEvent event) throws IOException, SQLException {
+       selAppointment = (Appointment) apptTable.getSelectionModel().getSelectedItem();
+       int apptId = selAppointment.getAppointmentId();
+         
+       DatabaseConnect.delAppointment(apptId);
+       reinitialize();  
+     }
+        
 //Timestamp T = java.sql.Timestamp.valueOf("2019-01-23 12:00:00");
 //Timestamp EN = java.sql.Timestamp.valueOf("2019-01-23 14:00:00");        
     @Override
@@ -172,5 +185,9 @@ public class HomeScreenController implements Initializable {
                     "Homescreen initialize - user not logged in - fixme force login"
             );
         }
+        
+        
+        
+        
     }
 }
