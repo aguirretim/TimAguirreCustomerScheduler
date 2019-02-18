@@ -83,14 +83,7 @@ public class AddCustomerController implements Initializable {
 
     @FXML
     private void saveButtonAction(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/CustomerSceen.fxml"));
-        Scene scene = new Scene(root);
-        stage.setTitle("Tim Aguirre Customer Scheduler App");
-        saveButton.getScene().getWindow().hide();
-        
-        try {
-                
-              
+        try {              
                 int userId = Login.getLoggedInUserId();
                 String customerName = customerNameText.getText();
                 int addressId;
@@ -105,9 +98,6 @@ public class AddCustomerController implements Initializable {
                 String createdDate = timestamp.toString();
                 String createdBy = Login.getLoggedInUser().getUserName();
                 String lastUpdateby =  Login.getLoggedInUser().getUserName();
-                  
-                
-                
                 
                 /*public void createAddress(String address, String address2, int cityId,
             String postalCode, String phone, String createDate,
@@ -127,7 +117,7 @@ public class AddCustomerController implements Initializable {
                 // Save the appointment 
                 
                 // Close the window 
-                stage = (Stage) cancelButton.getScene().getWindow();
+                stage = (Stage) saveButton.getScene().getWindow();
                 stage.hide();
                 CustomerSceenController.getActiveCustomerScreen().reinitialize();
                         

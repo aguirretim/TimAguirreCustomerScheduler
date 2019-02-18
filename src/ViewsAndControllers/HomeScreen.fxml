@@ -35,7 +35,7 @@
             <Font size="11.0" />
          </font>
       </Button>
-      <Button fx:id="editApptButton" layoutX="29.0" layoutY="256.0" mnemonicParsing="false" onAction="#editApptButtonAction" prefHeight="58.0" prefWidth="89.0" text="Edit Appointment" textAlignment="CENTER" wrapText="true">
+      <Button fx:id="editApptButton" layoutX="29.0" layoutY="256.0" mnemonicParsing="false" onAction="#editApptButtonAction" prefHeight="58.0" prefWidth="89.0" text="Edit Selected Appointment" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="11.0" />
          </font>

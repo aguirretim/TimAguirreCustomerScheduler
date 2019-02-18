@@ -127,11 +127,44 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     private void editApptButtonAction(ActionEvent event) throws IOException {
-        stage = (Stage) editApptButton.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/EditAppointment.fxml"));
-        Scene scene = new Scene(root);
+        
+        try {
+        FXMLLoader loader = new FXMLLoader(); //Loads an object hierarchy from an XML document.     
+        loader.setLocation(getClass().getResource("/ViewsAndControllers/EditAppointment.fxml")); //  reference FXML files like this in my controllers                 
+        loader.load();
+
+        EditAppointmentController eac = loader.getController();
+        
+        Parent editAppointmentWindow = loader.getRoot();
+        
+        selAppointment = (Appointment) apptTable.getSelectionModel().getSelectedItem();
+
+         
+        eac.transferData(selAppointment.getAppointmentId(), selAppointment.getTitle(), 
+                selAppointment.getDescription(), selAppointment.getType(), 
+                selAppointment.getUrl(), selAppointment.getStart(), selAppointment.getEnd());
+        
+        System.out.println(selAppointment.getAppointmentId()+ selAppointment.getTitle()+ 
+                selAppointment.getDescription()+ selAppointment.getType()+ 
+                selAppointment.getUrl()+ selAppointment.getStart()+ selAppointment.getEnd());
+         
+        
+        Scene scene = new Scene(editAppointmentWindow);
         stage.setTitle("Edit and Modify Appointment");
         stage.setScene(scene);
+        stage.showAndWait();
+         }
+        
+       /* stage = (Stage) editApptButton.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/EditAppointment.fxml"));
+        Scene scene = new Scene(root);
+        stage.setTitle();
+        stage.setScene(scene);*/
+         catch (Exception ex)
+                 {
+                 System.out.println("erro: " + ex);
+                 
+                 }
     }
     
     @FXML
@@ -142,6 +175,8 @@ public class HomeScreenController implements Initializable {
        DatabaseConnect.delAppointment(apptId);
        reinitialize();  
      }
+    
+    
         
 //Timestamp T = java.sql.Timestamp.valueOf("2019-01-23 12:00:00");
 //Timestamp EN = java.sql.Timestamp.valueOf("2019-01-23 14:00:00");        

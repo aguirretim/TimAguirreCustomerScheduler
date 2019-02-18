@@ -5,6 +5,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import Model.DBConnect;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 
 
 
@@ -26,6 +28,10 @@ public class TimAguirreCustomerSchedulerApp extends Application {
   DBConnect connect = new DBConnect();
  
  connect.getCustomerId(0);
+ Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+ System.out.println(timestamp.toString());
+ //System.out.println(LocalDate.MAX.toString());
+ 
  
  }
 

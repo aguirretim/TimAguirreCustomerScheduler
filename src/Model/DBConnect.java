@@ -382,4 +382,25 @@ public class DBConnect {
         }
     }
 
+    public void editAppointment(int appointmentId, String title,
+            String description, String type, String url, String start, String end,
+            String lastUpdate,String lastUpdateBy )throws SQLException {
+   
+            String query = "UPDATE `U04k77`.`appointment` SET "                  
+                    + "`title` = '"+title+"', "
+                    + "`description` = '"+description+"', "
+                    + "`type` = '"+type+"', "
+                    + "`url` = '"+url+"', "
+                    + "`start` = '"+start+"', "
+                    + "`end` = '"+end+"', "
+                    + "`lastUpdate` = '"+lastUpdate+"', "                   
+                    + "`lastUpdateBy` = '"+lastUpdateBy+"' "
+                    + "WHERE (`appointmentId` = '"+appointmentId+"');";
+            
+        int tableRowsAffected = st.executeUpdate(query);
+
+        System.out.println(tableRowsAffected + " rows were edited. "
+                + "Editing an Appointment with" + query);
+    }
+    
 }

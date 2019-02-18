@@ -24,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -98,11 +99,14 @@ public class CustomerSceenController implements Initializable {
 
     @FXML
     private void addCustomerButtonAction(ActionEvent event) throws IOException {
+        Stage modalStage = new Stage();
+        modalStage.initOwner(stage);
+        modalStage.initModality(Modality.APPLICATION_MODAL);
         Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/AddCustomer.fxml"));
         Scene scene = new Scene(root);
-        stage.setTitle("Create A New Customer");
-        stage.setScene(scene);
-        stage.showAndWait();
+        modalStage.setTitle("Create A New Customer");
+        modalStage.setScene(scene);
+        modalStage.showAndWait();
     }
 
     @FXML
@@ -142,7 +146,7 @@ public class CustomerSceenController implements Initializable {
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         address.setCellValueFactory(new PropertyValueFactory<>("addressId"));
-        phone.setCellValueFactory(new PropertyValueFactory<>("active"));
+        phone.setCellValueFactory(new PropertyValueFactory<>("addressId"));
     }
 
 }

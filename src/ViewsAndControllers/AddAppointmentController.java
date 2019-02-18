@@ -36,10 +36,14 @@ import javafx.stage.Stage;
  */
 public class AddAppointmentController implements Initializable {
 
-    /**
-     * **********************************
-     * Variables for Buttons and Field. **********************************
-     */
+    
+    
+    /*************************************
+     * Variables for Buttons and Field. 
+     ***********************************/
+    
+    
+    
     @FXML
     private TextField titleText;
 
