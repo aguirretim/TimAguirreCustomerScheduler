@@ -1,8 +1,12 @@
 package Model;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.text.DateFormatter;
 
 /**
  *
@@ -155,6 +159,16 @@ public class DBConnect {
             String contact = rs.getString("contact");
             String url = rs.getString("url");
             String start = rs.getString("Start");
+            /*
+            Timestamp ts = rs.getTimestamp("start");
+            LocalDateTime d = ts.toLocalDateTime();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+                    "yyyy-MM-dd: mm:ss"
+            );
+            String formattedDate = d.format(formatter);
+            d.getYear();*/
+            
+            
             if (start == null) {
                 start = "0000-00-00";
             }
@@ -381,11 +395,35 @@ public class DBConnect {
             System.out.println("erro: " + ex);
         }
     }
+    
+        public String customerName(int customerId) {
+        try {
+            String query = "SELECT customerName" +
+                            "FROM U04k77.customer" +
+                            "Where customerId="+ customerId;
+            
+            rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                String customerName = rs.getString("customerName");
+
+                System.out.println("customerName: " + customerName);
+                return customerName;
+            }
+            
+        } catch (NumberFormatException | SQLException ex) {
+            System.out.println("erro: " + ex);
+        }
+        return null;
+    }
+    
+    
+    
 
     public void editAppointment(int appointmentId, String title,
             String description, String type, String url, String start, String end,
             String lastUpdate,String lastUpdateBy )throws SQLException {
-   
+   /*
             String query = "UPDATE `U04k77`.`appointment` SET "                  
                     + "`title` = '"+title+"', "
                     + "`description` = '"+description+"', "
@@ -403,4 +441,19 @@ public class DBConnect {
                 + "Editing an Appointment with" + query);
     }
     
+    public List<Appointment> getAllAppointmentViewsByUserId(
+            int LoggedInUserId) throws SQLException {
+
+        // create a new Arraylist to return the results of the query
+        List<Appointment> results = new ArrayList<>();
+
+        String query = "SELECT * FROM U04k77.appointment "
+                + "where userId = "
+                + LoggedInUserId;
+        rs = st.executeQuery(query);
+        System.out.println("Record from Database");
+        while (rs.next()) {}
+ */   
+}
+
 }
