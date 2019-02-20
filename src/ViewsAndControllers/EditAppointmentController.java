@@ -38,81 +38,75 @@ import javafx.stage.Stage;
  * @author Tim
  */
 public class EditAppointmentController implements Initializable {
-    
-        
-  
-    
-  /************************************
-  * Variables for Buttons and Field.
-  ************************************/
-    
-  
-    
+
+    /**
+     * **********************************
+     * Variables for Buttons and Field.
+  ***********************************
+     */
     @FXML
     private TextField titleText;
-    
+
     @FXML
     private TextField descriptionText;
-    
+
     @FXML
     private ChoiceBox typeSelection;
-    
+
     @FXML
     private TextField urlText;
-    
+
     @FXML
     private DatePicker startDateSelection;
-    
+
     @FXML
     private DatePicker endDateSelection;
-    
+
     @FXML
     private TableView customerTable;
-    
+
     @FXML
     private TableColumn customerNameCol;
 
     @FXML
     private TableColumn addressCol;
-    
+
     @FXML
     private TableColumn phoneCol;
-    
+
     @FXML
     private Button saveButton;
-    
+
     @FXML
     private Button cancelButton;
-    
-     
+
     //Stage setting variable for Button actions to select new stages to display
-    Stage stage = new Stage();  
-    
+    Stage stage = new Stage();
+
     //The inventory object that contains all of the parts and product listed inside
     CustomerList customerData = new CustomerList();
 
     DBConnect DatabaseConnect = new DBConnect();
 
-    Timestamp timestamp = new Timestamp(System.currentTimeMillis());   
-    
+    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
     int apptId;
-  
-  /************************************
-  * Changing screens and scenes with buttons.
-  ************************************/
-    
-    
- 
+
+    /**
+     * **********************************
+     * Changing screens and scenes with buttons.
+  ***********************************
+     */
     @FXML
     private void cancelButtonAction(ActionEvent event) throws IOException {
-    stage=(Stage)cancelButton.getScene().getWindow();
-    Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));
-    Scene scene = new Scene(root);
-    stage.setTitle("Tim Aguirre Customer Scheduler App");
-    stage.setScene(scene);
+        stage = (Stage) cancelButton.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));
+        Scene scene = new Scene(root);
+        stage.setTitle("Tim Aguirre Customer Scheduler App");
+        stage.setScene(scene);
 
- }
-    
+    }
+
     @FXML
     private void saveButtonAction(ActionEvent event) throws IOException {
 
@@ -131,7 +125,7 @@ public class EditAppointmentController implements Initializable {
 
             int customerId = selCustomer.getCustomerId();
             int userId = Login.getLoggedInUserId();
-            int appointmentId=apptId;
+            int appointmentId = apptId;
             String title = titleText.getText();
             String description = descriptionText.getText();
             String location = String.valueOf(selCustomer.getAddressId());
@@ -148,9 +142,8 @@ public class EditAppointmentController implements Initializable {
             /*  public void editAppointment(int appointmentId, String title,
             String description, String type, String url, String start, String end,
             String lastUpdate,String lastUpdateBy )throws SQLException {*/
-            
-            DatabaseConnect.editAppointment(appointmentId, title, 
-                    description, type, url, start, end, 
+            DatabaseConnect.editAppointment(appointmentId, title,
+                    description, type, url, start, end,
                     lastUpdate, lastUpdateby);
 
             // Save the appointment 
@@ -164,50 +157,44 @@ public class EditAppointmentController implements Initializable {
             System.out.println("error: " + e);
         }
     }
-    
-    
-    public String dateConverter(String Date)
-{
-   DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    return LocalDate.parse(Date, inputFormat).format(outputFormat);
- 
-}
-    
-     public void transferData(
+    public String dateConverter(String Date) {
+        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+        DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        return LocalDate.parse(Date, inputFormat).format(outputFormat);
+
+    }
+
+    public void transferData(
             int appointmentId,
             String title, String description, String type,
             String url, String start, String end) {
 
-         
-         DateTimeFormatter Formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSX");
-         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-         
-         
-                 start=start.trim();
-                 end=end.trim();                
-            LocalDate result = LocalDate.parse(dateConverter(start), format);
-            LocalDate result2 = LocalDate.parse(dateConverter(end), format);
-      
-            
+        DateTimeFormatter Formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        start = start.trim();
+        end = end.trim();
+        LocalDate result = LocalDate.parse(dateConverter(start), format);
+        LocalDate result2 = LocalDate.parse(dateConverter(end), format);
+
         titleText.setText(String.valueOf(title));
         descriptionText.setText(String.valueOf(description));
         typeSelection.setValue(String.valueOf(type));
         urlText.setText(String.valueOf(url));
         startDateSelection.setValue(result);
         endDateSelection.setValue(result2);
-         int apptId= appointmentId;
-        
+        int apptId = appointmentId;
+
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         typeSelection.getItems().addAll("Lunch", "Meeting", "Phone");
-                 
-            
-            /*startTimeSelection.getItems().addAll("12:00 AM", "12:30 AM",
+
+        /*startTimeSelection.getItems().addAll("12:00 AM", "12:30 AM",
                                                  "1:00 AM", "1:30 AM",
                                                  "2:00 AM", "2:30 AM",
                                                  "3:00 AM", "3:30 AM",
@@ -255,7 +242,6 @@ public class EditAppointmentController implements Initializable {
                                                  "9:00 PM", "9:30 PM",
                                                  "10:00 PM", "10:30 PM",
                                                  "11:00 PM", "11:30 PM");
-        */
+         */
     }
-    }    
-    
+}

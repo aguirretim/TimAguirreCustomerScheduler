@@ -187,7 +187,8 @@ public class DBConnect {
             }
             String lastUpdateBy = rs.getString("lastUpdateBy");
             String type = rs.getString("type");
-
+            
+            //String customerName = customerName(customerId);
             /*String query2 = "Use U04k77; "
                     + "SELECT customerName "
                     + "FROM customer "
@@ -197,6 +198,7 @@ public class DBConnect {
             String cusName = rs.getString("customerName");*/
             System.out.println("appointmentId: " + appointmentId + " "
                     + "Customer ID: " + customerId + " "
+                    //+ "Customer Name: " + customerName + " "
                     + "title: " + title + " "
                     + "description: " + description + " "
                     + "location: " + location + " "
@@ -216,8 +218,8 @@ public class DBConnect {
                     String type, String url, String start, String end, String createdBy, 
                     String lastUpdate, String lastUpdateBY)
              */
-            results.add(new Appointment(appointmentId, customerId, userId, title,
-                    description, location, contact, type,
+            results.add(new Appointment(appointmentId, customerId,/*customerName,*/
+                    userId, title, description, location, contact, type,
                     url, start, end, createdBy, lastUpdate, lastUpdateBy));
         }
 
@@ -248,7 +250,7 @@ public class DBConnect {
                 lastUpdate = "0000-00-00";
             }
             String lastUpdateBy = rs.getString("lastUpdateBy");
-
+            
             System.out.println("Customer ID: " + customerId + " "
                     + "customerName " + customerName + " "
                     + "addessId: " + addressId + " "
@@ -258,6 +260,7 @@ public class DBConnect {
                     + "lastUpdate: " + lastUpdate + " "
                     + "lastUpdateBy: " + lastUpdateBy + " "
             );
+            
 
             results.add(new Customer(customerId, customerName, addressId, active,
                     createdBy, lastUpdate, lastUpdateBy));
@@ -398,9 +401,10 @@ public class DBConnect {
     
         public String customerName(int customerId) {
         try {
-            String query = "SELECT customerName" +
-                            "FROM U04k77.customer" +
-                            "Where customerId="+ customerId;
+            String query = "SELECT customerName\n" +
+                            "FROM U04k77.customer\n" +
+                            "Where customerId="+customerId+";";
+            
             
             rs = st.executeQuery(query);
 

@@ -97,11 +97,9 @@ public class HomeScreenController implements Initializable {
 
     DBConnect DatabaseConnect = new DBConnect();
 
-    /**
-     * **********************************
-     * Changing screens and scenes with buttons.
-     * **********************************
-     */
+    /*************************************
+     *Changing screens and scenes with buttons.
+     ************************************/
 
     @FXML
     private void customerButtonAction(ActionEvent event) throws IOException {
@@ -162,6 +160,7 @@ public class HomeScreenController implements Initializable {
         stage.setScene(scene);*/
          catch (Exception ex)
                  {
+                     
                  System.out.println("erro: " + ex);
                  
                  }
@@ -220,9 +219,6 @@ public class HomeScreenController implements Initializable {
                     "Homescreen initialize - user not logged in - fixme force login"
             );
         }
-        
-        
-        
-        
+  
     }
 }
