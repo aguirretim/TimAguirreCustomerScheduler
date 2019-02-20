@@ -159,7 +159,7 @@ public class EditAppointmentController implements Initializable {
     }
 
     public String dateConverter(String Date) {
-        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         return LocalDate.parse(Date, inputFormat).format(outputFormat);

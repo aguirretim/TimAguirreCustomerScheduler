@@ -143,7 +143,7 @@ public class Login implements Initializable {
         Locale mexicoLocale = new Locale("es", "MX");
 
         //Changes default language english to testing language 
-        Locale.setDefault(mexicoLocale);
+        //Locale.setDefault(mexicoLocale);
         Locale currentLocale = Locale.getDefault();
         /*
         System.out.println(currentLocale.getDisplayLanguage());

@@ -208,7 +208,7 @@ public class HomeScreenController implements Initializable {
             
            // customerData.getAppointment().forEach(appointment-> getCustomerName(appointment.getCustomerId()));
             
-            customerCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+            customerCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
             apptCol.setCellValueFactory(new PropertyValueFactory<>("title"));
             addressCol.setCellValueFactory(new PropertyValueFactory<>("location"));
             startCol.setCellValueFactory(new PropertyValueFactory<>("start"));

@@ -18,7 +18,7 @@ public class Appointment {
 
    private Integer appointmentId;
    private int customerId;
-   //private String customerName;
+/*   private String customerName;*/
    private int userId;
    private String title;
    private String description;
@@ -35,13 +35,13 @@ public class Appointment {
    private String lastUpdate;
    private String lastUpdateBY;
    
-   public Appointment(Integer appointmentId, int customerId, /*String customerName,*/ int userId, 
+   public Appointment(Integer appointmentId, int customerId,/* String customerName,*/ int userId, 
            String title, String description, String location, String contact, 
            String type, String url, String start, String end, String createdBy, 
            String lastUpdate, String lastUpdateBY) {
         this.appointmentId = appointmentId;
         this.customerId = customerId;
-        //this.customerName = customerName;
+        /*this.customerName = customerName;*/
         this.userId = userId;
         this.title = title;
         this.description = description;

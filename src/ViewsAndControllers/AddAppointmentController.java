@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -129,15 +131,25 @@ public class AddAppointmentController implements Initializable {
             String contact = String.valueOf(selCustomer.getAddressId());
             String type = typeSelection.getValue().toString();
             String url = urlText.getText();
+            
+            
             String start = startDateSelection.getValue().toString();
+            String startTime = timeConverter(startTimeSelection.getValue().toString());
+            String startDateTime = start + " " +startTime;
+            
+            
+            
             String end = endDateSelection.getValue().toString();
+            String endTime = timeConverter(endTimeSelection.getValue().toString());
+            String endDateTime = end + " " +endTime;
+            
             String lastUpdate = timestamp.toString();
             String createdDate = timestamp.toString();
             String createdBy = Login.getLoggedInUser().getUserName();
             String lastUpdateby = Login.getLoggedInUser().getUserName();
 
             DatabaseConnect.createAppontment(customerId, userId, title,
-                    description, location, contact, type, url, start, end,
+                    description, location, contact, type, url, startDateTime, endDateTime,
                     lastUpdate, createdDate, createdBy, lastUpdateby);
 
             // Save the appointment 
@@ -155,6 +167,21 @@ public class AddAppointmentController implements Initializable {
 
     }
 
+    
+     public String timeConverter(String Date) {
+        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("h:mm a");
+        DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        return LocalTime.parse(Date, inputFormat).format(outputFormat);
+
+    }
+    
+    
+    
+    
+    
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

@@ -26,7 +26,8 @@ public class DBConnect {
 
         /**
          * ************************************
-         * Connects to MySql Database. *********************************
+         * Connects to MySql Database. 
+         *********************************
          */
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -188,7 +189,7 @@ public class DBConnect {
             String lastUpdateBy = rs.getString("lastUpdateBy");
             String type = rs.getString("type");
             
-            //String customerName = customerName(customerId);
+          //  String cusName = customerName(customerId);
             /*String query2 = "Use U04k77; "
                     + "SELECT customerName "
                     + "FROM customer "
@@ -198,7 +199,7 @@ public class DBConnect {
             String cusName = rs.getString("customerName");*/
             System.out.println("appointmentId: " + appointmentId + " "
                     + "Customer ID: " + customerId + " "
-                    //+ "Customer Name: " + customerName + " "
+                   // + "Customer Name: " + cusName + " "
                     + "title: " + title + " "
                     + "description: " + description + " "
                     + "location: " + location + " "
@@ -218,7 +219,7 @@ public class DBConnect {
                     String type, String url, String start, String end, String createdBy, 
                     String lastUpdate, String lastUpdateBY)
              */
-            results.add(new Appointment(appointmentId, customerId,/*customerName,*/
+            results.add(new Appointment(appointmentId, customerId,/*cusName,*/
                     userId, title, description, location, contact, type,
                     url, start, end, createdBy, lastUpdate, lastUpdateBy));
         }
