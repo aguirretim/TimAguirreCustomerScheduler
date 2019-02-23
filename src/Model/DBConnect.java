@@ -1,5 +1,6 @@
 package Model;
 
+import static java.lang.Integer.parseInt;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,7 +18,19 @@ public class DBConnect {
     private Connection con;
     private Statement st;
     private ResultSet rs;
-
+    
+    private Connection con2;
+    private Statement st2;
+    private ResultSet rs2;
+    
+    private Connection con3;
+    private Statement st3;
+    private ResultSet rs3;
+    
+    private Connection con4;
+    private Statement st4;
+    private ResultSet rs4;
+    
 //    private String userName;
 //    private String password;
 //
@@ -33,6 +46,30 @@ public class DBConnect {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77?zeroDateTimeBehavior=convertToNull", "U04k77", "53688267207");
             st = con.createStatement();
+        } catch (Exception ex) {
+            System.out.println("erro: " + ex);
+        }
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con2 = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77?zeroDateTimeBehavior=convertToNull", "U04k77", "53688267207");
+            st2 = con2.createStatement();
+        } catch (Exception ex) {
+            System.out.println("erro: " + ex);
+        }
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con3 = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77?zeroDateTimeBehavior=convertToNull", "U04k77", "53688267207");
+            st3 = con3.createStatement();
+        } catch (Exception ex) {
+            System.out.println("erro: " + ex);
+        }
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con4 = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77?zeroDateTimeBehavior=convertToNull", "U04k77", "53688267207");
+            st4 = con4.createStatement();
         } catch (Exception ex) {
             System.out.println("erro: " + ex);
         }
@@ -189,7 +226,20 @@ public class DBConnect {
             String lastUpdateBy = rs.getString("lastUpdateBy");
             String type = rs.getString("type");
             
-          //  String cusName = customerName(customerId);
+            String cusName=customerName(customerId);
+            
+            if (customerName(customerId)== null)
+            {
+             cusName="Deleted Customer";
+            }   
+            else {
+                  cusName=cusName;
+                    }
+            int locationId= parseInt(location);
+            String Address=AddressFromId(locationId);
+             
+            
+            
             /*String query2 = "Use U04k77; "
                     + "SELECT customerName "
                     + "FROM customer "
@@ -199,7 +249,8 @@ public class DBConnect {
             String cusName = rs.getString("customerName");*/
             System.out.println("appointmentId: " + appointmentId + " "
                     + "Customer ID: " + customerId + " "
-                   // + "Customer Name: " + cusName + " "
+                    + "Customer Name: " + cusName + " "
+                    + "Address: " + Address + " "
                     + "title: " + title + " "
                     + "description: " + description + " "
                     + "location: " + location + " "
@@ -219,7 +270,7 @@ public class DBConnect {
                     String type, String url, String start, String end, String createdBy, 
                     String lastUpdate, String lastUpdateBY)
              */
-            results.add(new Appointment(appointmentId, customerId,/*cusName,*/
+            results.add(new Appointment(appointmentId, customerId,cusName,Address,
                     userId, title, description, location, contact, type,
                     url, start, end, createdBy, lastUpdate, lastUpdateBy));
         }
@@ -378,7 +429,7 @@ public class DBConnect {
         String query = "DELETE FROM `U04k77`.`appointment` "
                 + "WHERE (`appointmentId` = '" + apptId + "');";
         try {
-            int tableRowsAffected = st.executeUpdate(query);
+            int tableRowsAffected = st4.executeUpdate(query);
 
             System.out.println(tableRowsAffected + " rows were deleted. "
                     + "Deleting an appointment with" + query);
@@ -391,7 +442,7 @@ public class DBConnect {
         String query = "DELETE FROM `U04k77`.`customer` "
                 + "WHERE (`customerId` = '" + customerId + "');";
         try {
-            int tableRowsAffected = st.executeUpdate(query);
+            int tableRowsAffected = st4.executeUpdate(query);
             System.out.println(tableRowsAffected + " rows were deleted. "
                     + "Deleting a Customer with" + query);
             
@@ -407,10 +458,10 @@ public class DBConnect {
                             "Where customerId="+customerId+";";
             
             
-            rs = st.executeQuery(query);
+            rs2 = st2.executeQuery(query);
 
-            while (rs.next()) {
-                String customerName = rs.getString("customerName");
+            while (rs2.next()) {
+                String customerName = rs2.getString("customerName");
 
                 System.out.println("customerName: " + customerName);
                 return customerName;
@@ -422,6 +473,27 @@ public class DBConnect {
         return null;
     }
     
+     public String AddressFromId(int addressId) {
+        try {
+            String query = "SELECT address,address2,postalCode\n "
+                            + "FROM U04k77.address\n"
+                            + "Where addressId ="+addressId+ ";";
+            
+            
+            rs3 = st3.executeQuery(query);
+
+            while (rs3.next()) {
+                String Address = rs3.getString("address")+" "+rs3.getString("address2")+" "+rs3.getString("postalCode");
+
+                System.out.println("Address: " + Address);
+                return Address;
+            }
+            
+        } catch (NumberFormatException | SQLException ex) {
+            System.out.println("erro: " + ex);
+        }
+        return null;
+    }
     
     
 

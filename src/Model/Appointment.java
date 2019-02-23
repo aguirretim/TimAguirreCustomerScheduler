@@ -18,7 +18,8 @@ public class Appointment {
 
    private Integer appointmentId;
    private int customerId;
-/*   private String customerName;*/
+   private String customerName;
+   private String address;
    private int userId;
    private String title;
    private String description;
@@ -35,13 +36,14 @@ public class Appointment {
    private String lastUpdate;
    private String lastUpdateBY;
    
-   public Appointment(Integer appointmentId, int customerId,/* String customerName,*/ int userId, 
+   public Appointment(Integer appointmentId, int customerId, String customerName,String address, int userId, 
            String title, String description, String location, String contact, 
            String type, String url, String start, String end, String createdBy, 
            String lastUpdate, String lastUpdateBY) {
         this.appointmentId = appointmentId;
         this.customerId = customerId;
-        /*this.customerName = customerName;*/
+        this.customerName = customerName;
+        this.address=address;
         this.userId = userId;
         this.title = title;
         this.description = description;
@@ -54,6 +56,23 @@ public class Appointment {
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdateBY = lastUpdateBY;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+   
+   
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
    
        public Integer getAppointmentId() {
