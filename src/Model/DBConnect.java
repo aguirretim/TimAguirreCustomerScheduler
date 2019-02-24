@@ -27,10 +27,7 @@ public class DBConnect {
     private Statement st3;
     private ResultSet rs3;
     
-    private Connection con4;
-    private Statement st4;
-    private ResultSet rs4;
-    
+  
 //    private String userName;
 //    private String password;
 //
@@ -66,13 +63,7 @@ public class DBConnect {
             System.out.println("erro: " + ex);
         }
         
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con4 = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77?zeroDateTimeBehavior=convertToNull", "U04k77", "53688267207");
-            st4 = con4.createStatement();
-        } catch (Exception ex) {
-            System.out.println("erro: " + ex);
-        }
+      
     }
 
     // public User getUserByUsernamePassword - if not null success
@@ -302,10 +293,13 @@ public class DBConnect {
                 lastUpdate = "0000-00-00";
             }
             String lastUpdateBy = rs.getString("lastUpdateBy");
-            
+            String addr = AddressFromId(addressId);
+            String phone = phoneFromAddressId(addressId);
             System.out.println("Customer ID: " + customerId + " "
                     + "customerName " + customerName + " "
                     + "addessId: " + addressId + " "
+                    + "addess: " + addr + " "
+                    + "phone: " + phone + " "
                     + "active: " + active + " "
                     + "createDate: " + createDate + " "
                     + "createdBy: " + createdBy + " "
@@ -314,7 +308,7 @@ public class DBConnect {
             );
             
 
-            results.add(new Customer(customerId, customerName, addressId, active,
+            results.add(new Customer(customerId, customerName, addressId, addr,phone, active,
                     createdBy, lastUpdate, lastUpdateBy));
         }
 
@@ -429,7 +423,7 @@ public class DBConnect {
         String query = "DELETE FROM `U04k77`.`appointment` "
                 + "WHERE (`appointmentId` = '" + apptId + "');";
         try {
-            int tableRowsAffected = st4.executeUpdate(query);
+            int tableRowsAffected = st.executeUpdate(query);
 
             System.out.println(tableRowsAffected + " rows were deleted. "
                     + "Deleting an appointment with" + query);
@@ -442,7 +436,7 @@ public class DBConnect {
         String query = "DELETE FROM `U04k77`.`customer` "
                 + "WHERE (`customerId` = '" + customerId + "');";
         try {
-            int tableRowsAffected = st4.executeUpdate(query);
+            int tableRowsAffected = st.executeUpdate(query);
             System.out.println(tableRowsAffected + " rows were deleted. "
                     + "Deleting a Customer with" + query);
             
@@ -495,6 +489,27 @@ public class DBConnect {
         return null;
     }
     
+          public String phoneFromAddressId(int addressId) {
+        try {
+            String query = "SELECT phone\n "
+                            + "FROM U04k77.address\n"
+                            + "Where addressId ="+addressId+ ";";
+            
+            
+            rs2 = st2.executeQuery(query);
+
+            while (rs2.next()) {
+                String phone = rs2.getString("phone");
+
+                System.out.println("phone: " + phone);
+                return phone;
+            }
+            
+        } catch (NumberFormatException | SQLException ex) {
+            System.out.println("erro: " + ex);
+        }
+        return null;
+    }
     
 
     public void editAppointment(int appointmentId, String title,

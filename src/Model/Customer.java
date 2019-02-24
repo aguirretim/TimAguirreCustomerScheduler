@@ -15,47 +15,53 @@ import javafx.collections.ObservableList;
  */
 public class Customer {
 
-    
-    
     private int customerId;
     private String customerName;
     private int addressId;
+    private String address;
+    private String phone;
     private int active;
     private String createdDate;
     private String createdBy;
     private String lastUpdate;
     private String lastUpdateBY;
-    
-    
-    
-     /*************************************
+
+    /**
+     * ***********************************
      * Constructor
-     ************************************/
-    
-    
-    
+     ***********************************
+     */
     @Override
     public String toString() {
         return "Customer{" + "customerId=" + customerId + ", customerName=" + customerName + ", addressId=" + addressId + ", active=" + active + ", createdDate=" + createdDate + ", createdBy=" + createdBy + ", lastUpdate=" + lastUpdate + ", lastUpdateBY=" + lastUpdateBY + '}';
     }
 
-    public Customer(int customerId, String customerName, int addressId, int active, String createdBy, String lastUpdate, String lastUpdateBY) {
+    public Customer(int customerId, String customerName, int addressId, String address, String phone, int active, String createdBy, String lastUpdate, String lastUpdateBY) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.addressId = addressId;
+        this.address = address;
+        this.phone = phone;
         this.active = active;
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdateBY = lastUpdateBY;
     }
-    
 
-     /*************************************
+
+    /**
+     * ***********************************
      * Getters
-     ************************************/
-    
-    
-    
+     ***********************************
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
     public int getCustomerId() {
         return customerId;
     }
@@ -86,16 +92,22 @@ public class Customer {
 
     public String getLastUpdateBY() {
         return lastUpdateBY;
-    }        
+    }
 
-    
-    
-     /*************************************
+    /**
+     * ***********************************
      * Setters
-     ************************************/
+     ***********************************
+     */
     
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
     
-    
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
@@ -127,5 +139,5 @@ public class Customer {
     public void setLastUpdateBY(String lastUpdateBY) {
         this.lastUpdateBY = lastUpdateBY;
     }
-    
+
 }

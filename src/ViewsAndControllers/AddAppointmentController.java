@@ -196,8 +196,8 @@ public class AddAppointmentController implements Initializable {
         customerTable.setItems(customerData.getCustomer());
 
         customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        addressCol.setCellValueFactory(new PropertyValueFactory<>("addressId"));
-        phoneCol.setCellValueFactory(new PropertyValueFactory<>("active"));
+        addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
         typeSelection.getItems().addAll("Lunch", "Meeting", "Phone");
                   

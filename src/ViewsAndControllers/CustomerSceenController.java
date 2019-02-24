@@ -145,8 +145,8 @@ public class CustomerSceenController implements Initializable {
         customerTable.setItems(customerData.getCustomer());
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        address.setCellValueFactory(new PropertyValueFactory<>("addressId"));
-        phone.setCellValueFactory(new PropertyValueFactory<>("addressId"));
+        address.setCellValueFactory(new PropertyValueFactory<>("address"));
+        phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
     }
 
 }
