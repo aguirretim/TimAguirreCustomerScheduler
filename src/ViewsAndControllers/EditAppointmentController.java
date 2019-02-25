@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -52,6 +53,12 @@ public class EditAppointmentController implements Initializable {
 
     @FXML
     private ChoiceBox typeSelection;
+    
+    @FXML
+    private ChoiceBox startTimeSelection;
+    
+    @FXML
+    private ChoiceBox endTimeSelection;
 
     @FXML
     private TextField urlText;
@@ -119,21 +126,25 @@ public class EditAppointmentController implements Initializable {
                 return;
             }*/
         // Now that we have a valid form try to save
-        Customer selCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+//        Customer selCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
 
         try {
 
-            int customerId = selCustomer.getCustomerId();
+  //          int customerId = selCustomer.getCustomerId();
             int userId = Login.getLoggedInUserId();
             int appointmentId = apptId;
             String title = titleText.getText();
             String description = descriptionText.getText();
-            String location = String.valueOf(selCustomer.getAddressId());
-            String contact = String.valueOf(selCustomer.getAddressId());
+    //        String location = String.valueOf(selCustomer.getAddressId());
+      //      String contact = String.valueOf(selCustomer.getAddressId());
             String type = typeSelection.getValue().toString();
             String url = urlText.getText();
             String start = startDateSelection.getValue().toString();
+            String startTime = timeConverter2(startTimeSelection.getValue().toString());
+            String startDateTime = start + " " +startTime;
             String end = endDateSelection.getValue().toString();
+            String endTime = timeConverter2(endTimeSelection.getValue().toString());
+            String endDateTime = end + " " +endTime;
             String lastUpdate = timestamp.toString();
             String createdDate = timestamp.toString();
             String createdBy = Login.getLoggedInUser().getUserName();
@@ -143,7 +154,7 @@ public class EditAppointmentController implements Initializable {
             String description, String type, String url, String start, String end,
             String lastUpdate,String lastUpdateBy )throws SQLException {*/
             DatabaseConnect.editAppointment(appointmentId, title,
-                    description, type, url, start, end,
+                    description, type, url, startDateTime, endDateTime,
                     lastUpdate, lastUpdateby);
 
             // Save the appointment 
@@ -185,16 +196,41 @@ public class EditAppointmentController implements Initializable {
         urlText.setText(String.valueOf(url));
         startDateSelection.setValue(result);
         endDateSelection.setValue(result2);
-        int apptId = appointmentId;
+        
+        String startTime= timeConverter(start);
+        String endTime= timeConverter(end);
+        
+        startTimeSelection.setValue(String.valueOf(startTime));
+        endTimeSelection.setValue(String.valueOf(endTime));
+        
+         apptId = appointmentId;
+         
 
     }
 
+    
+    
+         public String timeConverter(String Date) {
+        DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("h:mm a");
+        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        return LocalTime.parse(Date, inputFormat).format(outputFormat);
+
+    }
+         
+         public String timeConverter2(String Date) {
+        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("h:mm a");
+        DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        return LocalTime.parse(Date, inputFormat).format(outputFormat);
+
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         typeSelection.getItems().addAll("Lunch", "Meeting", "Phone");
 
-        /*startTimeSelection.getItems().addAll("12:00 AM", "12:30 AM",
+        startTimeSelection.getItems().addAll("12:00 AM", "12:30 AM",
                                                  "1:00 AM", "1:30 AM",
                                                  "2:00 AM", "2:30 AM",
                                                  "3:00 AM", "3:30 AM",
@@ -242,6 +278,6 @@ public class EditAppointmentController implements Initializable {
                                                  "9:00 PM", "9:30 PM",
                                                  "10:00 PM", "10:30 PM",
                                                  "11:00 PM", "11:30 PM");
-         */
+         
     }
 }

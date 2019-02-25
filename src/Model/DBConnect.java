@@ -515,7 +515,7 @@ public class DBConnect {
     public void editAppointment(int appointmentId, String title,
             String description, String type, String url, String start, String end,
             String lastUpdate,String lastUpdateBy )throws SQLException {
-   /*
+   
             String query = "UPDATE `U04k77`.`appointment` SET "                  
                     + "`title` = '"+title+"', "
                     + "`description` = '"+description+"', "
@@ -532,7 +532,7 @@ public class DBConnect {
         System.out.println(tableRowsAffected + " rows were edited. "
                 + "Editing an Appointment with" + query);
     }
-    
+    /*
     public List<Appointment> getAllAppointmentViewsByUserId(
             int LoggedInUserId) throws SQLException {
 
@@ -545,7 +545,7 @@ public class DBConnect {
         rs = st.executeQuery(query);
         System.out.println("Record from Database");
         while (rs.next()) {}
- */   
-}
+    
+}*/
 
 }

@@ -35,9 +35,11 @@ public class Login implements Initializable {
 
     private static User loggedInUser;
 
-    /*************************************
+    /**
+     * ***********************************
      * Variables for Buttons and Field.
-     ************************************/
+     ***********************************
+     */
     @FXML
     private TextField usernameText;
 
@@ -54,8 +56,10 @@ public class Login implements Initializable {
     Stage stage = new Stage();
 
     //Locale/language setting Varriable for setting language of app
-    Locale currentLocale;
-    Locale mexicoLocale;
+    Locale mexicoLocale = new Locale("es", "MX");
+    //Changes default language english to testing language 
+    //Locale.setDefault(mexicoLocale);
+    Locale currentLocale = Locale.getDefault();
 
     //String sql = "select userName,password from user where user = '" + userT+"'password = '"+passT+"'" ;
     DBConnect connect = new DBConnect();
@@ -64,29 +68,30 @@ public class Login implements Initializable {
     public static boolean isLoggedIn() {
         return Login.loggedInUser != null;
     }
-    
-    
+
     public static int getLoggedInUserId() {
-        if(Login.isLoggedIn()) {
+        if (Login.isLoggedIn()) {
             return Login.loggedInUser.getUserId();
         } else {
             throw new RuntimeException(
                     "Login.getLoggedInUserId() - error: user not logged in");
         }
     }
-    
+
     public static User getLoggedInUser() {
-        if(Login.isLoggedIn()) {
+        if (Login.isLoggedIn()) {
             return Login.loggedInUser;
         } else {
             throw new RuntimeException(
                     "Login.getLoggedInUserId() - error: user not logged in");
         }
     }
-    
-    /*************************************
+
+    /**
+     * ***********************************
      * Changing screens and scenes with buttons.
-     ************************************/
+     ***********************************
+     */
     @FXML
     private void loginButtonAction(ActionEvent event) throws IOException {
         try {
@@ -96,10 +101,10 @@ public class Login implements Initializable {
             // test to see if the login credentials are correct
             User user = null;
             User userInData = connect.getUserByUsernamePassword(userT, passT);
-            
+
             if ((user = userInData) != null) {
                 System.out.println("log in completed");
-                
+
                 // Login passed
                 Login.loggedInUser = user;
 
@@ -133,7 +138,6 @@ public class Login implements Initializable {
         } catch (Exception ex) {
         }
     }
-
 
     public void initialize(URL url, ResourceBundle rb) {
         //Test print of current time for understanding how timestamps work
