@@ -306,6 +306,22 @@ public class DBConnect {
         return results;
     }
 
+    public List<City> getAllCitys() throws SQLException {
+        List<City> results = new ArrayList<>();
+
+        String query = "SELECT cityId,city FROM U04k77.city;";
+        rs = st.executeQuery(query);
+        while (rs.next()) {
+
+            int cityId = rs.getInt("cityId");
+            String city = rs.getString("city");
+
+            results.add(new City(cityId, city));
+            
+        }
+        return results;
+    }
+
     public void createAppontment(int customerId, int userId, String title,
             String description, String location, String contact, String type,
             String url, String start, String end, String lastUpdate,
@@ -491,19 +507,16 @@ public class DBConnect {
 
                 System.out.println("phone: " + phone);
                 return phone;
-                
+
             }
 
         } catch (NumberFormatException | SQLException ex) {
             System.out.println("erro: " + ex);
         }
-        
+
         return null;
-        
+
     }
-
-    
-
 
     public void editAppointment(int appointmentId, String title,
             String description, String type, String url, String start, String end,

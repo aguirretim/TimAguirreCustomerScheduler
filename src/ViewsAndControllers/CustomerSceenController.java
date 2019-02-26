@@ -111,11 +111,33 @@ public class CustomerSceenController implements Initializable {
 
     @FXML
     private void editCustomerButtonAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(); //Loads an object hierarchy from an XML document.     
+            loader.setLocation(getClass().getResource("/ViewsAndControllers/EditCustomer.fxml")); //  reference FXML files like this in my controllers                 
+            loader.load();
+
+            EditCustomerController ecc = loader.getController();
+
+            Parent editCustomerWindow = loader.getRoot();
+
+        
+        selCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+        
+        
+        //ecc.transferData(0, customerName, address, address2, citySelectionText, zipCode, phone);
+        
         stage = (Stage) editCustomerButton.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/EditCustomer.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Edit and Modify Customer");
         stage.setScene(scene);
+        
+        
+        
+        
+        
+        
+        
+        
     }
 
     @FXML

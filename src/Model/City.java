@@ -13,11 +13,30 @@ import java.util.Date;
  * @author Tim
  */
 public class City {
+
     int cityId;
     private String city;
-    int countryId;
-    Date createdDate = new Date();
-    private String createdBy;
-    private Timestamp lastUpdate;
-    private String lastUpdateBY;
+
+    public City(int cityId, String city) {
+        this.cityId = cityId;
+        this.city = city;
+    }
+
+    public int getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+
 }
