@@ -129,15 +129,7 @@ public class CustomerSceenController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/EditCustomer.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Edit and Modify Customer");
-        stage.setScene(scene);
-        
-        
-        
-        
-        
-        
-        
-        
+        stage.setScene(scene);    
     }
 
     @FXML

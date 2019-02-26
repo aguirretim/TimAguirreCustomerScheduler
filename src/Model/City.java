@@ -14,6 +14,11 @@ import java.util.Date;
  */
 public class City {
 
+    @Override
+    public String toString() {
+        return "City{" + "cityId=" + cityId + ", city=" + city + '}';
+    }
+
     int cityId;
     private String city;
 

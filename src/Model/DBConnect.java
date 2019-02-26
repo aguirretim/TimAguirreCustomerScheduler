@@ -27,6 +27,7 @@ public class DBConnect {
     private Statement st3;
     private ResultSet rs3;
 
+
 //    private String userName;
 //    private String password;
 //
@@ -35,8 +36,9 @@ public class DBConnect {
 
         /**
          * ************************************
-         * Connects to MySql Database. ********************************
-         */
+         * Connects to MySql Database. 
+         ********************************/
+        
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77?zeroDateTimeBehavior=convertToNull", "U04k77", "53688267207");
@@ -60,6 +62,7 @@ public class DBConnect {
         } catch (Exception ex) {
             System.out.println("erro: " + ex);
         }
+        
 
     }
 
@@ -310,16 +313,32 @@ public class DBConnect {
         List<City> results = new ArrayList<>();
 
         String query = "SELECT cityId,city FROM U04k77.city;";
-        rs = st.executeQuery(query);
-        while (rs.next()) {
+        rs2 = st2.executeQuery(query);
+        while (rs2.next()) {
 
-            int cityId = rs.getInt("cityId");
-            String city = rs.getString("city");
-
+            int cityId = rs2.getInt("cityId");
+            String city = rs2.getString("city");
             results.add(new City(cityId, city));
             
         }
         return results;
+    }
+
+    public String getCityByCityId(int cityId) throws SQLException {
+
+        List<City> citylist2 = new ArrayList<>();
+        citylist2 = this.getAllCitys();
+        for (City var : citylist2) {
+            if (var.getCityId() == cityId) {
+                // codes
+                System.out.println(cityId);
+                System.out.println(var.toString());
+                            
+
+                return var.getCity();
+            }
+        }
+        return null;
     }
 
     public void createAppontment(int customerId, int userId, String title,
@@ -475,15 +494,14 @@ public class DBConnect {
 
     public String AddressFromId(int addressId) {
         try {
-            String query = "SELECT address,address2,postalCode\n "
+            String query = "SELECT address,address2,cityId,postalCode\n "
                     + "FROM U04k77.address\n"
                     + "Where addressId =" + addressId + ";";
 
             rs3 = st3.executeQuery(query);
 
             while (rs3.next()) {
-                String Address = rs3.getString("address") + " " + rs3.getString("address2") + " " + rs3.getString("postalCode");
-
+                String Address = rs3.getString("address") + " " + rs3.getString("address2") + " " + getCityByCityId(rs3.getInt("cityId")) + " " + rs3.getString("postalCode");
                 System.out.println("Address: " + Address);
                 return Address;
             }
