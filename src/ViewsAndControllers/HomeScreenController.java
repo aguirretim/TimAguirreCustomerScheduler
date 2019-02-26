@@ -11,6 +11,7 @@ import Model.DBConnect;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -35,8 +37,8 @@ public class HomeScreenController implements Initializable {
     /**
      * **********************************
      * Variables for Buttons and Field. 
-     ***********************************/
-    
+     **********************************
+     */
     //The inventory object that contains all of the parts and product listed inside
     CustomerList customerData = new CustomerList();
 
@@ -78,10 +80,10 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     private Button past30DayButton;
-    
+
     Appointment selAppointment;
-   
-    private static HomeScreenController ActiveHomeScreen=null;
+
+    private static HomeScreenController ActiveHomeScreen = null;
 
     public static HomeScreenController getActiveHomeScreen() {
         return ActiveHomeScreen;
@@ -90,17 +92,23 @@ public class HomeScreenController implements Initializable {
     public static void setActiveHomeScreen(HomeScreenController ActiveHomeScreen) {
         HomeScreenController.ActiveHomeScreen = ActiveHomeScreen;
     }
-            
-    
+
+    Locale mexicoLocale = new Locale("es", "MX");
+
+    //Changes default language english to testing language 
+    //Locale.setDefault(mexicoLocale);
+    Locale currentLocale = Locale.getDefault();
+
     //Stage setting variable for Button actions to select new stages to display
     Stage stage = new Stage();
 
     DBConnect DatabaseConnect = new DBConnect();
 
-    /*************************************
-     *Changing screens and scenes with buttons.
-     ************************************/
-
+    /**
+     * ***********************************
+     * Changing screens and scenes with buttons.
+     ***********************************
+     */
     @FXML
     private void customerButtonAction(ActionEvent event) throws IOException {
         stage = (Stage) customerButton.getScene().getWindow();
@@ -125,63 +133,92 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     private void editApptButtonAction(ActionEvent event) throws IOException {
-        
+
         try {
-        FXMLLoader loader = new FXMLLoader(); //Loads an object hierarchy from an XML document.     
-        loader.setLocation(getClass().getResource("/ViewsAndControllers/EditAppointment.fxml")); //  reference FXML files like this in my controllers                 
-        loader.load();
+            FXMLLoader loader = new FXMLLoader(); //Loads an object hierarchy from an XML document.     
+            loader.setLocation(getClass().getResource("/ViewsAndControllers/EditAppointment.fxml")); //  reference FXML files like this in my controllers                 
+            loader.load();
 
-        EditAppointmentController eac = loader.getController();
-        
-        Parent editAppointmentWindow = loader.getRoot();
-        
-        selAppointment = (Appointment) apptTable.getSelectionModel().getSelectedItem();
+            EditAppointmentController eac = loader.getController();
 
-         
-        eac.transferData(selAppointment.getAppointmentId(), selAppointment.getTitle(), 
-                selAppointment.getDescription(), selAppointment.getType(), 
-                selAppointment.getUrl(), selAppointment.getStart(), selAppointment.getEnd());
-        
-        System.out.println(selAppointment.getAppointmentId()+ selAppointment.getTitle()+ 
-                selAppointment.getDescription()+ selAppointment.getType()+ 
-                selAppointment.getUrl()+ selAppointment.getStart()+ selAppointment.getEnd());
-         
-        
-        Scene scene = new Scene(editAppointmentWindow);
-        stage.setTitle("Edit and Modify Appointment");
-        stage.setScene(scene);
-        stage.showAndWait();
-         }
-        
-       /* stage = (Stage) editApptButton.getScene().getWindow();
+            Parent editAppointmentWindow = loader.getRoot();
+
+            selAppointment = (Appointment) apptTable.getSelectionModel().getSelectedItem();
+
+            eac.transferData(selAppointment.getAppointmentId(), selAppointment.getTitle(),
+                    selAppointment.getDescription(), selAppointment.getType(),
+                    selAppointment.getUrl(), selAppointment.getStart(), selAppointment.getEnd());
+
+            System.out.println(selAppointment.getAppointmentId() + selAppointment.getTitle()
+                    + selAppointment.getDescription() + selAppointment.getType()
+                    + selAppointment.getUrl() + selAppointment.getStart() + selAppointment.getEnd());
+
+            Scene scene = new Scene(editAppointmentWindow);
+            stage.setTitle("Edit and Modify Appointment");
+            stage.setScene(scene);
+            stage.showAndWait();
+        } /* stage = (Stage) editApptButton.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/EditAppointment.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle();
-        stage.setScene(scene);*/
-         catch (Exception ex)
-                 {
-                     
-                 System.out.println("erro: " + ex);
-                 
-                 }
+        stage.setScene(scene);*/ catch (NullPointerException ex) {
+            if (currentLocale != mexicoLocale) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Error");
+                alert.setContentText("Please Select an Appointment to edit");
+                alert.showAndWait();
+                System.out.println("Please Select an Appointment to edit");
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Error");
+                alert.setContentText("Seleccione una cita para editar");
+                alert.showAndWait();
+                System.out.println("Seleccione una cita para editar");
+            }
+            System.out.println("erro: " + ex);
+
+        }
     }
-    
+
     @FXML
     private void delButtonButtonAction(ActionEvent event) throws IOException, SQLException {
-       selAppointment = (Appointment) apptTable.getSelectionModel().getSelectedItem();
-       int apptId = selAppointment.getAppointmentId();
-         
-       DatabaseConnect.delAppointment(apptId);
-       reinitialize();  
-     }
-    
-    
-        
+        try {
+            selAppointment = (Appointment) apptTable.getSelectionModel().getSelectedItem();
+            int apptId = selAppointment.getAppointmentId();
+
+            DatabaseConnect.delAppointment(apptId);
+            reinitialize();
+
+            //  Block of code to try
+        } catch (NullPointerException ex) {
+            if (currentLocale != mexicoLocale) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Error");
+                alert.setContentText("Please Select an Appointment to delete");
+                alert.showAndWait();
+                System.out.println("Please Select an Appointment to delete");
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Error");
+                alert.setContentText("Por favor seleccione una cita para eliminar");
+                alert.showAndWait();
+                System.out.println("Por favor seleccione una cita para eliminar");
+            }
+            System.out.println("erro: " + ex);
+
+        }
+
+    }
+
 //Timestamp T = java.sql.Timestamp.valueOf("2019-01-23 12:00:00");
 //Timestamp EN = java.sql.Timestamp.valueOf("2019-01-23 14:00:00");        
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         setActiveHomeScreen(this);
         reinitialize();
     }
@@ -203,11 +240,10 @@ public class HomeScreenController implements Initializable {
             }
 
             apptTable.setItems(customerData.getAppointment());
-            
+
             int cusId;
-            
-           // customerData.getAppointment().forEach(appointment-> getCustomerName(appointment.getCustomerId()));
-          
+
+            // customerData.getAppointment().forEach(appointment-> getCustomerName(appointment.getCustomerId()));
             customerCol.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
             apptCol.setCellValueFactory(new PropertyValueFactory<>("title"));
             addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -219,6 +255,6 @@ public class HomeScreenController implements Initializable {
                     "Homescreen initialize - user not logged in - fixme force login"
             );
         }
-  
+
     }
 }

@@ -7,6 +7,8 @@ package ViewsAndControllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,63 +27,71 @@ import javafx.stage.Stage;
  * @author Tim
  */
 public class EditCustomerController implements Initializable {
-  
-    
-    
-  /************************************
-  * Variables for Buttons and Field.
-  ************************************/
-    
-    
-    
+
+    /**
+     * **********************************
+     * Variables for Buttons and Field.
+  ***********************************
+     */
     @FXML
     private TextField customerNameText;
-    
+
     @FXML
     private TextField addressText;
-    
+
     @FXML
     private TextField address2Text;
-    
+
     @FXML
     private ChoiceBox citySelection;
-    
+
     @FXML
     private TextField zipCodeText;
-    
+
     @FXML
     private TextField phoneText;
-    
+
     @FXML
     private Button saveButton;
-    
+
     @FXML
     private Button cancelButton;
-         
-    
+
     //Stage setting variable for Button actions to select new stages to display
     Stage stage = new Stage();
-    
-    
-    
-  /************************************
-  * Changing screens and scenes with buttons.
-  ************************************/
-    
-    
-    
+
+    /**
+     * **********************************
+     * Changing screens and scenes with buttons.
+  ***********************************
+     */
     @FXML
     private void cancelButtonAction(ActionEvent event) throws IOException {
-    stage=(Stage)cancelButton.getScene().getWindow();
-    Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/CustomerSceen.fxml"));
-    Scene scene = new Scene(root);
-    stage.setTitle("Tim Aguirre Customer Scheduler App");
-    stage.setScene(scene);
+        stage = (Stage) cancelButton.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/CustomerSceen.fxml"));
+        Scene scene = new Scene(root);
+        stage.setTitle("Tim Aguirre Customer Scheduler App");
+        stage.setScene(scene);
 
- }
+    }
+
+    public void transferData(
+            int appointmentId,
+            String customerName, String address, String address2,
+            String citySelectionText, String zipCode, String phone) {
+
+        customerNameText.setText(String.valueOf(customerName));
+        addressText.setText(String.valueOf(address));
+        address2Text.setText(String.valueOf(address2));
+        zipCodeText.setText(String.valueOf(zipCode));
+        phoneText.setText(String.valueOf(phone));
+        citySelection.setValue(citySelectionText);
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }

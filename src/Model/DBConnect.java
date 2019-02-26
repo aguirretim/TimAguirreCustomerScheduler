@@ -18,16 +18,15 @@ public class DBConnect {
     private Connection con;
     private Statement st;
     private ResultSet rs;
-    
+
     private Connection con2;
     private Statement st2;
     private ResultSet rs2;
-    
+
     private Connection con3;
     private Statement st3;
     private ResultSet rs3;
-    
-  
+
 //    private String userName;
 //    private String password;
 //
@@ -36,8 +35,7 @@ public class DBConnect {
 
         /**
          * ************************************
-         * Connects to MySql Database. 
-         *********************************
+         * Connects to MySql Database. ********************************
          */
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -46,7 +44,7 @@ public class DBConnect {
         } catch (Exception ex) {
             System.out.println("erro: " + ex);
         }
-        
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con2 = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77?zeroDateTimeBehavior=convertToNull", "U04k77", "53688267207");
@@ -54,7 +52,7 @@ public class DBConnect {
         } catch (Exception ex) {
             System.out.println("erro: " + ex);
         }
-        
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con3 = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77?zeroDateTimeBehavior=convertToNull", "U04k77", "53688267207");
@@ -62,8 +60,7 @@ public class DBConnect {
         } catch (Exception ex) {
             System.out.println("erro: " + ex);
         }
-        
-      
+
     }
 
     // public User getUserByUsernamePassword - if not null success
@@ -196,8 +193,7 @@ public class DBConnect {
             );
             String formattedDate = d.format(formatter);
             d.getYear();*/
-            
-            
+
             if (start == null) {
                 start = "0000-00-00";
             }
@@ -216,21 +212,17 @@ public class DBConnect {
             }
             String lastUpdateBy = rs.getString("lastUpdateBy");
             String type = rs.getString("type");
-            
-            String cusName=customerName(customerId);
-            
-            if (customerName(customerId)== null)
-            {
-             cusName="Deleted Customer";
-            }   
-            else {
-                  cusName=cusName;
-                    }
-            int locationId= parseInt(location);
-            String Address=AddressFromId(locationId);
-             
-            
-            
+
+            String cusName = customerName(customerId);
+
+            if (customerName(customerId) == null) {
+                cusName = "Deleted Customer";
+            } else {
+                cusName = cusName;
+            }
+            int locationId = parseInt(location);
+            String Address = AddressFromId(locationId);
+
             /*String query2 = "Use U04k77; "
                     + "SELECT customerName "
                     + "FROM customer "
@@ -261,7 +253,7 @@ public class DBConnect {
                     String type, String url, String start, String end, String createdBy, 
                     String lastUpdate, String lastUpdateBY)
              */
-            results.add(new Appointment(appointmentId, customerId,cusName,Address,
+            results.add(new Appointment(appointmentId, customerId, cusName, Address,
                     userId, title, description, location, contact, type,
                     url, start, end, createdBy, lastUpdate, lastUpdateBy));
         }
@@ -306,9 +298,8 @@ public class DBConnect {
                     + "lastUpdate: " + lastUpdate + " "
                     + "lastUpdateBy: " + lastUpdateBy + " "
             );
-            
 
-            results.add(new Customer(customerId, customerName, addressId, addr,phone, active,
+            results.add(new Customer(customerId, customerName, addressId, addr, phone, active,
                     createdBy, lastUpdate, lastUpdateBy));
         }
 
@@ -431,7 +422,7 @@ public class DBConnect {
             System.out.println("erro: " + ex);
         }
     }
-    
+
     public void delCustomer(int customerId) throws SQLException {
         String query = "DELETE FROM `U04k77`.`customer` "
                 + "WHERE (`customerId` = '" + customerId + "');";
@@ -439,19 +430,18 @@ public class DBConnect {
             int tableRowsAffected = st.executeUpdate(query);
             System.out.println(tableRowsAffected + " rows were deleted. "
                     + "Deleting a Customer with" + query);
-            
+
         } catch (Exception ex) {
             System.out.println("erro: " + ex);
         }
     }
-    
-        public String customerName(int customerId) {
+
+    public String customerName(int customerId) {
         try {
-            String query = "SELECT customerName\n" +
-                            "FROM U04k77.customer\n" +
-                            "Where customerId="+customerId+";";
-            
-            
+            String query = "SELECT customerName\n"
+                    + "FROM U04k77.customer\n"
+                    + "Where customerId=" + customerId + ";";
+
             rs2 = st2.executeQuery(query);
 
             while (rs2.next()) {
@@ -460,42 +450,40 @@ public class DBConnect {
                 System.out.println("customerName: " + customerName);
                 return customerName;
             }
-            
+
         } catch (NumberFormatException | SQLException ex) {
             System.out.println("erro: " + ex);
         }
         return null;
     }
-    
-     public String AddressFromId(int addressId) {
+
+    public String AddressFromId(int addressId) {
         try {
             String query = "SELECT address,address2,postalCode\n "
-                            + "FROM U04k77.address\n"
-                            + "Where addressId ="+addressId+ ";";
-            
-            
+                    + "FROM U04k77.address\n"
+                    + "Where addressId =" + addressId + ";";
+
             rs3 = st3.executeQuery(query);
 
             while (rs3.next()) {
-                String Address = rs3.getString("address")+" "+rs3.getString("address2")+" "+rs3.getString("postalCode");
+                String Address = rs3.getString("address") + " " + rs3.getString("address2") + " " + rs3.getString("postalCode");
 
                 System.out.println("Address: " + Address);
                 return Address;
             }
-            
+
         } catch (NumberFormatException | SQLException ex) {
             System.out.println("erro: " + ex);
         }
         return null;
     }
-    
-          public String phoneFromAddressId(int addressId) {
+
+    public String phoneFromAddressId(int addressId) {
         try {
             String query = "SELECT phone\n "
-                            + "FROM U04k77.address\n"
-                            + "Where addressId ="+addressId+ ";";
-            
-            
+                    + "FROM U04k77.address\n"
+                    + "Where addressId =" + addressId + ";";
+
             rs2 = st2.executeQuery(query);
 
             while (rs2.next()) {
@@ -503,30 +491,35 @@ public class DBConnect {
 
                 System.out.println("phone: " + phone);
                 return phone;
+                
             }
-            
+
         } catch (NumberFormatException | SQLException ex) {
             System.out.println("erro: " + ex);
         }
+        
         return null;
+        
     }
+
     
+
 
     public void editAppointment(int appointmentId, String title,
             String description, String type, String url, String start, String end,
-            String lastUpdate,String lastUpdateBy )throws SQLException {
-   
-            String query = "UPDATE `U04k77`.`appointment` SET "                  
-                    + "`title` = '"+title+"', "
-                    + "`description` = '"+description+"', "
-                    + "`type` = '"+type+"', "
-                    + "`url` = '"+url+"', "
-                    + "`start` = '"+start+"', "
-                    + "`end` = '"+end+"', "
-                    + "`lastUpdate` = '"+lastUpdate+"', "                   
-                    + "`lastUpdateBy` = '"+lastUpdateBy+"' "
-                    + "WHERE (`appointmentId` = '"+appointmentId+"');";
-            
+            String lastUpdate, String lastUpdateBy) throws SQLException {
+
+        String query = "UPDATE `U04k77`.`appointment` SET "
+                + "`title` = '" + title + "', "
+                + "`description` = '" + description + "', "
+                + "`type` = '" + type + "', "
+                + "`url` = '" + url + "', "
+                + "`start` = '" + start + "', "
+                + "`end` = '" + end + "', "
+                + "`lastUpdate` = '" + lastUpdate + "', "
+                + "`lastUpdateBy` = '" + lastUpdateBy + "' "
+                + "WHERE (`appointmentId` = '" + appointmentId + "');";
+
         int tableRowsAffected = st.executeUpdate(query);
 
         System.out.println(tableRowsAffected + " rows were edited. "
