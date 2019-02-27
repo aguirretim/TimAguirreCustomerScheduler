@@ -36,8 +36,7 @@ public class HomeScreenController implements Initializable {
 
     /**
      * **********************************
-     * Variables for Buttons and Field. 
-     **********************************
+     * Variables for Buttons and Field. *********************************
      */
     //The inventory object that contains all of the parts and product listed inside
     CustomerList customerData = new CustomerList();
@@ -107,7 +106,7 @@ public class HomeScreenController implements Initializable {
     /**
      * ***********************************
      * Changing screens and scenes with buttons.
-     ***********************************
+     * **********************************
      */
     @FXML
     private void customerButtonAction(ActionEvent event) throws IOException {
@@ -217,6 +216,7 @@ public class HomeScreenController implements Initializable {
 //Timestamp T = java.sql.Timestamp.valueOf("2019-01-23 12:00:00");
 //Timestamp EN = java.sql.Timestamp.valueOf("2019-01-23 14:00:00");        
     @Override
+    
     public void initialize(URL url, ResourceBundle rb) {
 
         setActiveHomeScreen(this);

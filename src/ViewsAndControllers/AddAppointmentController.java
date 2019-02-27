@@ -101,6 +101,8 @@ public class AddAppointmentController implements Initializable {
     //Changes default language english to testing language 
     //Locale.setDefault(mexicoLocale);
     Locale currentLocale = Locale.getDefault();
+    
+    
 
     /**
      * ************************************

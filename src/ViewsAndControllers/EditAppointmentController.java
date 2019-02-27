@@ -46,8 +46,8 @@ public class EditAppointmentController implements Initializable {
 
     /**
      * **********************************
-     * Variables for Buttons and Field. **********************************
-     */
+     * Variables for Buttons and Field. 
+     ***********************************/
     @FXML
     private TextField titleText;
 

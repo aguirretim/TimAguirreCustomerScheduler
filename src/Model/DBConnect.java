@@ -27,7 +27,6 @@ public class DBConnect {
     private Statement st3;
     private ResultSet rs3;
 
-
 //    private String userName;
 //    private String password;
 //
@@ -36,9 +35,8 @@ public class DBConnect {
 
         /**
          * ************************************
-         * Connects to MySql Database. 
-         ********************************/
-        
+         * Connects to MySql Database. ******************************
+         */
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77?zeroDateTimeBehavior=convertToNull", "U04k77", "53688267207");
@@ -62,7 +60,6 @@ public class DBConnect {
         } catch (Exception ex) {
             System.out.println("erro: " + ex);
         }
-        
 
     }
 
@@ -224,7 +221,7 @@ public class DBConnect {
                 cusName = cusName;
             }
             int locationId = parseInt(location);
-            String Address = AddressFromId(locationId);
+            String Address = fullAddressFromId(locationId);
 
             /*String query2 = "Use U04k77; "
                     + "SELECT customerName "
@@ -269,7 +266,11 @@ public class DBConnect {
         // create a new Arraylist to return the results of the query
         List<Customer> results = new ArrayList<>();
 
-        String query = "SELECT * FROM U04k77.customer;";
+        String query = "SELECT customer.*, address.address,address.address2,address.postalCode,address.phone, city.city\n"
+                + "FROM customer\n"
+                + "Left JOIN address  ON address.addressId=customer.addressId\n"
+                + "Left JOIN city  ON city.cityId=address.cityId\n"
+                + "GROUP BY customer.customerId";
         rs = st.executeQuery(query);
         System.out.println("Record from Database");
         while (rs.next()) {
@@ -288,8 +289,11 @@ public class DBConnect {
                 lastUpdate = "0000-00-00";
             }
             String lastUpdateBy = rs.getString("lastUpdateBy");
-            String addr = AddressFromId(addressId);
-            String phone = phoneFromAddressId(addressId);
+            String addr = rs.getString("address")
+                    + " " + rs.getString("address2")
+                    + " " + rs.getString("city")
+                    + " " + rs.getString("postalCode");
+            String phone = rs.getString("phone");
             System.out.println("Customer ID: " + customerId + " "
                     + "customerName " + customerName + " "
                     + "addessId: " + addressId + " "
@@ -319,7 +323,7 @@ public class DBConnect {
             int cityId = rs2.getInt("cityId");
             String city = rs2.getString("city");
             results.add(new City(cityId, city));
-            
+
         }
         return results;
     }
@@ -333,7 +337,6 @@ public class DBConnect {
                 // codes
                 System.out.println(cityId);
                 System.out.println(var.toString());
-                            
 
                 return var.getCity();
             }
@@ -492,9 +495,49 @@ public class DBConnect {
         return null;
     }
 
-    public String AddressFromId(int addressId) {
+    public String fullAddressFromId(int addressId) {
         try {
             String query = "SELECT address,address2,cityId,postalCode\n "
+                    + "FROM U04k77.address\n"
+                    + "Where addressId =" + addressId + ";";
+
+            rs3 = st3.executeQuery(query);
+
+            while (rs3.next()) {
+                String Address = rs3.getString("address") + " " + rs3.getString("address2") + " " + getCityByCityId(rs3.getInt("cityId")) + " " + rs3.getString("postalCode");
+                System.out.println("Address: " + Address);
+                return Address;
+            }
+
+        } catch (NumberFormatException | SQLException ex) {
+            System.out.println("erro: " + ex);
+        }
+        return null;
+    }
+
+    public String address1FromId(int addressId) {
+        try {
+            String query = "SELECT address,\n "
+                    + "FROM U04k77.address\n"
+                    + "Where addressId =" + addressId + ";";
+
+            rs3 = st3.executeQuery(query);
+
+            while (rs3.next()) {
+                String Address = rs3.getString("address") + " " + rs3.getString("address2") + " " + getCityByCityId(rs3.getInt("cityId")) + " " + rs3.getString("postalCode");
+                System.out.println("Address: " + Address);
+                return Address;
+            }
+
+        } catch (NumberFormatException | SQLException ex) {
+            System.out.println("erro: " + ex);
+        }
+        return null;
+    }
+
+    public String address2FromId(int addressId) {
+        try {
+            String query = "SELECT address2,\n "
                     + "FROM U04k77.address\n"
                     + "Where addressId =" + addressId + ";";
 

@@ -5,8 +5,10 @@
  */
 package ViewsAndControllers;
 
+import Model.DBConnect;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -30,8 +32,7 @@ public class EditCustomerController implements Initializable {
 
     /**
      * **********************************
-     * Variables for Buttons and Field.
-  ***********************************
+     * Variables for Buttons and Field. **********************************
      */
     @FXML
     private TextField customerNameText;
@@ -56,15 +57,24 @@ public class EditCustomerController implements Initializable {
 
     @FXML
     private Button cancelButton;
+    
+    int cusId;
 
     //Stage setting variable for Button actions to select new stages to display
     Stage stage = new Stage();
 
+    DBConnect DatabaseConnect = new DBConnect();
+
+    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
     /**
      * **********************************
      * Changing screens and scenes with buttons.
-  ***********************************
+     * **********************************
      */
+    
+    
+    
     @FXML
     private void cancelButtonAction(ActionEvent event) throws IOException {
         stage = (Stage) cancelButton.getScene().getWindow();
@@ -76,7 +86,7 @@ public class EditCustomerController implements Initializable {
     }
 
     public void transferData(
-            int appointmentId,
+            int customerId,
             String customerName, String address, String address2,
             String citySelectionText, String zipCode, String phone) {
 
@@ -86,6 +96,8 @@ public class EditCustomerController implements Initializable {
         zipCodeText.setText(String.valueOf(zipCode));
         phoneText.setText(String.valueOf(phone));
         citySelection.setValue(citySelectionText);
+        
+        cusId=customerId;
 
     }
 
