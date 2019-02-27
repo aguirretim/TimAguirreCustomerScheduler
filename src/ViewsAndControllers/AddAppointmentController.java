@@ -14,7 +14,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -22,10 +21,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -45,8 +41,11 @@ public class AddAppointmentController implements Initializable {
 
     /**
      * ***********************************
-     * Variables for Buttons and Field. *********************************
-     */
+     * Variables for Buttons and Field. 
+     **********************************/
+    
+    
+    
     @FXML
     private TextField titleText;
 
@@ -117,7 +116,7 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private void saveButtonAction(ActionEvent event) throws IOException {
 
-        System.out.println(timestamp.toString());
+  
 
         // first try to validate the form
         /*if(!validateForm()) {
@@ -158,7 +157,7 @@ public class AddAppointmentController implements Initializable {
 
                 // Save the appointment 
                 // Close the window 
-                stage = (Stage) cancelButton.getScene().getWindow();
+                stage = (Stage) saveButton.getScene().getWindow();
                 stage.hide();
                 HomeScreenController.getActiveHomeScreen().reinitialize();
 

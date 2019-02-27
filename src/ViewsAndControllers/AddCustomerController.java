@@ -12,11 +12,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import static java.util.Collections.list;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,8 +34,11 @@ public class AddCustomerController implements Initializable {
 
     /**
      * ***********************************
-     * Variables for Buttons and Field. **********************************
-     */
+     * Variables for Buttons and Field. 
+     ***********************************/
+    
+    
+    
     @FXML
     private TextField customerNameText;
 
@@ -95,7 +95,7 @@ public class AddCustomerController implements Initializable {
             int active = 1;
             int city;
 
-            city = getCityIdByCity(citySelection.getValue().toString()).intValue();
+            city = getCityIdByCity(citySelection.getValue().toString());
             String zipCode = zipCodeText.getText();
             String phone = phoneText.getText();
 
@@ -122,7 +122,16 @@ public class AddCustomerController implements Initializable {
             // Close the window 
             stage = (Stage) saveButton.getScene().getWindow();
             stage.hide();
-            CustomerSceenController.getActiveCustomerScreen().reinitialize();
+            try {
+                  //  Block of code to try
+                  CustomerSceenController.getActiveCustomerScreen().reinitializer();
+            }
+            catch(Exception e) {
+                  //  Block of code to handle errors
+                  System.out.println("error: " + e);
+                  
+            }
+            
 
         } catch (SQLException e) {
             // possibly show a popup with a try again or cancel option
@@ -130,7 +139,7 @@ public class AddCustomerController implements Initializable {
             System.out.println("error: " + e);
 
         }
-
+        
     }
 
     public Integer getCityIdByCity(String cityName) throws SQLException {

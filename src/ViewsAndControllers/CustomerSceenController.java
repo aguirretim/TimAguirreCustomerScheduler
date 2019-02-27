@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,8 +34,8 @@ public class CustomerSceenController implements Initializable {
 
     /**
      * ***********************************
-     * Variables for Buttons and Field.
-     ***********************************
+     * Variables for Buttons and Field. 
+     * 
      */
     //The inventory object that contains all of the parts and product listed inside
     CustomerList customerData = new CustomerList();
@@ -73,7 +71,7 @@ public class CustomerSceenController implements Initializable {
 
     Customer selCustomer;
 
-    private static CustomerSceenController ActiveCustomerScreen = null;
+    private static CustomerSceenController ActiveCustomerScreen;
 
     public static CustomerSceenController getActiveCustomerScreen() {
         return ActiveCustomerScreen;
@@ -86,7 +84,7 @@ public class CustomerSceenController implements Initializable {
     /**
      * ***********************************
      * Changing screens and scenes with buttons.
-     ***********************************
+     * **********************************
      */
     @FXML
     private void apptButtonAction(ActionEvent event) throws IOException {
@@ -112,24 +110,21 @@ public class CustomerSceenController implements Initializable {
     @FXML
     private void editCustomerButtonAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(); //Loads an object hierarchy from an XML document.     
-            loader.setLocation(getClass().getResource("/ViewsAndControllers/EditCustomer.fxml")); //  reference FXML files like this in my controllers                 
-            loader.load();
+        loader.setLocation(getClass().getResource("/ViewsAndControllers/EditCustomer.fxml")); //  reference FXML files like this in my controllers                 
+        loader.load();
 
-            EditCustomerController ecc = loader.getController();
+        EditCustomerController ecc = loader.getController();
 
-            Parent editCustomerWindow = loader.getRoot();
+        Parent editCustomerWindow = loader.getRoot();
 
-        
         selCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
-        
-        
+
         //ecc.transferData(0, customerName, address, address2, citySelectionText, zipCode, phone);
-        
         stage = (Stage) editCustomerButton.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/EditCustomer.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Edit and Modify Customer");
-        stage.setScene(scene);    
+        stage.setScene(scene);
     }
 
     @FXML
@@ -137,30 +132,41 @@ public class CustomerSceenController implements Initializable {
         selCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
         int custId = selCustomer.getCustomerId();
         DatabaseConnect.delCustomer(custId);
-        reinitialize();
+        reinitializer();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        reinitialize();
+        setActiveCustomerScreen(this);
+        reinitializer();
     }
 
-    public void reinitialize() {
-        this.customerData.clearCustomers();
-        try {
-            // TODO
-            this.customerData.addCustomers(DatabaseConnect.getAllCustomers());
-        } catch (Exception e) {
-            // print some msg or popup some error alert box
-            throw new UnsupportedOperationException(
-                    "Homescreen initialize - caught Exception", e);
-        }
-        customerTable.setItems(customerData.getCustomer());
+    public void reinitializer() {
+        if (Login.isLoggedIn()) {
+            // codes
+            this.customerData.clearCustomers();
+            try {
+                // TODO
+                this.customerData.addCustomers(DatabaseConnect.getAllCustomers());
+            } catch (Exception e) {
+                // print some msg or popup some error alert box
+                throw new UnsupportedOperationException(
+                        "Customerscreen initialize - caught Exception", e);
+            }
+            customerTable.setItems(customerData.getCustomer());
 
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        address.setCellValueFactory(new PropertyValueFactory<>("address"));
-        phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+            nameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+            address.setCellValueFactory(new PropertyValueFactory<>("address"));
+            phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        } else {
+            // some other code
+            // prompt the user to log in
+            throw new UnsupportedOperationException(
+                    "Customerscreen initialize - user not logged in - fixme force login"
+            );
+
+        }
+
     }
 
 }

@@ -232,7 +232,7 @@ public class HomeScreenController implements Initializable {
                 this.customerData.addAppointments(
                         DatabaseConnect.getAllAppointmentsByUserId(Login.getLoggedInUserId()));
 
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 // print some msg or popup some error alert box
                 throw new UnsupportedOperationException(
                         "Homescreen initialize - caught Exception", e
