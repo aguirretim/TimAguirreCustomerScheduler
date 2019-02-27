@@ -140,6 +140,7 @@ public class CustomerSceenController implements Initializable {
         selCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
         int custId = selCustomer.getCustomerId();
         DatabaseConnect.delCustomer(custId);
+        DatabaseConnect.delAddress(selCustomer.getAddressId());
         reinitializer();
     }
 

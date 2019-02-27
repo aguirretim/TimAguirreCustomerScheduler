@@ -467,6 +467,20 @@ public class DBConnect {
         }
     }
 
+    public void delAddress(int addressId) throws SQLException {
+        String query = "DELETE FROM `U04k77`.`address` WHERE (`addressId` = '"+
+                addressId+"');";
+        try {
+            int tableRowsAffected = st.executeUpdate(query);
+            System.out.println(tableRowsAffected + " rows were deleted. "
+                    + "Deleting a address with" + query);
+
+        } catch (Exception ex) {
+            System.out.println("erro: " + ex);
+        }
+    }
+    
+    
     public void editCustomer(int customerId, String customerName) {
         String query = "UPDATE `U04k77`.`customer` SET `customerName` = "
                 + "'" + customerName + "', `lastUpdate` = '"
