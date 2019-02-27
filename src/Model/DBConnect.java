@@ -293,20 +293,13 @@ public class DBConnect {
                     + " " + rs.getString("address2")
                     + " " + rs.getString("city")
                     + " " + rs.getString("postalCode");
+            String address1 = rs.getString("address");
+            String address2 = rs.getString("address2");
+            String postalCode = rs.getString("postalCode");
+            String city = rs.getString("city");
             String phone = rs.getString("phone");
-            System.out.println("Customer ID: " + customerId + " "
-                    + "customerName " + customerName + " "
-                    + "addessId: " + addressId + " "
-                    + "addess: " + addr + " "
-                    + "phone: " + phone + " "
-                    + "active: " + active + " "
-                    + "createDate: " + createDate + " "
-                    + "createdBy: " + createdBy + " "
-                    + "lastUpdate: " + lastUpdate + " "
-                    + "lastUpdateBy: " + lastUpdateBy + " "
-            );
 
-            results.add(new Customer(customerId, customerName, addressId, addr, phone, active,
+            results.add(new Customer(customerId, customerName, addressId, addr, address1, address2, postalCode, city, phone, active,
                     createdBy, lastUpdate, lastUpdateBy));
         }
 
@@ -468,6 +461,43 @@ public class DBConnect {
             int tableRowsAffected = st.executeUpdate(query);
             System.out.println(tableRowsAffected + " rows were deleted. "
                     + "Deleting a Customer with" + query);
+
+        } catch (Exception ex) {
+            System.out.println("erro: " + ex);
+        }
+    }
+
+    public void editCustomer(int customerId, String customerName) {
+        String query = "UPDATE `U04k77`.`customer` SET `customerName` = "
+                + "'" + customerName + "', `lastUpdate` = '"
+                + new Timestamp(System.currentTimeMillis()) + "' "
+                + "WHERE (`customerId` = '" + customerId + "');";
+        try {
+            int tableRowsAffected = st.executeUpdate(query);
+            System.out.println(tableRowsAffected + " rows were edited. "
+                    + "Edting a Customer with" + query);
+
+        } catch (Exception ex) {
+            System.out.println("erro: " + ex);
+        }
+    }
+
+    public void editAddress(int addressId, String address, String address2, int cityId,
+            String postalCode, String phone, String lastUpdate, String lastUpdateBy) {
+        //Code for Method
+        String query = "UPDATE `U04k77`.`address` SET "
+                + "`address` = '" + address + "', "
+                + "`address2` = '" + address2 + "', "
+                + "`cityId` = '" + cityId + "', "
+                + "`postalCode` = '" + postalCode + "', "
+                + "`phone` = '" + phone + "', "
+                + "`lastUpdate` = '" + lastUpdate + "', "
+                + "`lastUpdateBy` = '" + lastUpdateBy + "' "
+                + "WHERE (`addressId` = '" + addressId + "');";
+        try {
+            int tableRowsAffected = st.executeUpdate(query);
+            System.out.println(tableRowsAffected + " rows were edited. "
+                    + "editing a address with" + query);
 
         } catch (Exception ex) {
             System.out.println("erro: " + ex);

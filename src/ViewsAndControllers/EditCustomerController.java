@@ -5,12 +5,16 @@
  */
 package ViewsAndControllers;
 
+import Model.City;
 import Model.DBConnect;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,6 +63,7 @@ public class EditCustomerController implements Initializable {
     private Button cancelButton;
     
     int cusId;
+    int addrId;
 
     //Stage setting variable for Button actions to select new stages to display
     Stage stage = new Stage();
@@ -84,9 +89,48 @@ public class EditCustomerController implements Initializable {
         stage.setScene(scene);
 
     }
+    
+    @FXML
+    private void saveButtonAction(ActionEvent event) throws IOException {
+try {
+            int userId = Login.getLoggedInUserId();
+            String customerName = customerNameText.getText();
+            int addressId=addrId;
+            String address = addressText.getText();
+            String address2 = address2Text.getText();
+            int active = 1;
+            int city;
+
+            city = getCityIdByCity(citySelection.getValue().toString());
+            String zipCode = zipCodeText.getText();
+            String phone = phoneText.getText();
+
+            String lastUpdate = timestamp.toString();
+            String lastUpdateby = Login.getLoggedInUser().getUserName();
+
+            
+
+            DatabaseConnect.editCustomer(cusId, customerName);
+            DatabaseConnect.editAddress(addressId, address, address2, city, 
+                    zipCode, phone, lastUpdate, lastUpdateby);
+
+            // Save the appointment 
+            // Close the window 
+            stage = (Stage) saveButton.getScene().getWindow();
+            stage.hide();
+            CustomerSceenController.getActiveCustomerScreen().reinitializer();
+
+        } catch (SQLException e) {
+            // possibly show a popup with a try again or cancel option
+
+            System.out.println("error: " + e);
+
+        }
+
+    }
 
     public void transferData(
-            int customerId,
+            int customerId,int addressId,
             String customerName, String address, String address2,
             String citySelectionText, String zipCode, String phone) {
 
@@ -95,15 +139,42 @@ public class EditCustomerController implements Initializable {
         address2Text.setText(String.valueOf(address2));
         zipCodeText.setText(String.valueOf(zipCode));
         phoneText.setText(String.valueOf(phone));
-        citySelection.setValue(citySelectionText);
+        citySelection.setValue(String.valueOf(citySelectionText));
         
         cusId=customerId;
+        addrId=addressId;
+    }
+    
+    
+        public Integer getCityIdByCity(String cityName) throws SQLException {
 
+        List<City> citylist2 = new ArrayList<>();
+        citylist2 = DatabaseConnect.getAllCitys();
+        for (City var : citylist2) {
+            if (var.getCity().contains(cityName)) {
+                // codes
+                return var.getCityId();
+            }
+        }
+        return null;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        List<City> citylist = new ArrayList<>();
+        try {
+
+            citylist = DatabaseConnect.getAllCitys();
+        } catch (SQLException ex) {
+            System.out.println("error: " + ex);
+        }
+
+        for (City var : citylist) {
+            citySelection.getItems().addAll(var.getCity());
+        }
+        
     }
 
 }

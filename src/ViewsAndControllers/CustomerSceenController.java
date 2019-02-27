@@ -117,26 +117,22 @@ public class CustomerSceenController implements Initializable {
 
         Parent editCustomerWindow = loader.getRoot();
 
-        selCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+        selCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();        
         
-         /*public void transferData(
-            int appointmentId,
-            String customerName, String address, String address2,
-            String citySelectionText, String zipCode, String phone) {*/
-        
-       /* ecc.transferData(selCustomer.getCustomerId(), 
+       ecc.transferData(selCustomer.getCustomerId(),
+                selCustomer.getAddressId(),
                 selCustomer.getCustomerName(), 
-                DatabaseConnect.address1FromId(selCustomer.getAddressId()), 
-                DatabaseConnect.address2FromId(selCustomer.getAddressId()), 
-                selCustomer., 
-                zipCode, 
-                phone);*/
+                selCustomer.getAddress1(), 
+                selCustomer.getAddress2(), 
+                selCustomer.getCity(), 
+                selCustomer.getPostalCode(), 
+                selCustomer.getPhone());
         
-        stage = (Stage) editCustomerButton.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/EditCustomer.fxml"));
-        Scene scene = new Scene(root);
+        
+        Scene scene = new Scene(editCustomerWindow);
         stage.setTitle("Edit and Modify Customer");
         stage.setScene(scene);
+        stage.showAndWait();
     }
 
     @FXML

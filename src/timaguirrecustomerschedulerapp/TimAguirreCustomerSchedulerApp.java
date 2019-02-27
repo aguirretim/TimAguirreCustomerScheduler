@@ -32,11 +32,7 @@ public class TimAguirreCustomerSchedulerApp extends Application {
  System.out.println(timestamp.toString());
  //System.out.println(LocalDate.MAX.toString());
  
- 
  }
-
- 
- 
  public static void main(String[] args) {
   launch(args);
 
