@@ -480,6 +480,20 @@ public class DBConnect {
         }
     }
     
+    public void delAppointmentByCustomerId(int customerId) throws SQLException {
+        String query = "DELETE FROM `U04k77`.`appointment` "
+                + "WHERE (`customerId` = '"+customerId+"');";
+        try {
+            int tableRowsAffected = st.executeUpdate(query);
+            System.out.println(tableRowsAffected + " rows were deleted. "
+                    + "Deleting a address with" + query);
+
+        } catch (Exception ex) {
+            System.out.println("erro: " + ex);
+        }
+    }
+    
+    
     
     public void editCustomer(int customerId, String customerName) {
         String query = "UPDATE `U04k77`.`customer` SET `customerName` = "

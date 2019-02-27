@@ -141,6 +141,7 @@ public class CustomerSceenController implements Initializable {
         int custId = selCustomer.getCustomerId();
         DatabaseConnect.delCustomer(custId);
         DatabaseConnect.delAddress(selCustomer.getAddressId());
+        DatabaseConnect.delAppointmentByCustomerId(custId);
         reinitializer();
     }
 
