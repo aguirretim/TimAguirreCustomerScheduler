@@ -34,11 +34,8 @@ public class AddCustomerController implements Initializable {
 
     /**
      * ***********************************
-     * Variables for Buttons and Field. 
-     ***********************************/
-    
-    
-    
+     * Variables for Buttons and Field. *********************************
+     */
     @FXML
     private TextField customerNameText;
 
@@ -122,16 +119,7 @@ public class AddCustomerController implements Initializable {
             // Close the window 
             stage = (Stage) saveButton.getScene().getWindow();
             stage.hide();
-            try {
-                  //  Block of code to try
-                  CustomerSceenController.getActiveCustomerScreen().reinitializer();
-            }
-            catch(Exception e) {
-                  //  Block of code to handle errors
-                  System.out.println("error: " + e);
-                  
-            }
-            
+            CustomerSceenController.getActiveCustomerScreen().reinitializer();
 
         } catch (SQLException e) {
             // possibly show a popup with a try again or cancel option
@@ -139,7 +127,7 @@ public class AddCustomerController implements Initializable {
             System.out.println("error: " + e);
 
         }
-        
+
     }
 
     public Integer getCityIdByCity(String cityName) throws SQLException {
@@ -154,7 +142,7 @@ public class AddCustomerController implements Initializable {
         }
         return null;
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         List<City> citylist = new ArrayList<>();
