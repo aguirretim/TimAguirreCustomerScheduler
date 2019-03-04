@@ -8,11 +8,19 @@ package ViewsAndControllers;
 import Model.Appointment;
 import Model.CustomerList;
 import Model.DBConnect;
+import static Model.DBConnect.convertToUtc;
+import static Model.DBConnect.dateTimeConverter;
+import static Model.DBConnect.fromUTC;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +29,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -80,6 +89,15 @@ public class HomeScreenController implements Initializable {
     @FXML
     private Button past30DayButton;
 
+    @FXML
+    private Button filterButton;
+
+    @FXML
+    private DatePicker startPicker;
+    
+    @FXML
+    private DatePicker endPicker;
+
     Appointment selAppointment;
 
     private static HomeScreenController ActiveHomeScreen = null;
@@ -117,6 +135,17 @@ public class HomeScreenController implements Initializable {
         stage.setScene(scene);
     }
 
+    @FXML
+    private void filterButtonAction(ActionEvent event) throws IOException {
+        
+        
+        System.out.println("Checking Appointments in the range of " + startPicker.getValue().toString() + " and "+endPicker.getValue().toString());
+       
+        apptTable.setItems(getAllDatesInRange(startPicker.getValue().toString()+" 00:00:00",endPicker.getValue().toString()+" 00:00:00"));
+        
+        
+    }
+    
     @FXML
     private void addApptButtonAction(ActionEvent event) throws IOException {
         // stage = (Stage) addApptButton.getScene().getWindow();
@@ -213,10 +242,36 @@ public class HomeScreenController implements Initializable {
 
     }
 
+    public ObservableList<Appointment> getAllDatesInRange(String Date1, String Date2) {
+        
+        
+        LocalDateTime DateA = dateTimeConverter((Date1));
+        LocalDateTime DateB = dateTimeConverter((Date2));
+        
+        ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
+        List<Appointment> filterAppointmentList = new ArrayList<Appointment>();
+        
+        for (Appointment var
+                : customerData.getAppointment()) {
+            if (dateTimeConverter(var.getStart()).isAfter(DateA)
+                    || dateTimeConverter(var.getStart()).equals(DateA)
+                    && dateTimeConverter(var.getEnd()).isBefore(DateB)
+                    || dateTimeConverter(var.getEnd()).equals(DateB)) {
+                // codes
+                System.out.println(dateTimeConverter(var.getStart()));
+                System.out.println(dateTimeConverter(var.getEnd()));
+                filterAppointmentList.add(var);
+                filteredAppointments.addAll(filterAppointmentList);
+                
+            }
+        }
+        return filteredAppointments;
+    }
+
 //Timestamp T = java.sql.Timestamp.valueOf("2019-01-23 12:00:00");
 //Timestamp EN = java.sql.Timestamp.valueOf("2019-01-23 14:00:00");        
     @Override
-    
+
     public void initialize(URL url, ResourceBundle rb) {
 
         setActiveHomeScreen(this);
@@ -227,6 +282,7 @@ public class HomeScreenController implements Initializable {
         if (Login.isLoggedIn()) {
             //Clears the table to refresh it
             this.customerData.clearAppointments();
+            
             try {
                 //Adds appointments to table list by User who is logged in ID
                 this.customerData.addAppointments(
@@ -237,7 +293,7 @@ public class HomeScreenController implements Initializable {
                 throw new UnsupportedOperationException(
                         "Homescreen initialize - caught Exception", e
                 );
-                
+
             }
 
             apptTable.setItems(customerData.getAppointment());
@@ -245,11 +301,16 @@ public class HomeScreenController implements Initializable {
             int cusId;
 
             // customerData.getAppointment().forEach(appointment-> getCustomerName(appointment.getCustomerId()));
-            customerCol.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
-            apptCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-            addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
-            startCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-            endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+            customerCol.setCellValueFactory(
+                    new PropertyValueFactory<>("CustomerName"));
+            apptCol.setCellValueFactory(
+                    new PropertyValueFactory<>("title"));
+            addressCol.setCellValueFactory(
+                    new PropertyValueFactory<>("address"));
+            startCol.setCellValueFactory(
+                    new PropertyValueFactory<>("start"));
+            endCol.setCellValueFactory(
+                    new PropertyValueFactory<>("end"));
         } else {
             // prompt the user to log in
             throw new UnsupportedOperationException(

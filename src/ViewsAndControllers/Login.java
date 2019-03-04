@@ -118,7 +118,7 @@ public class Login implements Initializable {
                 stage.setTitle("Tim Aguirre Customer Scheduler App");
 
                 stage.setScene(scene);
-                stage.showAndWait();
+                
 
             } else {
                 if (currentLocale == mexicoLocale) {

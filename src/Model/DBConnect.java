@@ -161,11 +161,6 @@ public class DBConnect {
         return "Error occured No Customer name found";
     }
 
-    // getting all the appoitments in the databse
-    // public List<Appointment> getAllAppointments()
-    // appontments = dbConn.getAllAppointments()
-    // myObservableList.clear()
-    // myObservableList.addAll(appointments)
     public List<Appointment> getAllAppointmentsByUserId(
             int LoggedInUserId) throws SQLException {
 
@@ -187,14 +182,6 @@ public class DBConnect {
             String contact = rs.getString("contact");
             String url = rs.getString("url");
             String start = rs.getString("Start");
-            /*
-            Timestamp ts = rs.getTimestamp("start");
-            LocalDateTime d = ts.toLocalDateTime();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
-                    "yyyy-MM-dd: mm:ss"
-            );
-            String formattedDate = d.format(formatter);
-            d.getYear();*/
 
             if (start == null) {
                 start = "0000-00-00";
@@ -225,13 +212,6 @@ public class DBConnect {
             int locationId = parseInt(location);
             String Address = fullAddressFromId(locationId);
 
-            /*String query2 = "Use U04k77; "
-                    + "SELECT customerName "
-                    + "FROM customer "
-                    + "Where customer.customerId = "+ customerId; 
-            rs = st.executeQuery(query2);
-            
-            String cusName = rs.getString("customerName");*/
             System.out.println("appointmentId: " + appointmentId + " "
                     + "Customer ID: " + customerId + " "
                     + "Customer Name: " + cusName + " "
@@ -249,10 +229,6 @@ public class DBConnect {
                     + "lastUpdateBy: " + lastUpdateBy + " "
                     + "type: " + type);
 
-            // LocalDateTime startDate = dateTimeConverter(start);
-            //LocalDateTime endDate = dateTimeConverter(end);
-            //startDate=convertFromUtcToLocal(startDate);
-            //endDate=convertFromUtcToLocal(endDate);
             start = fromUTC(start);
             end = fromUTC(end);
             createDate = fromUTC(createDate);
@@ -266,7 +242,7 @@ public class DBConnect {
         return results;
     }
 
-    public LocalDateTime convertFromUtcToLocal(LocalDateTime time) {
+    public static LocalDateTime convertFromUtcToLocal(LocalDateTime time) {
         return time.atZone(ZoneId.of("Z")).withZoneSameInstant(ZoneOffset.systemDefault()).toLocalDateTime();
     }
 
@@ -403,12 +379,12 @@ public class DBConnect {
                 + "Creating an appointment with" + query);
     }
 
-    public LocalDateTime dateTimeConverter(String Date) {
+    public static LocalDateTime dateTimeConverter(String Date) {
         DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDateTime.parse(Date.substring(0, 19), outputFormat);
     }
 
-    public LocalDateTime convertToUtc(LocalDateTime time) {
+    public static LocalDateTime convertToUtc(LocalDateTime time) {
         return time.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
     }
 
