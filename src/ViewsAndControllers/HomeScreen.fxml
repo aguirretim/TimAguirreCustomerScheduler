@@ -29,7 +29,7 @@
             <Blend />
          </effect>
       </Label>
-      <Button fx:id="customerButton" layoutX="29.0" layoutY="86.0" mnemonicParsing="false" onAction="#customerButtonAction" prefHeight="58.0" prefWidth="89.0" text="Customers" />
+      <Button fx:id="customerButton" layoutX="29.0" layoutY="87.0" mnemonicParsing="false" onAction="#customerButtonAction" prefHeight="58.0" prefWidth="89.0" text="Customers" />
       <Button fx:id="addApptButton" layoutX="29.0" layoutY="169.0" mnemonicParsing="false" onAction="#addApptButtonAction" prefHeight="58.0" prefWidth="89.0" text="Create New Appointments" wrapText="true">
          <font>
             <Font size="11.0" />

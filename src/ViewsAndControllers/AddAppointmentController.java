@@ -182,7 +182,7 @@ public class AddAppointmentController implements Initializable {
 
     public LocalDateTime dateTimeConverter(String Date) {
         DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        
 
         return LocalDateTime.parse(Date, outputFormat);
 

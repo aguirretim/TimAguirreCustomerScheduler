@@ -2,12 +2,14 @@ package Model;
 
 import static java.lang.Integer.parseInt;
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.text.DateFormatter;
+import java.util.TimeZone;
 
 /**
  *
@@ -35,7 +37,7 @@ public class DBConnect {
 
         /**
          * ************************************
-         * Connects to MySql Database. ******************************
+         * Connects to MySql Database. *****************************
          */
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -247,18 +249,39 @@ public class DBConnect {
                     + "lastUpdateBy: " + lastUpdateBy + " "
                     + "type: " + type);
 
-            /*
-                Appointment(int appointmentId, int customerId, int userId, 
-                    String title, String description, String location, String contact, 
-                    String type, String url, String start, String end, String createdBy, 
-                    String lastUpdate, String lastUpdateBY)
-             */
+            // LocalDateTime startDate = dateTimeConverter(start);
+            //LocalDateTime endDate = dateTimeConverter(end);
+            //startDate=convertFromUtcToLocal(startDate);
+            //endDate=convertFromUtcToLocal(endDate);
+            start = fromUTC(start);
+            end = fromUTC(end);
+            createDate = fromUTC(createDate);
+            lastUpdate = fromUTC(lastUpdate);
+
             results.add(new Appointment(appointmentId, customerId, cusName, Address,
                     userId, title, description, location, contact, type,
                     url, start, end, createdBy, lastUpdate, lastUpdateBy));
         }
 
         return results;
+    }
+
+    public LocalDateTime convertFromUtcToLocal(LocalDateTime time) {
+        return time.atZone(ZoneId.of("Z")).withZoneSameInstant(ZoneOffset.systemDefault()).toLocalDateTime();
+    }
+
+    public static String fromUTC(String dateTime) {
+        //Code for Method
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        System.out.println(dateTime);
+        LocalDateTime defaultDateTime = LocalDateTime.parse(dateTime.substring(0, 19), dateFormat);
+
+        ZonedDateTime utcDateTime = ZonedDateTime.of(defaultDateTime, ZoneId.of("UTC"));
+
+        ZonedDateTime defaultZoneDateTime = utcDateTime.withZoneSameInstant(TimeZone.getDefault().toZoneId());
+
+        return defaultZoneDateTime.format(dateFormat);
+
     }
 
     public List<Customer> getAllCustomers() throws SQLException {
@@ -298,6 +321,9 @@ public class DBConnect {
             String postalCode = rs.getString("postalCode");
             String city = rs.getString("city");
             String phone = rs.getString("phone");
+
+            createDate = fromUTC(createDate);
+            lastUpdate = fromUTC(lastUpdate);
 
             results.add(new Customer(customerId, customerName, addressId, addr, address1, address2, postalCode, city, phone, active,
                     createdBy, lastUpdate, lastUpdateBy));
@@ -342,6 +368,16 @@ public class DBConnect {
             String url, String start, String end, String lastUpdate,
             String createDate, String createdBy, String lastUpdateBy) throws SQLException {
 
+        LocalDateTime startDate = dateTimeConverter(start);
+        LocalDateTime endDate = dateTimeConverter(end);
+        LocalDateTime createDateUTC = dateTimeConverter(createDate);
+        LocalDateTime updateUTC = dateTimeConverter(lastUpdate);
+
+        startDate = convertToUtc(startDate);
+        endDate = convertToUtc(endDate);
+        createDateUTC = convertToUtc(createDateUTC);
+        updateUTC = convertToUtc(updateUTC);
+
         String query = "INSERT INTO `U04k77`.`appointment` (`customerId`, `userId`,"
                 + " `title`, `description`,"
                 + "`location`, `contact`, `type`, `url`, `start`, `end`, `lastUpdate`, "
@@ -354,10 +390,10 @@ public class DBConnect {
                 + "'" + contact + "',"
                 + "'" + type + "',"
                 + "'" + url + "',"
-                + "'" + start + "',"
-                + "'" + end + "',"
-                + "'" + lastUpdate + "',"
-                + "'" + createDate + "',"
+                + "'" + startDate + "',"
+                + "'" + endDate + "',"
+                + "'" + updateUTC + "',"
+                + "'" + createDateUTC + "',"
                 + "'" + createdBy + "',"
                 + "'" + lastUpdateBy + "');";
 
@@ -367,9 +403,28 @@ public class DBConnect {
                 + "Creating an appointment with" + query);
     }
 
+    public LocalDateTime dateTimeConverter(String Date) {
+        DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.parse(Date.substring(0, 19), outputFormat);
+    }
+
+    public LocalDateTime convertToUtc(LocalDateTime time) {
+        return time.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+    }
+
+    /*public LocalDateTime convertfromUTC(LocalDateTime time) {    
+    return time.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+}*/
     public void createCustomer(String customerName, int addressId, int active,
             String createDate, String lastUpdate, String createdBy,
             String lastUpdateBy) throws SQLException {
+
+        LocalDateTime createDateUTC = dateTimeConverter(createDate);
+        LocalDateTime updateUTC = dateTimeConverter(lastUpdate);
+
+        createDateUTC = convertToUtc(createDateUTC);
+        updateUTC = convertToUtc(updateUTC);
+
         String query = "INSERT INTO `U04k77`.`customer` ("
                 + "`customerName`, "
                 + "`addressId`,"
@@ -383,9 +438,9 @@ public class DBConnect {
                 + customerName + "', " + "'"
                 + addressId + "', '"
                 + active + "', '"
-                + createDate + "'," + " '"
+                + createDateUTC + "'," + " '"
                 + createdBy + "', '"
-                + lastUpdate + "', '"
+                + updateUTC + "', '"
                 + lastUpdateBy + "');";
 
         int tableRowsAffected = st.executeUpdate(query);
@@ -397,6 +452,13 @@ public class DBConnect {
     public void createAddress(String address, String address2, int cityId,
             String postalCode, String phone, String createDate,
             String createdBy, String lastUpdate, String lastUpdateBy) throws SQLException {
+
+        LocalDateTime createDateUTC = dateTimeConverter(createDate);
+        LocalDateTime updateUTC = dateTimeConverter(lastUpdate);
+
+        createDateUTC = convertToUtc(createDateUTC);
+        updateUTC = convertToUtc(updateUTC);
+
         String query = "INSERT INTO `U04k77`.`address` ("
                 + "`address`, "
                 + "`address2`, "
@@ -413,9 +475,9 @@ public class DBConnect {
                 + "'" + cityId + "', "
                 + "'" + postalCode + "', "
                 + "'" + phone + "', "
-                + "'" + createDate + "', "
+                + "'" + createDateUTC + "', "
                 + "'" + createdBy + "', "
-                + "'" + lastUpdate + "', "
+                + "'" + updateUTC + "', "
                 + "'" + lastUpdateBy + "')";
 
         int tableRowsAffected = st.executeUpdate(query);
@@ -468,8 +530,8 @@ public class DBConnect {
     }
 
     public void delAddress(int addressId) throws SQLException {
-        String query = "DELETE FROM `U04k77`.`address` WHERE (`addressId` = '"+
-                addressId+"');";
+        String query = "DELETE FROM `U04k77`.`address` WHERE (`addressId` = '"
+                + addressId + "');";
         try {
             int tableRowsAffected = st.executeUpdate(query);
             System.out.println(tableRowsAffected + " rows were deleted. "
@@ -479,10 +541,10 @@ public class DBConnect {
             System.out.println("erro: " + ex);
         }
     }
-    
+
     public void delAppointmentByCustomerId(int customerId) throws SQLException {
         String query = "DELETE FROM `U04k77`.`appointment` "
-                + "WHERE (`customerId` = '"+customerId+"');";
+                + "WHERE (`customerId` = '" + customerId + "');";
         try {
             int tableRowsAffected = st.executeUpdate(query);
             System.out.println(tableRowsAffected + " rows were deleted. "
@@ -492,9 +554,7 @@ public class DBConnect {
             System.out.println("erro: " + ex);
         }
     }
-    
-    
-    
+
     public void editCustomer(int customerId, String customerName) {
         String query = "UPDATE `U04k77`.`customer` SET `customerName` = "
                 + "'" + customerName + "', `lastUpdate` = '"
@@ -512,14 +572,18 @@ public class DBConnect {
 
     public void editAddress(int addressId, String address, String address2, int cityId,
             String postalCode, String phone, String lastUpdate, String lastUpdateBy) {
-        //Code for Method
+
+        LocalDateTime updateUTC = dateTimeConverter(lastUpdate);
+
+        updateUTC = convertToUtc(updateUTC);
+
         String query = "UPDATE `U04k77`.`address` SET "
                 + "`address` = '" + address + "', "
                 + "`address2` = '" + address2 + "', "
                 + "`cityId` = '" + cityId + "', "
                 + "`postalCode` = '" + postalCode + "', "
                 + "`phone` = '" + phone + "', "
-                + "`lastUpdate` = '" + lastUpdate + "', "
+                + "`lastUpdate` = '" + updateUTC + "', "
                 + "`lastUpdateBy` = '" + lastUpdateBy + "' "
                 + "WHERE (`addressId` = '" + addressId + "');";
         try {
@@ -641,14 +705,22 @@ public class DBConnect {
             String description, String type, String url, String start, String end,
             String lastUpdate, String lastUpdateBy) throws SQLException {
 
+        LocalDateTime startDate = dateTimeConverter(start);
+        LocalDateTime endDate = dateTimeConverter(end);
+        LocalDateTime updateUTC = dateTimeConverter(lastUpdate);
+
+        startDate = convertToUtc(startDate);
+        endDate = convertToUtc(endDate);
+        updateUTC = convertToUtc(updateUTC);
+
         String query = "UPDATE `U04k77`.`appointment` SET "
                 + "`title` = '" + title + "', "
                 + "`description` = '" + description + "', "
                 + "`type` = '" + type + "', "
                 + "`url` = '" + url + "', "
-                + "`start` = '" + start + "', "
-                + "`end` = '" + end + "', "
-                + "`lastUpdate` = '" + lastUpdate + "', "
+                + "`start` = '" + startDate + "', "
+                + "`end` = '" + endDate + "', "
+                + "`lastUpdate` = '" + updateUTC + "', "
                 + "`lastUpdateBy` = '" + lastUpdateBy + "' "
                 + "WHERE (`appointmentId` = '" + appointmentId + "');";
 
@@ -657,20 +729,6 @@ public class DBConnect {
         System.out.println(tableRowsAffected + " rows were edited. "
                 + "Editing an Appointment with" + query);
     }
-    /*
-    public List<Appointment> getAllAppointmentViewsByUserId(
-            int LoggedInUserId) throws SQLException {
-
-        // create a new Arraylist to return the results of the query
-        List<Appointment> results = new ArrayList<>();
-
-        String query = "SELECT * FROM U04k77.appointment "
-                + "where userId = "
-                + LoggedInUserId;
-        rs = st.executeQuery(query);
-        System.out.println("Record from Database");
-        while (rs.next()) {}
     
-}*/
 
 }

@@ -5,10 +5,7 @@
  */
 package Model;
 
-
-
 import java.util.Date;
-import javafx.scene.text.Text;
 
 /**
  *
@@ -16,34 +13,34 @@ import javafx.scene.text.Text;
  */
 public class Appointment {
 
-   private Integer appointmentId;
-   private int customerId;
-   private String customerName;
-   private String address;
-   private int userId;
-   private String title;
-   private String description;
-   private String location;
-   private String contact;
-   private String type;
-   private String url;
+    private Integer appointmentId;
+    private int customerId;
+    private String customerName;
+    private String address;
+    private int userId;
+    private String title;
+    private String description;
+    private String location;
+    private String contact;
+    private String type;
+    private String url;
     //Start time suppose to be datetime in SQL
-   private String start;
-   //End time suppose to be datetime in SQL
-   private String end;
-   Date createdDate = new Date();
-   private String createdBy;
-   private String lastUpdate;
-   private String lastUpdateBY;
-   
-   public Appointment(Integer appointmentId, int customerId, String customerName,String address, int userId, 
-           String title, String description, String location, String contact, 
-           String type, String url, String start, String end, String createdBy, 
-           String lastUpdate, String lastUpdateBY) {
+    private String start;
+    //End time suppose to be datetime in SQL
+    private String end;
+    Date createdDate = new Date();
+    private String createdBy;
+    private String lastUpdate;
+    private String lastUpdateBY;
+
+    public Appointment(Integer appointmentId, int customerId, String customerName, String address, int userId,
+            String title, String description, String location, String contact,
+            String type, String url, String start, String end, String createdBy,
+            String lastUpdate, String lastUpdateBY) {
         this.appointmentId = appointmentId;
         this.customerId = customerId;
         this.customerName = customerName;
-        this.address=address;
+        this.address = address;
         this.userId = userId;
         this.title = title;
         this.description = description;
@@ -65,8 +62,7 @@ public class Appointment {
     public void setAddress(String address) {
         this.address = address;
     }
-   
-   
+
     public String getCustomerName() {
         return customerName;
     }
@@ -74,8 +70,8 @@ public class Appointment {
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
-   
-       public Integer getAppointmentId() {
+
+    public Integer getAppointmentId() {
         return appointmentId;
     }
 
@@ -194,5 +190,5 @@ public class Appointment {
     public void setLastUpdateBY(String lastUpdateBY) {
         this.lastUpdateBY = lastUpdateBY;
     }
-   
+
 }

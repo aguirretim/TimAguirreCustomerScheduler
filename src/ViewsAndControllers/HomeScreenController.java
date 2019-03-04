@@ -237,6 +237,7 @@ public class HomeScreenController implements Initializable {
                 throw new UnsupportedOperationException(
                         "Homescreen initialize - caught Exception", e
                 );
+                
             }
 
             apptTable.setItems(customerData.getAppointment());

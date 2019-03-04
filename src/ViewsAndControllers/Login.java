@@ -93,8 +93,8 @@ public class Login implements Initializable {
      ***********************************
      */
     @FXML
-    private void loginButtonAction(ActionEvent event) throws IOException {
-        try {
+    private void loginButtonAction(ActionEvent event) throws IOException, Exception {
+       
             String userT = usernameText.getText().trim();
             String passT = passwordText.getText().trim();
 
@@ -112,6 +112,8 @@ public class Login implements Initializable {
                 stage = (Stage) login.getScene().getWindow();
                 System.out.println("(Succesful login) Welcome Consultant");
                 Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));
+                
+                
                 Scene scene = new Scene(root);
                 stage.setTitle("Tim Aguirre Customer Scheduler App");
 
@@ -135,8 +137,7 @@ public class Login implements Initializable {
                     alert.showAndWait();
                 }
             }
-        } catch (Exception ex) {
-        }
+      
     }
 
     public void initialize(URL url, ResourceBundle rb) {

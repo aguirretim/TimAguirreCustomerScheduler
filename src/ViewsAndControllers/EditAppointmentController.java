@@ -46,8 +46,8 @@ public class EditAppointmentController implements Initializable {
 
     /**
      * **********************************
-     * Variables for Buttons and Field. 
-     ***********************************/
+     * Variables for Buttons and Field. *********************************
+     */
     @FXML
     private TextField titleText;
 
@@ -128,47 +128,48 @@ public class EditAppointmentController implements Initializable {
 
         System.out.println(timestamp.toString());
 
-            if (validateAllEdit()) {
-        try {
+        if (validateAllEdit()) {
+            try {
 
-            //          int customerId = selCustomer.getCustomerId();
-            int userId = Login.getLoggedInUserId();
-            int appointmentId = apptId;
-            String title = titleText.getText();
-            String description = descriptionText.getText();
-            //        String location = String.valueOf(selCustomer.getAddressId());
-            //      String contact = String.valueOf(selCustomer.getAddressId());
-            String type = typeSelection.getValue().toString();
-            String url = urlText.getText();
-            String start = startDateSelection.getValue().toString();
-            String startTime = timeConverter2(startTimeSelection.getValue().toString());
-            String startDateTime = start + " " + startTime;
-            String end = endDateSelection.getValue().toString();
-            String endTime = timeConverter2(endTimeSelection.getValue().toString());
-            String endDateTime = end + " " + endTime;
-            String lastUpdate = timestamp.toString();
-            String createdDate = timestamp.toString();
-            String createdBy = Login.getLoggedInUser().getUserName();
-            String lastUpdateby = Login.getLoggedInUser().getUserName();
+                //          int customerId = selCustomer.getCustomerId();
+                int userId = Login.getLoggedInUserId();
+                int appointmentId = apptId;
+                String title = titleText.getText();
+                String description = descriptionText.getText();
+                //        String location = String.valueOf(selCustomer.getAddressId());
+                //      String contact = String.valueOf(selCustomer.getAddressId());
+                String type = typeSelection.getValue().toString();
+                String url = urlText.getText();
+                String start = startDateSelection.getValue().toString();
+                String startTime = validTimeConverter(startTimeSelection.getValue().toString());
+                String startDateTime = start + " " + startTime;
+                String end = endDateSelection.getValue().toString();
+                String endTime = validTimeConverter(endTimeSelection.getValue().toString());
+                String endDateTime = end + " " + endTime;
+                String lastUpdate = timestamp.toString();
+                String createdDate = timestamp.toString();
+                String createdBy = Login.getLoggedInUser().getUserName();
+                String lastUpdateby = Login.getLoggedInUser().getUserName();
 
-            /*  public void editAppointment(int appointmentId, String title,
+                /*  public void editAppointment(int appointmentId, String title,
             String description, String type, String url, String start, String end,
             String lastUpdate,String lastUpdateBy )throws SQLException {*/
-            DatabaseConnect.editAppointment(appointmentId, title,
-                    description, type, url, startDateTime, endDateTime,
-                    lastUpdate, lastUpdateby);
+                DatabaseConnect.editAppointment(appointmentId, title,
+                        description, type, url, startDateTime, endDateTime,
+                        lastUpdate, lastUpdateby);
 
-            // Save the appointment 
-            // Close the window 
-            stage = (Stage) cancelButton.getScene().getWindow();
-            stage.hide();
-            HomeScreenController.getActiveHomeScreen().reinitialize();
+                // Save the appointment 
+                // Close the window 
+                stage = (Stage) cancelButton.getScene().getWindow();
+                stage.hide();
+                HomeScreenController.getActiveHomeScreen().reinitialize();
 
-        } catch (SQLException e) {
-            // possibly show a popup with a try again or cancel option
-            System.out.println("error: " + e);
+            } catch (SQLException e) {
+                // possibly show a popup with a try again or cancel option
+                System.out.println("error: " + e);
+            }
         }
-    }}
+    }
 
     public Boolean validateAllEdit() {
         if (validateTitle()
@@ -183,7 +184,7 @@ public class EditAppointmentController implements Initializable {
             return false;
         }
     }
-    
+
     public boolean validateTitle() {
         String title = titleText.getText();
         if (title.equals(null) || title.isEmpty()) {
@@ -355,7 +356,7 @@ public class EditAppointmentController implements Initializable {
             return false;
         }
         try {
-            startTime = validtimeConverter(startTimeSelection.getValue().toString());
+            startTime = validTimeConverter(startTimeSelection.getValue().toString());
         } catch (NullPointerException e) {
             //  Block of code to handle errors
             if (currentLocale != mexicoLocale) {
@@ -400,7 +401,7 @@ public class EditAppointmentController implements Initializable {
             return false;
         }
         try {
-            endTime = validtimeConverter(endTimeSelection.getValue().toString());
+            endTime = validTimeConverter(endTimeSelection.getValue().toString());
         } catch (NullPointerException e) {
             //  Block of code to handle errors
             if (currentLocale != mexicoLocale) {
@@ -497,13 +498,13 @@ public class EditAppointmentController implements Initializable {
 
     public boolean validateEndDate() {
         String start = startDateSelection.getValue().toString();
-        String startTime = validtimeConverter(startTimeSelection.getValue().toString());
+        String startTime = validTimeConverter(startTimeSelection.getValue().toString());
         String startDateTime = start + " " + startTime;
 
         LocalDateTime startDate = dateTimeConverter(startDateTime);
 
         String end = endDateSelection.getValue().toString();
-        String endTime = validtimeConverter(endTimeSelection.getValue().toString());
+        String endTime = validTimeConverter(endTimeSelection.getValue().toString());
         String endDateTime = end + " " + endTime;
 
         LocalDateTime endDate = dateTimeConverter(endDateTime);
@@ -606,15 +607,7 @@ public class EditAppointmentController implements Initializable {
 
     }
 
-        public String validtimeConverter(String Date) {
-        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("h:mm a");
-        DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-        return LocalTime.parse(Date, inputFormat).format(outputFormat);
-
-    }
-    
-    public String timeConverter2(String Date) {
+    public String validTimeConverter(String Date) {
         DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("h:mm a");
         DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 
