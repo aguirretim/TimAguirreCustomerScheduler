@@ -247,7 +247,7 @@ public class DBConnect {
     }
 
     public static String fromUTC(String dateTime) {
-        //Code for Method
+        //Code for Methodtest
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         System.out.println(dateTime);
         LocalDateTime defaultDateTime = LocalDateTime.parse(dateTime.substring(0, 19), dateFormat);

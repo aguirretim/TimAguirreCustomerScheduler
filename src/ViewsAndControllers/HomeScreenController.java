@@ -8,9 +8,7 @@ package ViewsAndControllers;
 import Model.Appointment;
 import Model.CustomerList;
 import Model.DBConnect;
-import static Model.DBConnect.convertToUtc;
 import static Model.DBConnect.dateTimeConverter;
-import static Model.DBConnect.fromUTC;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -91,10 +89,13 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     private Button filterButton;
+    
+    @FXML
+    private Button resetButton;
 
     @FXML
     private DatePicker startPicker;
-    
+
     @FXML
     private DatePicker endPicker;
 
@@ -137,15 +138,22 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     private void filterButtonAction(ActionEvent event) throws IOException {
-        
-        
-        System.out.println("Checking Appointments in the range of " + startPicker.getValue().toString() + " and "+endPicker.getValue().toString());
-       
-        apptTable.setItems(getAllDatesInRange(startPicker.getValue().toString()+" 00:00:00",endPicker.getValue().toString()+" 00:00:00"));
-        
+
+        System.out.println("Checking Appointments in the range of "
+                + startPicker.getValue().toString()
+                + " and " + endPicker.getValue().toString());
+        ObservableList<Appointment> apptList = getAllDatesInRange(startPicker.getValue().toString()
+                + " 00:00:00", endPicker.getValue().toString() + " 00:00:00");
+        System.out.println("Filtered list size= " + apptList.size());
+        apptTable.setItems(apptList);
+
+    }
+    @FXML
+    private void resetButtonAction(ActionEvent event) throws IOException {
+    reinitialize();
         
     }
-    
+
     @FXML
     private void addApptButtonAction(ActionEvent event) throws IOException {
         // stage = (Stage) addApptButton.getScene().getWindow();
@@ -243,29 +251,66 @@ public class HomeScreenController implements Initializable {
     }
 
     public ObservableList<Appointment> getAllDatesInRange(String Date1, String Date2) {
-        
-        
+
         LocalDateTime DateA = dateTimeConverter((Date1));
         LocalDateTime DateB = dateTimeConverter((Date2));
-        
+
         ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
         List<Appointment> filterAppointmentList = new ArrayList<Appointment>();
-        
+
         for (Appointment var
                 : customerData.getAppointment()) {
-            if (dateTimeConverter(var.getStart()).isAfter(DateA)
-                    || dateTimeConverter(var.getStart()).equals(DateA)
-                    && dateTimeConverter(var.getEnd()).isBefore(DateB)
-                    || dateTimeConverter(var.getEnd()).equals(DateB)) {
+            if ((dateTimeConverter(var.getStart()).isAfter(DateA)
+                    || dateTimeConverter(var.getStart()).equals(DateA))
+                    && (dateTimeConverter(var.getEnd()).isBefore(DateB)
+                    || dateTimeConverter(var.getEnd()).equals(DateB))) {
                 // codes
                 System.out.println(dateTimeConverter(var.getStart()));
                 System.out.println(dateTimeConverter(var.getEnd()));
                 filterAppointmentList.add(var);
-                filteredAppointments.addAll(filterAppointmentList);
-                
             }
         }
+        filteredAppointments.addAll(filterAppointmentList);
         return filteredAppointments;
+    }
+
+    public void fifteenMinAlert() {
+        for (Appointment var : customerData.getAppointment()) {
+            if (dateTimeConverter(var.getStart()).isAfter(LocalDateTime.now())  && 
+                    dateTimeConverter(var.getStart()).isBefore(LocalDateTime.now().plusMinutes(15)))  {
+                if (currentLocale == mexicoLocale) {
+                    System.out.println("Hola, este es un recordatorio de 15 minutos para su cita."
+                            + var.getTitle()
+                            + var.getDescription()
+                            + "con"
+                            + var.getCustomerName());
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Recordatorio de 15min");
+                    alert.setHeaderText("Hola");
+                    alert.setContentText("este es un recordatorio de 15 minutos para su cita."
+                            + var.getTitle()
+                            + var.getDescription()
+                            + "con"
+                            + var.getCustomerName());
+                    alert.showAndWait();
+                } else {
+                    System.out.println("Hello this is a 15Min reminder for your appointment"
+                            + var.getTitle() + " "
+                            + var.getDescription()
+                            + " With "
+                            + var.getCustomerName());
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("15 min Reminder");
+                    alert.setHeaderText("Hello Consultant");
+                    alert.setContentText("This is a 15Min reminder for your appointment "
+                            + var.getTitle()+" "
+                            + var.getDescription()
+                            + " With "
+                            + var.getCustomerName());
+                    alert.showAndWait();
+                }
+            }
+        }
     }
 
 //Timestamp T = java.sql.Timestamp.valueOf("2019-01-23 12:00:00");
@@ -282,7 +327,7 @@ public class HomeScreenController implements Initializable {
         if (Login.isLoggedIn()) {
             //Clears the table to refresh it
             this.customerData.clearAppointments();
-            
+
             try {
                 //Adds appointments to table list by User who is logged in ID
                 this.customerData.addAppointments(
@@ -317,6 +362,8 @@ public class HomeScreenController implements Initializable {
                     "Homescreen initialize - user not logged in - fixme force login"
             );
         }
+
+        fifteenMinAlert();
 
     }
 }

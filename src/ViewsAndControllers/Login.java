@@ -5,6 +5,8 @@
  */
 package ViewsAndControllers;
 
+import Model.Appointment;
+import Model.CustomerList;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,13 +21,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import Model.DBConnect;
+import static Model.DBConnect.dateTimeConverter;
 import Model.User;
-import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
+import java.sql.SQLException;
 import javafx.scene.control.Alert;
 import java.sql.Timestamp;
-import java.util.Arrays;
+import java.time.LocalDateTime;
 import java.util.Locale;
-import javafx.stage.Window;
 
 /**
  *
@@ -37,8 +39,7 @@ public class Login implements Initializable {
 
     /**
      * ***********************************
-     * Variables for Buttons and Field.
-     ***********************************
+     * Variables for Buttons and Field. **********************************
      */
     @FXML
     private TextField usernameText;
@@ -90,55 +91,55 @@ public class Login implements Initializable {
     /**
      * ***********************************
      * Changing screens and scenes with buttons.
-     ***********************************
+     * **********************************
      */
     @FXML
     private void loginButtonAction(ActionEvent event) throws IOException, Exception {
-       
-            String userT = usernameText.getText().trim();
-            String passT = passwordText.getText().trim();
 
-            // test to see if the login credentials are correct
-            User user = null;
-            User userInData = connect.getUserByUsernamePassword(userT, passT);
+        String userT = usernameText.getText().trim();
+        String passT = passwordText.getText().trim();
 
-            if ((user = userInData) != null) {
-                System.out.println("log in completed");
+        // test to see if the login credentials are correct
+        User user = null;
+        User userInData = connect.getUserByUsernamePassword(userT, passT);
 
-                // Login passed
-                Login.loggedInUser = user;
+        if ((user = userInData) != null) {
+            System.out.println("log in completed");
 
-                // Create a login session, and set the user to that session
-                stage = (Stage) login.getScene().getWindow();
-                System.out.println("(Succesful login) Welcome Consultant");
-                Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));
-                
-                
-                Scene scene = new Scene(root);
-                stage.setTitle("Tim Aguirre Customer Scheduler App");
+            // Login passed
+            Login.loggedInUser = user;
 
-                stage.setScene(scene);
-                
+            // Create a login session, and set the user to that session
+            stage = (Stage) login.getScene().getWindow();
+            System.out.println("(Succesful login) Welcome Consultant");
+            Parent root = FXMLLoader.load(getClass().getResource("/ViewsAndControllers/HomeScreen.fxml"));
 
+            Scene scene = new Scene(root);
+            stage.setTitle("Tim Aguirre Customer Scheduler App");
+
+            stage.setScene(scene);
+            
+        } else {
+            if (currentLocale == mexicoLocale) {
+                System.out.println("(Invalid login attempted) Sorry, The username or password you entered is incorrect.");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Intento de inicio de sesión no válido");
+                alert.setHeaderText("Lo siento");
+                alert.setContentText("El nombre de usuario o la contraseña son incorrectos.");
+                alert.showAndWait();
             } else {
-                if (currentLocale == mexicoLocale) {
-                    System.out.println("(Invalid login attempted) Sorry, The username or password you entered is incorrect.");
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Intento de inicio de sesión no válido");
-                    alert.setHeaderText("Lo siento");
-                    alert.setContentText("El nombre de usuario o la contraseña son incorrectos.");
-                    alert.showAndWait();
-                } else {
-                    System.out.println("(Invalid login attempted) Sorry, The username or password you entered is incorrect.");
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Invalid login attempted");
-                    alert.setHeaderText("Sorry");
-                    alert.setContentText("The username or password you entered is incorrect.");
-                    alert.showAndWait();
-                }
+                System.out.println("(Invalid login attempted) Sorry, The username or password you entered is incorrect.");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Invalid login attempted");
+                alert.setHeaderText("Sorry");
+                alert.setContentText("The username or password you entered is incorrect.");
+                alert.showAndWait();
             }
-      
+        }
+
     }
+
+    
 
     public void initialize(URL url, ResourceBundle rb) {
         //Test print of current time for understanding how timestamps work
