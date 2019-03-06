@@ -14,9 +14,12 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -41,11 +44,8 @@ public class AddAppointmentController implements Initializable {
 
     /**
      * ***********************************
-     * Variables for Buttons and Field. 
-     **********************************/
-    
-    
-    
+     * Variables for Buttons and Field. ********************************
+     */
     @FXML
     private TextField titleText;
 
@@ -101,13 +101,11 @@ public class AddAppointmentController implements Initializable {
     //Changes default language english to testing language 
     //Locale.setDefault(mexicoLocale);
     Locale currentLocale = Locale.getDefault();
-    
-    
 
     /**
      * ************************************
      * Changing screens and scenes with buttons.
-     ***********************************
+     * **********************************
      */
     @FXML
     private void cancelButtonAction(ActionEvent event) throws IOException {
@@ -116,9 +114,7 @@ public class AddAppointmentController implements Initializable {
     }
 
     @FXML
-    private void saveButtonAction(ActionEvent event) throws IOException {
-
-  
+    private void saveButtonAction(ActionEvent event) throws IOException, ParseException {
 
         // first try to validate the form
         /*if(!validateForm()) {
@@ -182,7 +178,6 @@ public class AddAppointmentController implements Initializable {
 
     public LocalDateTime dateTimeConverter(String Date) {
         DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        
 
         return LocalDateTime.parse(Date, outputFormat);
 
@@ -605,13 +600,13 @@ public class AddAppointmentController implements Initializable {
         }
     }
 
-    public Boolean validateAll() {
+    public Boolean validateAll() throws ParseException {
         if (validateTitle()
                 && validateDescription()
                 && validateType()
                 && validateUrl()
                 && validateStartDate()
-                && validateEndDate() && validateCustomer()) {
+                && validateEndDate() && validateCustomer() && validateBuissnessHours()) {
             return true;
         } else {
             // some other code
@@ -619,6 +614,64 @@ public class AddAppointmentController implements Initializable {
         }
     }
 
+    public Boolean validateBuissnessHours() throws ParseException {
+        String start = startDateSelection.getValue().toString();
+        String startTime = timeConverter(startTimeSelection.getValue().toString());
+        String startDateTime = start + " " + startTime;
+
+        LocalDateTime startDate = dateTimeConverter(startDateTime);
+
+        String end = endDateSelection.getValue().toString();
+        String endTime = timeConverter(endTimeSelection.getValue().toString());
+        String endDateTime = end + " " + endTime;
+
+        LocalDateTime endDate = dateTimeConverter(endDateTime);
+
+        SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
+        Date nineAm = parser.parse("09:00");
+        Date fivePm = parser.parse("17:00");
+
+        try {
+            Date userSDate = parser.parse(startTime);
+            Date userEDate = parser.parse(endTime);
+            if ((userSDate.after(nineAm) || userSDate.equals(nineAm)) && 
+                    (userEDate.before(fivePm) || 
+                      userEDate.equals(fivePm))) {
+                return true;
+            } else {
+                if (currentLocale != mexicoLocale) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("Please Select a start time and end time "
+                            + "within buissness Hours of 9am to 5pm");
+                    alert.showAndWait();
+                    System.out.println("Please Select a start time and end time "
+                            + "within buissness Hours of 9am to 5pm");
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("Seleccione una hora de inicio y una hora "
+                            + "de finalización dentro del horario "
+                            + "comercial de 9 a. M. A 5 p. M.");
+                    alert.showAndWait();
+                    System.out.println("Seleccione una hora de inicio y una hora de "
+                            + "finalización dentro del "
+                            + "horario comercial de 9 a. M. A 5 p. M.");
+                }
+                return false;
+            }
+
+        } catch (ParseException e) {
+            // Invalid date was entered
+            System.out.println("error: " + e);
+            return false;
+        }
+
+    }
+
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
