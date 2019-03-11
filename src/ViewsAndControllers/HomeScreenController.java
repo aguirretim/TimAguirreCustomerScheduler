@@ -89,7 +89,7 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     private Button filterButton;
-    
+
     @FXML
     private Button resetButton;
 
@@ -148,10 +148,11 @@ public class HomeScreenController implements Initializable {
         apptTable.setItems(apptList);
 
     }
+
     @FXML
     private void resetButtonAction(ActionEvent event) throws IOException {
-    reinitialize();
-        
+        reinitialize();
+
     }
 
     @FXML
@@ -274,10 +275,10 @@ public class HomeScreenController implements Initializable {
         return filteredAppointments;
     }
 
-    public void fifteenMinAlert() {
-        for (Appointment var : customerData.getAppointment()) {
-            if (dateTimeConverter(var.getStart()).isAfter(LocalDateTime.now())  && 
-                    dateTimeConverter(var.getStart()).isBefore(LocalDateTime.now().plusMinutes(15)))  {
+    public void lambdaFifteenMinAlert() {
+        customerData.getAppointment().forEach(var -> {
+            if (dateTimeConverter(var.getStart()).isAfter(LocalDateTime.now())
+                    && dateTimeConverter(var.getStart()).isBefore(LocalDateTime.now().plusMinutes(15))) {
                 if (currentLocale == mexicoLocale) {
                     System.out.println("Hola, este es un recordatorio de 15 minutos para su cita."
                             + var.getTitle()
@@ -303,7 +304,47 @@ public class HomeScreenController implements Initializable {
                     alert.setTitle("15 min Reminder");
                     alert.setHeaderText("Hello Consultant");
                     alert.setContentText("This is a 15Min reminder for your appointment "
-                            + var.getTitle()+" "
+                            + var.getTitle() + " "
+                            + var.getDescription()
+                            + " With "
+                            + var.getCustomerName());
+                    alert.showAndWait();
+                }
+            }
+        });
+    }
+
+    public void fifteenMinAlert() {
+
+        for (Appointment var : customerData.getAppointment()) {
+            if (dateTimeConverter(var.getStart()).isAfter(LocalDateTime.now())
+                    && dateTimeConverter(var.getStart()).isBefore(LocalDateTime.now().plusMinutes(15))) {
+                if (currentLocale == mexicoLocale) {
+                    System.out.println("Hola, este es un recordatorio de 15 minutos para su cita."
+                            + var.getTitle()
+                            + var.getDescription()
+                            + "con"
+                            + var.getCustomerName());
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Recordatorio de 15min");
+                    alert.setHeaderText("Hola");
+                    alert.setContentText("este es un recordatorio de 15 minutos para su cita."
+                            + var.getTitle()
+                            + var.getDescription()
+                            + "con"
+                            + var.getCustomerName());
+                    alert.showAndWait();
+                } else {
+                    System.out.println("Hello this is a 15Min reminder for your appointment"
+                            + var.getTitle() + " "
+                            + var.getDescription()
+                            + " With "
+                            + var.getCustomerName());
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("15 min Reminder");
+                    alert.setHeaderText("Hello Consultant");
+                    alert.setContentText("This is a 15Min reminder for your appointment "
+                            + var.getTitle() + " "
                             + var.getDescription()
                             + " With "
                             + var.getCustomerName());
@@ -363,7 +404,7 @@ public class HomeScreenController implements Initializable {
             );
         }
 
-        fifteenMinAlert();
-
+       // fifteenMinAlert();
+        lambdaFifteenMinAlert();
     }
 }

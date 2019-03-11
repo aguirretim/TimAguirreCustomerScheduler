@@ -212,7 +212,7 @@ public class DBConnect {
             int locationId = parseInt(location);
             String Address = fullAddressFromId(locationId);
 
-            System.out.println("appointmentId: " + appointmentId + " "
+           /* System.out.println("appointmentId: " + appointmentId + " "
                     + "Customer ID: " + customerId + " "
                     + "Customer Name: " + cusName + " "
                     + "Address: " + Address + " "
@@ -227,7 +227,7 @@ public class DBConnect {
                     + "createdBy: " + createdBy + " "
                     + "lastUpdate: " + lastUpdate + " "
                     + "lastUpdateBy: " + lastUpdateBy + " "
-                    + "type: " + type);
+                    + "type: " + type);*/
 
             start = fromUTC(start);
             end = fromUTC(end);
@@ -330,8 +330,7 @@ public class DBConnect {
         for (City var : citylist2) {
             if (var.getCityId() == cityId) {
                 // codes
-                System.out.println(cityId);
-                System.out.println(var.toString());
+               
 
                 return var.getCity();
             }

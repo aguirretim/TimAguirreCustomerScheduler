@@ -5,6 +5,7 @@
  */
 package ViewsAndControllers;
 
+import Model.Appointment;
 import Model.Customer;
 import Model.CustomerList;
 import Model.DBConnect;
@@ -606,10 +607,12 @@ public class AddAppointmentController implements Initializable {
                 && validateType()
                 && validateUrl()
                 && validateStartDate()
-                && validateEndDate() && validateCustomer() && validateBuissnessHours()) {
+                && validateEndDate()
+                && validateCustomer()
+                && validateBuissnessHours()
+                && validateOverlapAppt()) {
             return true;
         } else {
-            // some other code
             return false;
         }
     }
@@ -634,9 +637,9 @@ public class AddAppointmentController implements Initializable {
         try {
             Date userSDate = parser.parse(startTime);
             Date userEDate = parser.parse(endTime);
-            if ((userSDate.after(nineAm) || userSDate.equals(nineAm)) && 
-                    (userEDate.before(fivePm) || 
-                      userEDate.equals(fivePm))) {
+            if ((userSDate.after(nineAm) || userSDate.equals(nineAm))
+                    && (userEDate.before(fivePm)
+                    || userEDate.equals(fivePm))) {
                 return true;
             } else {
                 if (currentLocale != mexicoLocale) {
@@ -671,7 +674,73 @@ public class AddAppointmentController implements Initializable {
 
     }
 
-    
+    public Boolean validateOverlapAppt() {
+        String start = startDateSelection.getValue().toString();
+        String startTime = timeConverter(startTimeSelection.getValue().toString());
+        String startDateTime = start + " " + startTime;
+
+        LocalDateTime startDate = dateTimeConverter(startDateTime);
+
+        String end = endDateSelection.getValue().toString();
+        String endTime = timeConverter(endTimeSelection.getValue().toString());
+        String endDateTime = end + " " + endTime;
+
+        LocalDateTime endDate = dateTimeConverter(endDateTime);
+        
+        Boolean isValid = true;
+        
+        System.out.println("the size of the customer data list" + customerData.getAppointment().size());
+        for (Appointment var : customerData.getAppointment()) {
+            LocalDateTime apptStartDate = dateTimeConverter(var.getStart());
+            LocalDateTime apptEndDate = dateTimeConverter(var.getEnd());
+
+            System.out.println("StartDate from Form " + startDate);
+            System.out.println("EndDate from Form " + endDate);
+            System.out.println("StartDate from the Table " + apptStartDate);
+            System.out.println("EndDate from the Table " + apptEndDate);
+
+            if ((startDate.isAfter(apptStartDate)
+                    && startDate.isBefore(apptEndDate))
+                    || (endDate.isAfter(apptStartDate)
+                    && endDate.isBefore(apptEndDate))) {
+                isValid=false;
+                if (currentLocale != mexicoLocale) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("Sorry looks like you have an overlapping "
+                            + "appointment please select an appointment"
+                            + " that does not conflict with " + var.getTitle() + " "
+                            + var.getDescription() + " Start Time: " + var.getStart()
+                            + " End Time: " + var.getEnd());
+                    alert.showAndWait();
+                    System.out.println("Sorry looks like you have an overlapping "
+                            + "appointment please select an appointment"
+                            + " that does not conflict with " + var.getTitle() + " "
+                            + var.getDescription() + " Start Time: " + var.getStart()
+                            + " End Time: " + var.getEnd());
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("Lo siento parece que tienes una superposición"
+                            + "cita por favor seleccione una cita"
+                            + " que no está en conflicto con " + var.getTitle() + " "
+                            + var.getDescription() + " Hora de inicio" + var.getStart()
+                            + " Hora de finalización:" + var.getEnd());
+                    alert.showAndWait();
+                    System.out.println("Lo siento parece que tienes una superposición"
+                            + "cita por favor seleccione una cita"
+                            + " que no está en conflicto con " + var.getTitle() + " "
+                            + var.getDescription() + " Hora de inicio" + var.getStart()
+                            + " Hora de finalización:" + var.getEnd());
+                }
+                
+            }
+        }
+        return isValid;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

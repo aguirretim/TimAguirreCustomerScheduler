@@ -5,6 +5,7 @@
  */
 package ViewsAndControllers;
 
+import Model.Appointment;
 import Model.Customer;
 import Model.CustomerList;
 import Model.DBConnect;
@@ -14,11 +15,14 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -124,7 +128,7 @@ public class EditAppointmentController implements Initializable {
     }
 
     @FXML
-    private void saveButtonAction(ActionEvent event) throws IOException {
+    private void saveButtonAction(ActionEvent event) throws IOException, ParseException {
 
         System.out.println(timestamp.toString());
 
@@ -171,13 +175,15 @@ public class EditAppointmentController implements Initializable {
         }
     }
 
-    public Boolean validateAllEdit() {
+    public Boolean validateAllEdit() throws ParseException {
         if (validateTitle()
                 && validateDescription()
                 && validateType()
                 && validateUrl()
                 && validateStartDate()
-                && validateEndDate()) {
+                && validateEndDate()
+                && validateBuissnessHours()
+                && validateOverlapAppt()) {
             return true;
         } else {
             // some other code
@@ -185,6 +191,127 @@ public class EditAppointmentController implements Initializable {
         }
     }
 
+    public Boolean validateOverlapAppt() {
+        String start = startDateSelection.getValue().toString();
+        String startTime = timeConverter(startTimeSelection.getValue().toString());
+        String startDateTime = start + " " + startTime;
+
+        LocalDateTime startDate = dateTimeConverter(startDateTime);
+
+        String end = endDateSelection.getValue().toString();
+        String endTime = timeConverter(endTimeSelection.getValue().toString());
+        String endDateTime = end + " " + endTime;
+
+        LocalDateTime endDate = dateTimeConverter(endDateTime);
+        System.out.println("the size of the customer data list" + customerData.getAppointment().size());
+        for (Appointment var : customerData.getAppointment()) {
+            LocalDateTime apptStartDate = dateTimeConverter(var.getStart());
+            LocalDateTime apptEndDate = dateTimeConverter(var.getEnd());
+
+            System.out.println("StartDate from Form " + startDate);
+            System.out.println("EndDate from Form " + endDate);
+            System.out.println("StartDate from the Table " + apptStartDate);
+            System.out.println("EndDate from the Table " + apptEndDate);
+
+            if ((startDate.isAfter(apptStartDate)
+                    && startDate.isBefore(apptEndDate))
+                    || (endDate.isAfter(apptStartDate)
+                    && endDate.isBefore(apptEndDate))) {
+                if (currentLocale != mexicoLocale) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("Sorry looks like you have an overlapping "
+                            + "appointment please select an appointment"
+                            + " that does not conflict with " + var.getTitle() + " "
+                            + var.getDescription() + " Start Time:" + var.getStart()
+                            + " End Time:" + var.getEnd());
+                    alert.showAndWait();
+                    System.out.println("Sorry looks like you have an overlapping "
+                            + "appointment please select an appointment"
+                            + " that does not conflict with " + var.getTitle() + " "
+                            + var.getDescription() + " Start Time:" + var.getStart()
+                            + " End Time:" + var.getEnd());
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("Lo siento parece que tienes una superposición"
+                            + "cita por favor seleccione una cita"
+                            + " que no está en conflicto con " + var.getTitle() + " "
+                            + var.getDescription() + " Hora de inicio" + var.getStart()
+                            + " Hora de finalización:" + var.getEnd());
+                    alert.showAndWait();
+                    System.out.println("Lo siento parece que tienes una superposición"
+                            + "cita por favor seleccione una cita"
+                            + " que no está en conflicto con " + var.getTitle() + " "
+                            + var.getDescription() + " Hora de inicio" + var.getStart()
+                            + " Hora de finalización:" + var.getEnd());
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+    
+    public Boolean validateBuissnessHours() throws ParseException {
+        String start = startDateSelection.getValue().toString();
+        String startTime = timeConverter(startTimeSelection.getValue().toString());
+        String startDateTime = start + " " + startTime;
+
+        LocalDateTime startDate = dateTimeConverter(startDateTime);
+
+        String end = endDateSelection.getValue().toString();
+        String endTime = timeConverter(endTimeSelection.getValue().toString());
+        String endDateTime = end + " " + endTime;
+
+        LocalDateTime endDate = dateTimeConverter(endDateTime);
+
+        SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
+        Date nineAm = parser.parse("09:00");
+        Date fivePm = parser.parse("17:00");
+
+        try {
+            Date userSDate = parser.parse(startTime);
+            Date userEDate = parser.parse(endTime);
+            if ((userSDate.after(nineAm) || userSDate.equals(nineAm))
+                    && (userEDate.before(fivePm)
+                    || userEDate.equals(fivePm))) {
+                return true;
+            } else {
+                if (currentLocale != mexicoLocale) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("Please Select a start time and end time "
+                            + "within buissness Hours of 9am to 5pm");
+                    alert.showAndWait();
+                    System.out.println("Please Select a start time and end time "
+                            + "within buissness Hours of 9am to 5pm");
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("Seleccione una hora de inicio y una hora "
+                            + "de finalización dentro del horario "
+                            + "comercial de 9 a. M. A 5 p. M.");
+                    alert.showAndWait();
+                    System.out.println("Seleccione una hora de inicio y una hora de "
+                            + "finalización dentro del "
+                            + "horario comercial de 9 a. M. A 5 p. M.");
+                }
+                return false;
+            }
+
+        } catch (ParseException e) {
+            // Invalid date was entered
+            System.out.println("error: " + e);
+            return false;
+        }
+
+    }
+    
+    
     public boolean validateTitle() {
         String title = titleText.getText();
         if (title.equals(null) || title.isEmpty()) {
@@ -568,7 +695,7 @@ public class EditAppointmentController implements Initializable {
         return LocalDate.parse(Date, inputFormat).format(outputFormat);
 
     }
-
+        
     public void transferData(
             int appointmentId,
             String title, String description, String type,
