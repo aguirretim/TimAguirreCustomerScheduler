@@ -142,7 +142,7 @@ public class HomeScreenController implements Initializable {
         System.out.println("Checking Appointments in the range of "
                 + startPicker.getValue().toString()
                 + " and " + endPicker.getValue().toString());
-        ObservableList<Appointment> apptList = getAllDatesInRange(startPicker.getValue().toString()
+        ObservableList<Appointment> apptList = lambdaGetAllDatesInRange(startPicker.getValue().toString()
                 + " 00:00:00", endPicker.getValue().toString() + " 00:00:00");
         System.out.println("Filtered list size= " + apptList.size());
         apptTable.setItems(apptList);
@@ -251,7 +251,7 @@ public class HomeScreenController implements Initializable {
 
     }
 
-    public ObservableList<Appointment> getAllDatesInRange(String Date1, String Date2) {
+    public ObservableList<Appointment> lambdaGetAllDatesInRange(String Date1, String Date2) {
 
         LocalDateTime DateA = dateTimeConverter((Date1));
         LocalDateTime DateB = dateTimeConverter((Date2));
@@ -259,8 +259,8 @@ public class HomeScreenController implements Initializable {
         ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
         List<Appointment> filterAppointmentList = new ArrayList<Appointment>();
 
-        for (Appointment var
-                : customerData.getAppointment()) {
+         customerData.getAppointment().forEach(var ->
+        {
             if ((dateTimeConverter(var.getStart()).isAfter(DateA)
                     || dateTimeConverter(var.getStart()).equals(DateA))
                     && (dateTimeConverter(var.getEnd()).isBefore(DateB)
@@ -270,7 +270,8 @@ public class HomeScreenController implements Initializable {
                 System.out.println(dateTimeConverter(var.getEnd()));
                 filterAppointmentList.add(var);
             }
-        }
+            
+        });
         filteredAppointments.addAll(filterAppointmentList);
         return filteredAppointments;
     }

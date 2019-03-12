@@ -690,7 +690,8 @@ public class AddAppointmentController implements Initializable {
         Boolean isValid = true;
         
         System.out.println("the size of the customer data list" + customerData.getAppointment().size());
-        for (Appointment var : customerData.getAppointment()) {
+        for (Appointment var : customerData.getAppointment()) 
+        {
             LocalDateTime apptStartDate = dateTimeConverter(var.getStart());
             LocalDateTime apptEndDate = dateTimeConverter(var.getEnd());
 
