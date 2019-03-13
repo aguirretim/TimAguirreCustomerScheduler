@@ -167,6 +167,11 @@ public class HomeScreenController implements Initializable {
         modalStage.setScene(scene);
         modalStage.showAndWait();
     }
+    
+    @FXML
+    private void apptMonthReportButtonAction(ActionEvent event) throws IOException {
+    
+    }
 
     @FXML
     private void editApptButtonAction(ActionEvent event) throws IOException {

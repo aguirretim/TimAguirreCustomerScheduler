@@ -193,18 +193,20 @@ public class EditAppointmentController implements Initializable {
 
     public Boolean validateOverlapAppt() {
         String start = startDateSelection.getValue().toString();
-        String startTime = timeConverter(startTimeSelection.getValue().toString());
+        String startTime = gTimeConverter(startTimeSelection.getValue().toString());
         String startDateTime = start + " " + startTime;
 
         LocalDateTime startDate = dateTimeConverter(startDateTime);
 
         String end = endDateSelection.getValue().toString();
-        String endTime = timeConverter(endTimeSelection.getValue().toString());
+        String endTime = gTimeConverter(endTimeSelection.getValue().toString());
         String endDateTime = end + " " + endTime;
 
-        LocalDateTime endDate = dateTimeConverter(endDateTime);
+        LocalDateTime endDate = dateTimeConverter(endDateTime);  Boolean isValid = true;
+        
         System.out.println("the size of the customer data list" + customerData.getAppointment().size());
-        for (Appointment var : customerData.getAppointment()) {
+        for (Appointment var : customerData.getAppointment()) 
+        {
             LocalDateTime apptStartDate = dateTimeConverter(var.getStart());
             LocalDateTime apptEndDate = dateTimeConverter(var.getEnd());
 
@@ -217,6 +219,7 @@ public class EditAppointmentController implements Initializable {
                     && startDate.isBefore(apptEndDate))
                     || (endDate.isAfter(apptStartDate)
                     && endDate.isBefore(apptEndDate))) {
+                isValid=false;
                 if (currentLocale != mexicoLocale) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Dialog");
@@ -224,14 +227,14 @@ public class EditAppointmentController implements Initializable {
                     alert.setContentText("Sorry looks like you have an overlapping "
                             + "appointment please select an appointment"
                             + " that does not conflict with " + var.getTitle() + " "
-                            + var.getDescription() + " Start Time:" + var.getStart()
-                            + " End Time:" + var.getEnd());
+                            + var.getDescription() + " Start Time: " + var.getStart()
+                            + " End Time: " + var.getEnd());
                     alert.showAndWait();
                     System.out.println("Sorry looks like you have an overlapping "
                             + "appointment please select an appointment"
                             + " that does not conflict with " + var.getTitle() + " "
-                            + var.getDescription() + " Start Time:" + var.getStart()
-                            + " End Time:" + var.getEnd());
+                            + var.getDescription() + " Start Time: " + var.getStart()
+                            + " End Time: " + var.getEnd());
                 } else {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Dialog");
@@ -248,21 +251,21 @@ public class EditAppointmentController implements Initializable {
                             + var.getDescription() + " Hora de inicio" + var.getStart()
                             + " Hora de finalización:" + var.getEnd());
                 }
-                return false;
+                
             }
         }
-        return false;
+        return isValid;
     }
     
     public Boolean validateBuissnessHours() throws ParseException {
         String start = startDateSelection.getValue().toString();
-        String startTime = timeConverter(startTimeSelection.getValue().toString());
+        String startTime = gTimeConverter(startTimeSelection.getValue().toString());
         String startDateTime = start + " " + startTime;
 
         LocalDateTime startDate = dateTimeConverter(startDateTime);
 
         String end = endDateSelection.getValue().toString();
-        String endTime = timeConverter(endTimeSelection.getValue().toString());
+        String endTime = gTimeConverter(endTimeSelection.getValue().toString());
         String endDateTime = end + " " + endTime;
 
         LocalDateTime endDate = dateTimeConverter(endDateTime);
@@ -729,6 +732,14 @@ public class EditAppointmentController implements Initializable {
     public String timeConverter(String Date) {
         DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("h:mm a");
         DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        return LocalTime.parse(Date, inputFormat).format(outputFormat);
+
+    }
+    
+       public String gTimeConverter(String Date) {
+        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("h:mm a");
+        DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 
         return LocalTime.parse(Date, inputFormat).format(outputFormat);
 

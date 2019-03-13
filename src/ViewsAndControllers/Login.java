@@ -95,6 +95,7 @@ public class Login implements Initializable {
 
         pwVariable.println(logInfo);
         pwVariable.close();
+        
     }
 
     /**
