@@ -5,8 +5,6 @@
  */
 package ViewsAndControllers;
 
-import Model.Appointment;
-import Model.CustomerList;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,12 +19,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import Model.DBConnect;
-import static Model.DBConnect.dateTimeConverter;
 import Model.User;
-import java.sql.SQLException;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import javafx.scene.control.Alert;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Locale;
 
 /**
@@ -64,6 +62,8 @@ public class Login implements Initializable {
 
     //String sql = "select userName,password from user where user = '" + userT+"'password = '"+passT+"'" ;
     DBConnect connect = new DBConnect();
+    //Local TimeStamp
+    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
     // Static methods - logged in user
     public static boolean isLoggedIn() {
@@ -88,6 +88,15 @@ public class Login implements Initializable {
         }
     }
 
+    public void writeLogInfo(String logInfo) throws FileNotFoundException, IOException {
+
+        FileWriter fwVariable = new FileWriter("TrackLoginTimestampLogFile.txt", true);
+        PrintWriter pwVariable = new PrintWriter(fwVariable);
+
+        pwVariable.println(logInfo);
+        pwVariable.close();
+    }
+
     /**
      * ***********************************
      * Changing screens and scenes with buttons.
@@ -108,7 +117,8 @@ public class Login implements Initializable {
 
             // Login passed
             Login.loggedInUser = user;
-
+            // Add User login information
+            writeLogInfo("Username: " + user.getUserName() + " Logged in at " + timestamp);
             // Create a login session, and set the user to that session
             stage = (Stage) login.getScene().getWindow();
             System.out.println("(Succesful login) Welcome Consultant");
@@ -118,7 +128,7 @@ public class Login implements Initializable {
             stage.setTitle("Tim Aguirre Customer Scheduler App");
 
             stage.setScene(scene);
-            
+
         } else {
             if (currentLocale == mexicoLocale) {
                 System.out.println("(Invalid login attempted) Sorry, The username or password you entered is incorrect.");
@@ -139,11 +149,9 @@ public class Login implements Initializable {
 
     }
 
-    
-
     public void initialize(URL url, ResourceBundle rb) {
         //Test print of current time for understanding how timestamps work
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
         System.out.println("Current time using current time: " + timestamp);
 
         Locale mexicoLocale = new Locale("es", "MX");
