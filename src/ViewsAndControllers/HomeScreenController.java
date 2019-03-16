@@ -10,6 +10,7 @@ import Model.CustomerList;
 import Model.DBConnect;
 import static Model.DBConnect.dateTimeConverter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -167,10 +168,45 @@ public class HomeScreenController implements Initializable {
         modalStage.setScene(scene);
         modalStage.showAndWait();
     }
-    
+
     @FXML
-    private void apptMonthReportButtonAction(ActionEvent event) throws IOException {
-    
+    private void apptMonthReportButtonAction(ActionEvent event) throws IOException, SQLException {
+        if (currentLocale != mexicoLocale) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Report Created");
+                alert.setContentText("Report for the number of appointment types"
+                        + " separated by month has been created. The file is"
+                        + " called AppointmentsByTypeAndMonth.txt located in"
+                        + " the TimAguirreCustomerSchedulerApp project folder.");
+                alert.showAndWait();
+                System.out.println("Report for the number of appointment types"
+                        + " separated by month has been created. The file is "
+                        + "called AppointmentsByTypeAndMonth.txt located in the "
+                        + "TimAguirreCustomerSchedulerApp project folder.");
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Informe creado");
+                alert.setContentText("Se ha creado el informe para el número de "
+                        + "tipos de citas separados por mes. El archivo se llama "
+                        + "AppointmentsByTypeAndMonth.txt ubicado en la carpeta "
+                        + "del proyecto TimAguirreCustomerSchedulerApp");
+                alert.showAndWait();
+                System.out.println("Se ha creado el informe para el número de "
+                        + "tipos de citas separados por mes. El archivo se llama "
+                        + "AppointmentsByTypeAndMonth.txt ubicado en la carpeta "
+                        + "del proyecto TimAguirreCustomerSchedulerAppr");
+            }
+        
+        //FileWriter fwVariable = new FileWriter("AppointmentsByTypeAndMonth.txt", false);
+        PrintWriter pwVariable = new PrintWriter("AppointmentsByTypeAndMonth.txt");
+        pwVariable.println("Bellow is the Report of the number of appointment types separated by month.");
+        pwVariable.println(" ");
+        DatabaseConnect.getAppointmentsByTypeAndMonth().forEach(var
+                -> pwVariable.println(var.toString()));
+        pwVariable.close();
+
     }
 
     @FXML
@@ -264,8 +300,8 @@ public class HomeScreenController implements Initializable {
         ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
         List<Appointment> filterAppointmentList = new ArrayList<Appointment>();
 
-         customerData.getAppointment().forEach(var ->
-        {
+        customerData.getAppointment().forEach(var
+                -> {
             if ((dateTimeConverter(var.getStart()).isAfter(DateA)
                     || dateTimeConverter(var.getStart()).equals(DateA))
                     && (dateTimeConverter(var.getEnd()).isBefore(DateB)
@@ -275,7 +311,7 @@ public class HomeScreenController implements Initializable {
                 System.out.println(dateTimeConverter(var.getEnd()));
                 filterAppointmentList.add(var);
             }
-            
+
         });
         filteredAppointments.addAll(filterAppointmentList);
         return filteredAppointments;
@@ -410,7 +446,7 @@ public class HomeScreenController implements Initializable {
             );
         }
 
-       // fifteenMinAlert();
+        // fifteenMinAlert();
         lambdaFifteenMinAlert();
     }
 }

@@ -1,0 +1,5 @@
+Bellow is the Report of the number of appointment types separated by month.
+ 
+FEBRUARY Lunch 2
+FEBRUARY Meeting 3
+MARCH Meeting 7

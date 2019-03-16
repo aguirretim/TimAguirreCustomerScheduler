@@ -3,6 +3,7 @@ package Model;
 import static java.lang.Integer.parseInt;
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -212,7 +213,7 @@ public class DBConnect {
             int locationId = parseInt(location);
             String Address = fullAddressFromId(locationId);
 
-           /* System.out.println("appointmentId: " + appointmentId + " "
+            /* System.out.println("appointmentId: " + appointmentId + " "
                     + "Customer ID: " + customerId + " "
                     + "Customer Name: " + cusName + " "
                     + "Address: " + Address + " "
@@ -228,7 +229,6 @@ public class DBConnect {
                     + "lastUpdate: " + lastUpdate + " "
                     + "lastUpdateBy: " + lastUpdateBy + " "
                     + "type: " + type);*/
-
             start = fromUTC(start);
             end = fromUTC(end);
             createDate = fromUTC(createDate);
@@ -330,7 +330,6 @@ public class DBConnect {
         for (City var : citylist2) {
             if (var.getCityId() == cityId) {
                 // codes
-               
 
                 return var.getCity();
             }
@@ -704,6 +703,31 @@ public class DBConnect {
         System.out.println(tableRowsAffected + " rows were edited. "
                 + "Editing an Appointment with" + query);
     }
+
+    public List getAppointmentsByTypeAndMonth() throws SQLException {
     
+    // create a new Arraylist to return the results of the query
+        
+         List monthTypeCount = new ArrayList<>();
+        String query = "SELECT month(start),type,count(*) \n"
+                    + "FROM U04k77.appointment group by month(start),type;";
+        
+        rs = st.executeQuery(query);
+        
+        while (rs.next()) {
+
+            int monthNumber = rs.getInt("month(start)");
+            String monthName = Month.of(monthNumber).name();
+            String apptType = rs.getString("type");
+            int apptTypeCount = rs.getInt("count(*)");
+            
+ 
+            monthTypeCount.add(monthName+" "+ apptType+" "+ apptTypeCount);
+            
+        }
+    
+        return monthTypeCount;
+        
+}
 
 }
