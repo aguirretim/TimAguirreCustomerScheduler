@@ -1,0 +1,14 @@
+Bellow is the Report of the Schedule for the consultant.
+ 
+Customer: Elon musk Appt Title: Meeting about tesla Appt Start Time: 2019-02-19 05:00:00 Appt End Time: 2019-02-20 07:00:00
+Customer: Micheal Jordan Appt Title: magic title Appt Start Time: 2019-02-24 05:00:00 Appt End Time: 2019-02-25 08:30:00
+Customer: Micheal Jordan Appt Title: MAgic test Appt Start Time: 2019-02-26 02:00:00 Appt End Time: 2019-02-27 05:00:00
+Customer: Micheal B Jordan Appt Title: MAgic shall insue Appt Start Time: 2019-02-27 07:00:00 Appt End Time: 2019-02-27 12:30:00
+Customer: Micheal Jordan Appt Title: Play basket ball Appt Start Time: 2019-02-28 07:30:00 Appt End Time: 2019-02-28 08:00:00
+Customer: Will Smith Appt Title: UTC convert test Appt Start Time: 2019-03-04 01:00:00 Appt End Time: 2019-03-04 01:30:00
+Customer: Will Smith Appt Title: 15 test appt Appt Start Time: 2019-03-05 19:06:00 Appt End Time: 2019-03-06 13:30:00
+Customer: Elon musk Appt Title: Tesla energy focus Appt Start Time: 2019-03-05 20:15:00 Appt End Time: 2019-03-05 21:00:00
+Customer: Propel MAn Appt Title: Drink water and focus Appt Start Time: 2019-03-06 09:30:00 Appt End Time: 2019-03-06 16:30:00
+Customer: Kendrick Lamar Appt Title: Go to Concert Appt Start Time: 2019-03-06 09:00:00 Appt End Time: 2019-03-06 17:00:00
+Customer: Propel MAn Appt Title: drink water Appt Start Time: 2019-03-10 14:00:00 Appt End Time: 2019-03-10 14:30:00
+Customer: Kendrick Lamar Appt Title: Listen to music Appt Start Time: 2019-03-13 09:00:00 Appt End Time: 2019-03-13 10:00:00

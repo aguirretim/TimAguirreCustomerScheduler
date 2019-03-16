@@ -172,39 +172,82 @@ public class HomeScreenController implements Initializable {
     @FXML
     private void apptMonthReportButtonAction(ActionEvent event) throws IOException, SQLException {
         if (currentLocale != mexicoLocale) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Dialog");
-                alert.setHeaderText("Report Created");
-                alert.setContentText("Report for the number of appointment types"
-                        + " separated by month has been created. The file is"
-                        + " called AppointmentsByTypeAndMonth.txt located in"
-                        + " the TimAguirreCustomerSchedulerApp project folder.");
-                alert.showAndWait();
-                System.out.println("Report for the number of appointment types"
-                        + " separated by month has been created. The file is "
-                        + "called AppointmentsByTypeAndMonth.txt located in the "
-                        + "TimAguirreCustomerSchedulerApp project folder.");
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Dialog");
-                alert.setHeaderText("Informe creado");
-                alert.setContentText("Se ha creado el informe para el número de "
-                        + "tipos de citas separados por mes. El archivo se llama "
-                        + "AppointmentsByTypeAndMonth.txt ubicado en la carpeta "
-                        + "del proyecto TimAguirreCustomerSchedulerApp");
-                alert.showAndWait();
-                System.out.println("Se ha creado el informe para el número de "
-                        + "tipos de citas separados por mes. El archivo se llama "
-                        + "AppointmentsByTypeAndMonth.txt ubicado en la carpeta "
-                        + "del proyecto TimAguirreCustomerSchedulerAppr");
-            }
-        
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Report Created");
+            alert.setContentText("Report for the number of appointment types"
+                    + " separated by month has been created. The file is"
+                    + " called AppointmentsByTypeAndMonth.txt located in"
+                    + " the TimAguirreCustomerSchedulerApp project folder.");
+            alert.showAndWait();
+            System.out.println("Report for the number of appointment types"
+                    + " separated by month has been created. The file is "
+                    + "called AppointmentsByTypeAndMonth.txt located in the "
+                    + "TimAguirreCustomerSchedulerApp project folder.");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Informe creado");
+            alert.setContentText("Se ha creado el informe para el número de "
+                    + "tipos de citas separados por mes. El archivo se llama "
+                    + "AppointmentsByTypeAndMonth.txt ubicado en la carpeta "
+                    + "del proyecto TimAguirreCustomerSchedulerApp");
+            alert.showAndWait();
+            System.out.println("Se ha creado el informe para el número de "
+                    + "tipos de citas separados por mes. El archivo se llama "
+                    + "AppointmentsByTypeAndMonth.txt ubicado en la carpeta "
+                    + "del proyecto TimAguirreCustomerSchedulerAppr");
+        }
+
         //FileWriter fwVariable = new FileWriter("AppointmentsByTypeAndMonth.txt", false);
         PrintWriter pwVariable = new PrintWriter("AppointmentsByTypeAndMonth.txt");
         pwVariable.println("Bellow is the Report of the number of appointment types separated by month.");
         pwVariable.println(" ");
         DatabaseConnect.getAppointmentsByTypeAndMonth().forEach(var
                 -> pwVariable.println(var.toString()));
+        pwVariable.close();
+
+    }
+
+    @FXML
+    private void consultanApptReportButtonAction(ActionEvent event) throws IOException, SQLException {
+        if (currentLocale != mexicoLocale) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Report Created");
+            alert.setContentText("Report for the the Schedule of the Consultant "
+                    + "created. The file is"
+                    + " called ScheduleForConsultant.txt located in"
+                    + " the TimAguirreCustomerSchedulerApp project folder.");
+            alert.showAndWait();
+            System.out.println("Report for the the Schedule of the Consultant "
+                    + "created. The file is "
+                    + "called ScheduleForConsultant.txt located in the "
+                    + "TimAguirreCustomerSchedulerApp project folder.");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Informe creado");
+            alert.setContentText("Informe para el Horario del Consultor " +
+"                    creado. El archivo se llama "
+                    + "ScheduleForConsultant.txt ubicado en la carpeta "
+                    + "del proyecto TimAguirreCustomerSchedulerApp");
+            alert.showAndWait();
+            System.out.println("Informe para el Horario del Consultor " +
+"                    creado. El archivo se llama "
+                    + "ScheduleForConsultant.txt ubicado en la carpeta "
+                    + "del proyecto TimAguirreCustomerSchedulerAppr");
+        }
+
+        //FileWriter fwVariable = new FileWriter("AppointmentsByTypeAndMonth.txt", false);
+        PrintWriter pwVariable = new PrintWriter("ScheduleForConsultant.txt");
+        pwVariable.println("Bellow is the Report of the Schedule for the consultant.");
+        pwVariable.println(" ");
+        DatabaseConnect.getAllAppointmentsByUserId(Login.getLoggedInUserId()).forEach(var
+                -> pwVariable.println("Customer: "+var.getCustomerName() + " Appt Title: "
+                        + var.getTitle() + " Appt Start Time: "
+                        + var.getStart() + " Appt End Time: "
+                        + var.getEnd()));
         pwVariable.close();
 
     }
