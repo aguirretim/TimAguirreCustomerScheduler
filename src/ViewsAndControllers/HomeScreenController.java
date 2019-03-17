@@ -215,12 +215,12 @@ public class HomeScreenController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText("Report Created");
-            alert.setContentText("Report for the the Schedule of the Consultant "
+            alert.setContentText("Report for the Schedule of the Consultant "
                     + "created. The file is"
                     + " called ScheduleForConsultant.txt located in"
                     + " the TimAguirreCustomerSchedulerApp project folder.");
             alert.showAndWait();
-            System.out.println("Report for the the Schedule of the Consultant "
+            System.out.println("Report for the Schedule of the Consultant "
                     + "created. The file is "
                     + "called ScheduleForConsultant.txt located in the "
                     + "TimAguirreCustomerSchedulerApp project folder.");
@@ -236,7 +236,7 @@ public class HomeScreenController implements Initializable {
             System.out.println("Informe para el Horario del Consultor " +
 "                    creado. El archivo se llama "
                     + "ScheduleForConsultant.txt ubicado en la carpeta "
-                    + "del proyecto TimAguirreCustomerSchedulerAppr");
+                    + "del proyecto TimAguirreCustomerSchedulerApp");
         }
 
         //FileWriter fwVariable = new FileWriter("AppointmentsByTypeAndMonth.txt", false);
@@ -252,6 +252,50 @@ public class HomeScreenController implements Initializable {
 
     }
 
+    @FXML
+    private void oldestAndNewestApptButtonAction(ActionEvent event) throws IOException, SQLException {
+        if (currentLocale != mexicoLocale) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Report Created");
+            alert.setContentText("Report for the Oldest and Newest Appointment of the Consultant "
+                    + "created. The file is"
+                    + " called OldestAndNewestApptReport.txt located in"
+                    + " the TimAguirreCustomerSchedulerApp project folder.");
+            alert.showAndWait();
+            System.out.println("Report for the Oldest and Newest Appointment of the Consultant "
+                    + "created. The file is "
+                    + "called OldestAndNewestApptReport.txt located in the "
+                    + "TimAguirreCustomerSchedulerApp project folder.");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Informe creado");
+            alert.setContentText("Informe para el Horario del Consultor " +
+"                    creado. El archivo se llama "
+                    + "OldestAndNewestApptReport.txt ubicado en la carpeta "
+                    + "del proyecto TimAguirreCustomerSchedulerApp");
+            alert.showAndWait();
+            System.out.println("Informe para el Horario del Consultor " +
+"                    creado. El archivo se llama "
+                    + "OldestAndNewestApptReport.txt ubicado en la carpeta "
+                    + "del proyecto TimAguirreCustomerSchedulerApp");
+        }
+
+        //FileWriter fwVariable = new FileWriter("AppointmentsByTypeAndMonth.txt", false);
+        PrintWriter pwVariable = new PrintWriter("OldestAndNewestApptReport.txt");
+        pwVariable.println("Bellow is the Report of the Oldest And Newest Appointments for the consultant.");
+        pwVariable.println(" ");
+        DatabaseConnect.getMinMaxAppointmentsByUserId(Login.getLoggedInUserId()).forEach(var
+                -> pwVariable.println("Customer: "+var.getCustomerName() + " Appt Title: "
+                        + var.getTitle() + " Appt Start Time: "
+                        + var.getStart() + " Appt End Time: "
+                        + var.getEnd()));
+        pwVariable.close();
+
+    }
+
+    
     @FXML
     private void editApptButtonAction(ActionEvent event) throws IOException {
 

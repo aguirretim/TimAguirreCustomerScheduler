@@ -56,7 +56,7 @@
             <Font size="11.0" />
          </font>
       </Button>
-      <Button fx:id="past30DayButton" layoutX="511.0" layoutY="400.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="89.0" text="Past 30 Day Appointment Report" textAlignment="CENTER" wrapText="true">
+      <Button fx:id="past30DayButton" layoutX="511.0" layoutY="400.0" mnemonicParsing="false" onAction="#oldestAndNewestApptButtonAction" prefHeight="58.0" prefWidth="123.0" text="Oldest And Newest appointment Report" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="11.0" />
          </font>

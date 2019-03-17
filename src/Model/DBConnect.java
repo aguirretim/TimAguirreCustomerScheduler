@@ -241,7 +241,75 @@ public class DBConnect {
 
         return results;
     }
+    
+        public List<Appointment> getMinMaxAppointmentsByUserId(
+            int LoggedInUserId) throws SQLException {
 
+        // create a new Arraylist to return the results of the query
+        List<Appointment> results = new ArrayList<>();
+
+        String query = "SELECT *\n" +
+        "FROM U04k77.appointment\n" +
+        "where userId ="+LoggedInUserId+" && start=(SELECT max(start)\n" +
+        "FROM U04k77.appointment) || start=(SELECT min(start)\n" +
+        "FROM U04k77.appointment)";
+                
+        rs = st.executeQuery(query);
+        System.out.println("Record from Database");
+        while (rs.next()) {
+
+            int appointmentId = rs.getInt("appointmentId");
+            int customerId = rs.getInt("customerId");
+            int userId = rs.getInt("userId");
+            String title = rs.getString("title");
+            String description = rs.getString("description");
+            String location = rs.getString("location");
+            String contact = rs.getString("contact");
+            String url = rs.getString("url");
+            String start = rs.getString("Start");
+
+            if (start == null) {
+                start = "0000-00-00";
+            }
+            String end = rs.getString("end");
+            if (end == null) {
+                end = "0000-00-00";
+            }
+            String createDate = rs.getString("createDate");
+            if (createDate == null) {
+                createDate = "0000-00-00";
+            }
+            String createdBy = rs.getString("createdBy");
+            String lastUpdate = rs.getString("lastUpdate");
+            if (lastUpdate == null) {
+                lastUpdate = "0000-00-00";
+            }
+            String lastUpdateBy = rs.getString("lastUpdateBy");
+            String type = rs.getString("type");
+
+            String cusName = customerName(customerId);
+
+            if (customerName(customerId) == null) {
+                cusName = "Deleted Customer";
+            } else {
+                cusName = cusName;
+            }
+            int locationId = parseInt(location);
+            String Address = fullAddressFromId(locationId);
+
+            start = fromUTC(start);
+            end = fromUTC(end);
+            createDate = fromUTC(createDate);
+            lastUpdate = fromUTC(lastUpdate);
+
+            results.add(new Appointment(appointmentId, customerId, cusName, Address,
+                    userId, title, description, location, contact, type,
+                    url, start, end, createdBy, lastUpdate, lastUpdateBy));
+        }
+
+        return results;
+    }
+    
     public static LocalDateTime convertFromUtcToLocal(LocalDateTime time) {
         return time.atZone(ZoneId.of("Z")).withZoneSameInstant(ZoneOffset.systemDefault()).toLocalDateTime();
     }
