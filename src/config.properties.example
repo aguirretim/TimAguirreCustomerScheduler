@@ -1,0 +1,8 @@
+# TimAguirreCustomerScheduler — database configuration
+#
+# Copy this file to config.properties (in the same src/ folder) and fill in
+# your real values. config.properties is gitignored and must NEVER be committed.
+#
+db.url=jdbc:mysql://HOST:3306/DBNAME?zeroDateTimeBehavior=convertToNull
+db.user=YOUR_DB_USER
+db.password=YOUR_DB_PASSWORD

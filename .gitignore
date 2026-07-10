@@ -1,2 +1,5 @@
 /dist/
 /build/
+# Local DB credentials — never commit real secrets
+src/config.properties
+/config.properties

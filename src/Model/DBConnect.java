@@ -1,6 +1,7 @@
 package Model;
 
 import static java.lang.Integer.parseInt;
+import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -10,6 +11,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.TimeZone;
 
 /**
@@ -38,11 +40,18 @@ public class DBConnect {
 
         /**
          * ************************************
-         * Connects to MySql Database. *****************************
+         * Connects to MySql Database. Credentials are read from
+         * config.properties on the classpath (see config.properties.example);
+         * they are no longer hardcoded in source. *********************
          */
+        Properties config = loadConfig();
+        String dbUrl = config.getProperty("db.url");
+        String dbUser = config.getProperty("db.user");
+        String dbPassword = config.getProperty("db.password");
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77?zeroDateTimeBehavior=convertToNull", "U04k77", "53688267207");
+            con = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             st = con.createStatement();
         } catch (Exception ex) {
             System.out.println("erro: " + ex);
@@ -50,7 +59,7 @@ public class DBConnect {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con2 = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77?zeroDateTimeBehavior=convertToNull", "U04k77", "53688267207");
+            con2 = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             st2 = con2.createStatement();
         } catch (Exception ex) {
             System.out.println("erro: " + ex);
@@ -58,12 +67,33 @@ public class DBConnect {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con3 = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U04k77?zeroDateTimeBehavior=convertToNull", "U04k77", "53688267207");
+            con3 = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
             st3 = con3.createStatement();
         } catch (Exception ex) {
             System.out.println("erro: " + ex);
         }
 
+    }
+
+    /**
+     * Loads database credentials from config.properties on the classpath. This
+     * file is gitignored so secrets are never committed — copy
+     * config.properties.example to config.properties and fill in real values.
+     */
+    private static Properties loadConfig() {
+        Properties props = new Properties();
+        try (InputStream in = DBConnect.class.getResourceAsStream("/config.properties")) {
+            if (in == null) {
+                System.out.println("config.properties not found on the classpath. "
+                        + "Copy src/config.properties.example to src/config.properties "
+                        + "and fill in your database credentials.");
+            } else {
+                props.load(in);
+            }
+        } catch (Exception ex) {
+            System.out.println("Error loading config.properties: " + ex);
+        }
+        return props;
     }
 
     // public User getUserByUsernamePassword - if not null success
