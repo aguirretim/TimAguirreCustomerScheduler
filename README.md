@@ -2,9 +2,13 @@
 
 A desktop scheduling application for managing customer appointments, built for a university programming course. The app supports multiple time zones and has been localized for Spanish (Mexico).
 
-![Login window titled "Welcome Consultant Specialist" with username and password fields and a Login button](docs/screenshot.png)
+![Main appointments screen listing scheduled appointments with columns for appointment, start date, end date, customer, and address, plus buttons for managing customers, appointments, and reports](docs/screenshot.png)
 
-*The app launches on this login screen; the appointment dashboard beyond it requires a live MySQL connection.*
+*Main appointments screen after logging in, running against a local seeded MySQL database — each row shows an appointment with its customer and address, alongside customer/appointment management and reporting actions.*
+
+![Login window titled "Welcome Consultant Specialist" with username and password fields and a Login button](docs/screenshot-login.png)
+
+*The login screen the app launches on; credentials are validated against the MySQL database.*
 
 ## Features
 - Add, update, and delete customer appointments
